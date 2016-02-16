@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F7B9AEFC-AF3B-4E65-9CAF-BDFDCF33E49C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CNSirindar</RootNamespace>
+    <AssemblyName>CNSirindar</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\SirindarExtensions.cs" />
+    <Compile Include="Migrations\201512082302370_InitialCreate.cs" />
+    <Compile Include="Migrations\201512082302370_InitialCreate.Designer.cs">
+      <DependentUpon>201512082302370_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601111702396_agregardiassemana.cs" />
+    <Compile Include="Migrations\201601111702396_agregardiassemana.Designer.cs">
+      <DependentUpon>201601111702396_agregardiassemana.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AsignacionBloque.cs" />
+    <Compile Include="Models\Asistencia.cs" />
+    <Compile Include="Models\Bloque.cs" />
+    <Compile Include="Models\CantidadComidas.cs" />
+    <Compile Include="Models\ClasificacionDeporte.cs" />
+    <Compile Include="Models\Dependencia.cs" />
+    <Compile Include="Models\Deporte.cs" />
+    <Compile Include="Models\DeporteDeportista.cs" />
+    <Compile Include="Models\Deportista.cs" />
+    <Compile Include="Models\Entrenador.cs" />
+    <Compile Include="Models\Grupo.cs" />
+    <Compile Include="Models\GrupoAlimenticio.cs" />
+    <Compile Include="Models\Horario.cs" />
+    <Compile Include="Models\Persona.cs" />
+    <Compile Include="Models\TableDbConventions.cs" />
+    <Compile Include="Repositories\AsigancionBloqueRepository.cs" />
+    <Compile Include="Repositories\AsistenciaRepository.cs" />
+    <Compile Include="Repositories\BloqueRepository.cs" />
+    <Compile Include="Repositories\ClasificacionDeporteRepository.cs" />
+    <Compile Include="Repositories\DependenciaRepository.cs" />
+    <Compile Include="Repositories\DeporteDeportistaRepository.cs" />
+    <Compile Include="Repositories\DeporteRepository.cs" />
+    <Compile Include="Repositories\DeportistaRepository.cs" />
+    <Compile Include="Repositories\GeneralRepository.cs" />
+    <Compile Include="Repositories\GrupoAlimenticioRepository.cs" />
+    <Compile Include="Repositories\GrupoRepository.cs" />
+    <Compile Include="Repositories\HorarioRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="SirindarDbContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201512082302370_InitialCreate.resx">
+      <DependentUpon>201512082302370_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601111702396_agregardiassemana.resx">
+      <DependentUpon>201601111702396_agregardiassemana.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

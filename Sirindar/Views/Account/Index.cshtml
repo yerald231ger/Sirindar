@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@{var json = (HtmlString)ViewBag.json; }
+<h2>Index</h2>
+<div class="row" ng-app="listApp" ng-controller="listController">
+    <div>
+        <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
+            <strong>{{ message }}</strong>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true">
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Buscar..." aria-describedby="basic-addon1" ng-model="strCadena" ng-keyup="serch(strCadena)">
+                    </div>
+                </div>
+                <div class="col-md-offset-3 col-md-3">
+                    <h5>@Html.ActionLink("Registrar Deporte", "Create")</h5>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-striped table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Roles</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="x in tempItems">
+                                <td scope="row"></td>
+                                <td>{{ x.UserName }}</td>
+                                <td>{{ x.Nombre }}</td>
+                                <td>{{ x.Email }}</td>
+                                <td ng-if="x.Roles[0].RoleId == 'U'">User</td>
+                                <td ng-if="x.Roles[0].RoleId == 'A'">Admin</td>
+                                <td><a ng-href="@Url.Action("Edit")/{{x.Id}}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                <td><a href="#" ng-click="deleteConfirm('@Url.Action("Delete")', x.Id)"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-12" ng-hide="isHide">
+                    <ul class="pagination pull-right">
+                        <li ng-click="changePage(pages[0])">
+                            <a href="#">
+                                <span>First</span>
+                            </a>
+                        </li>
+                        <li ng-click="changePage(currentPage - 1)">
+                            <a href="#">
+                                <span><<</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="x in tempPages" ng-click="changePage(x)" ng-class="{active: x == currentPage}">
+                            <a href="#">
+                                <span>{{x}}</span>
+                            </a>
+                        </li>
+                        <li ng-click="changePage(currentPage + 1)">
+                            <a href="#">
+                                <span>>></span>
+                            </a>
+                        </li>
+                        <li ng-click="changePage(pages[pages.length - 1])">
+                            <a href="#">
+                                <span>Last</span>
+                            </a>
+                        </li>
+                        <li ng-click="sp(n = n + count, count)" ng-hide="notMore || (currentPage != tempPages[tempPages.length - 1])">
+                            <a href="#">
+                                <span>Load</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        jsPageing('@json', "@Url.Action("GetItemsJson")", 10, 9);
+    </script>
+}

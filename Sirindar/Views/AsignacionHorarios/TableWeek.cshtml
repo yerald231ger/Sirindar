@@ -1,0 +1,25 @@
+﻿@model Sirindar.Models.AsignacionHorariosViewModel
+<div class="table-responsive">
+    <table class="table table-condensed">
+        <tr>
+            <th></th>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miercoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+            <th>Sabado</th>
+            <th>Domingo</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>@Html.CheckBoxFor(model => model.Monday)</td>
+            <td>@Html.CheckBoxFor(model => model.Tuesday)</td>
+            <td>@Html.CheckBoxFor(model => model.Wednesday)</td>
+            <td>@Html.CheckBoxFor(model => model.Thursday)</td>
+            <td>@Html.CheckBoxFor(model => model.Friday)</td>
+            <td>@Html.CheckBoxFor(model => model.Saturday)</td>
+            <td>@Html.CheckBoxFor(model => model.Sunday)</td>
+        </tr>
+    </table>
+</div>

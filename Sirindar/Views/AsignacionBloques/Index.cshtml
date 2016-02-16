@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    var json = (HtmlString)ViewBag.json;
+}
+<h2>Asignación de bloques</h2>
+<br />
+<div class="row" ng-app="listApp" ng-controller="listController">
+    <div>
+        <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
+            <strong>{{ message }}</strong>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true">
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Buscar..." aria-describedby="basic-addon1" ng-model="strCadena" ng-keyup="serch(strCadena)">
+                    </div>
+                </div>
+                <div class="col-md-offset-3 col-md-3">
+                    @Html.ActionLink("Nueva Asignacion","CreateNew")
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="row">#</th>
+                                <th>Matricula</th>
+                                <th>Nombre</th>
+                                <th>Deporte</th>
+                                <th>Bloque</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat-start="(k,p) in tempItems" ng-if="false"></tr>
+                            <tr ng-repeat-start="c in p.Deportes" ng-if="false"></tr>
+                            <tr ng-repeat="s in c.Bloques">
+                                <th ng-if="$parent.$first && $first" rowspan="{{p.RowSpan.length}}">
+                                    {{k+1}}
+                                </th>
+                                <td ng-if="$parent.$first && $first" rowspan="{{p.RowSpan.length}}">
+                                    {{p.Matricula}}
+                                </td>
+                                <td ng-if="$parent.$first && $first" rowspan="{{p.RowSpan.length}}">
+                                    {{p.Nombre}}
+                                </td>                             
+                                <td ng-if="$first" rowspan="{{c.RowSpan.length}}">{{c.Nombre}}</td>
+                                <td>{{s.Nombre}}</td>
+                                <td ng-if="s.Nombre == 'Sin bloque' || s.BloqueId == 0" >
+                                    <a ng-href="@Url.Action("Edit")/{{s.DeporteDeportistaId}}"><span class="glyphicon glyphicon-plus"></span></a>&ensp;
+                                </td>                               
+                                <td ng-if="s.Nombre != 'Sin bloque' && s.BloqueId != 0">
+                                    <a ng-href="@Url.Action("Edit")/{{s.DeporteDeportistaId}}"><span class="glyphicon glyphicon-edit"></span></a>&ensp;
+                                    <a href="#" ng-click="deleteConfirm('@Url.Action("Delete")', s.DeporteDeportistaId)"><span class="glyphicon glyphicon-remove"></span></a>&ensp;
+                                    <a ng-if="$first" ng-href="@Url.Action("Create")?deportistaId={{p.DeportistaId}}&deporteId={{c.DeporteId}}"><span class="glyphicon glyphicon-plus"></span></a>
+                                </td>
+                            </tr>
+                            <tr ng-repeat-end ng-if="false"></tr>
+                            <tr ng-repeat-end ng-if="false"></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12" ng-hide="isHide">
+                    <ul class="pagination pull-right">
+                        <li ng-click="changePage(pages[0])">
+                            <a href="#">
+                                <span>Primera</span>
+                            </a>
+                        </li>
+                        <li ng-click="changePage(currentPage - 1)">
+                            <a href="#">
+                                <span><<</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="x in tempPages" ng-click="changePage(x)" ng-class="{active: x == currentPage}">
+                            <a href="#">
+                                <span>{{x}}</span>
+                            </a>
+                        </li>
+                        <li ng-click="changePage(currentPage + 1)">
+                            <a href="#">
+                                <span>>></span>
+                            </a>
+                        </li>
+                        <li ng-click="changePage(pages[pages.length - 1])">
+                            <a href="#">
+                                <span>Ultima</span>
+                            </a>
+                        </li>
+                        <li ng-click="sp(n = n + count, count)" ng-hide="notMore || (currentPage != tempPages[tempPages.length - 1])">
+                            <a href="#">
+                                <span>Load</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>      
+        jsPageing('@json', "@Url.Action("GetItemsJson")", 10, 9);
+    </script>
+}

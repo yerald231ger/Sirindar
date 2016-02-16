@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="modal fade" id="idModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Nombre de aplicación", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
+                    <li><a href="@Url.Action("Index","Account",new{})">Usuarios</a></li>
+                    <li><a href="@Url.Action("Index","Deportes",new{})">Deportes</a></li>
+                    <li><a href="@Url.Action("Index","Bloques",new{})">Bloques</a></li>
+                    <li><a href="@Url.Action("Index","Horarios",new{})">Horarios</a></li>
+                    <li><a href="@Url.Action("Index","Deportistas",new{})">Deportistas</a></li>
+                    <li><a href="@Url.Action("Index","AsignacionBloques", new { })">Asignacion Bloques</a></li>
+                    <li><a href="@Url.Action("Index","AsignacionHorarios",new{})">Asignacion Comidas</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Utilerias</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>CATÁLOGOS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="@Url.Action("Index","Account",new{})"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Usuarios</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="@Url.Action("Index", "Deportes", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Deportes</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="@Url.Action("Index", "Bloques", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Bloques</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="@Url.Action("Index", "Horarios", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Horarios</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="@Url.Action("Index", "Deportistas", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Deportistas</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br />
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ASIGNACIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="@Url.Action("Index", "AsignacionBloques", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Asignacion Bloques</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="@Url.Action("Index", "AsignacionHorarios", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Asignacion Horarios</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        Sirindar by DGI.
+                    </div>
+                }
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angularjs")
+    @RenderSection("scripts", required: false)
+    <script>
+        $("#myCollapsible").on('show.bs.collapse', function () {
+            alert(2);
+        });
+        $("#myCollapsible").on('hide.bs.collapse', function () {
+            alert(2);
+        });
+        function ff() { $("#myCollapsible").collapse('toggle'); }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿@model Sirindar.Models.DeportistaEditViewModel
+@using Sirindar.Helpers
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <br />
+            <h3>Actualizar Deportista</h3>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.DeportistaId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Matricula, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.Matricula, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Matricula, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Apellidos, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.Apellidos, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Genero, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.DropDownList("Genero", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Genero, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaNacimiento, new { @class = "control-label col-md-3" })
+            <div class="col-lg-9">
+                <div class="input-group" style="max-width:280px">
+                    @Html.TextBoxFor(model => model.FechaNacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    <span class="input-group-addon">@ViewBag.Edad años</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DependenciaId, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.DropDownList("DependenciaId", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DependenciaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.DropDownList("Status", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Actualizar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<br />
+<h3>Deportes</h3> 
+<div class="row">
+    <div class="col-md-offset-9 col-md-3">        
+        <a href="#" onclick="addDeporte('@Url.Action("AddDeporte", new { deportistaId = Model.DeportistaId })')">Agregar deporte</a>        
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Clasificación</th>
+        <th>Tipo de Energia</th>
+        <th></th>
+    </tr>
+    @foreach (var deporte in ViewBag.Deportes)
+    {
+        <tr>
+            <td>#</td>
+            <td>@deporte.Nombre</td>
+            <td>@deporte.Clasificacion.Descripcion</td>
+            <td>@deporte.TipoEnergia</td>
+            <td><a href="#" onclick="deleteDeporte('@Url.Action("DeleteDeporte", new { deporteId = deporte.DeporteId })')"><span class="glyphicon glyphicon-remove"></span></a>
+        </tr>
+    }
+</table>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+    function addDeporte(url) {
+        $.ajax(url).success(function (content) {
+            modalContentShow(content);
+        });
+    }
+
+    function deleteDeporte(url){
+        $.ajax(url).success(function (content) {
+            modalContentShow(content);
+        });
+    }
+
+    function modalContentShow(content){
+        $("#idModal .modal-content").replaceWith('<div class="modal-content">' + content + '</div>');
+        $("#idModal").modal('show');
+    }
+</script>

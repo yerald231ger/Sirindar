@@ -1,0 +1,63 @@
+﻿@model CNSirindar.Models.AsignacionBloque
+
+<div class="modal-header">
+    <h4>Seguro que deceas eliminar el registro?</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-8">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Deportista.Matricula)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Deportista.Matricula)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Deportista.Nombre)
+                </dt>
+
+                <dd>
+                    @Model.Deportista.ToString()
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Deporte.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Deporte.Nombre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Bloque.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Bloque.Nombre)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+</div>
+<div class="modal-footer">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-offset-7 col-md-2 col-sm-offset-7 col-sm-2">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-actions no-color">
+                    <input type="submit" value="Eliminar" class="btn btn-info" />
+                </div>
+            </div>
+            <div class="col-md-1 col-sm-1"></div>
+        </div>
+    }
+</div>
+

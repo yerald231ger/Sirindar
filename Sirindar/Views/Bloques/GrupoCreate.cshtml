@@ -1,0 +1,78 @@
+﻿@model CNSirindar.Models.Grupo
+
+@using (Html.BeginForm())
+{
+    <div class="modal-header">
+        <h4>Nuevo grupo</h4>
+    </div>
+    <div class="modal-body">
+        @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+                @Html.Hidden("BloqueId", (int)ViewBag.BloqueId)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GrupoAlimenticioId, "GrupoAlimenticioId", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownList("GrupoAlimenticioId", null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.GrupoAlimenticioId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Porcentaje, new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Porcentaje, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Porcentaje, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Gramos, new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Gramos, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Gramos, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Kilocalorias, new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Kilocalorias, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Kilocalorias, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Equivalencias, new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(model => model.Equivalencias, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Equivalencias, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-offset-7 col-md-2 col-sm-offset-7 col-sm-2">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-actions no-color">
+                    <input type="submit" value="Crear" class="btn btn-info" />
+                </div>
+            </div>
+            <div class="col-md-1 col-sm-1"></div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

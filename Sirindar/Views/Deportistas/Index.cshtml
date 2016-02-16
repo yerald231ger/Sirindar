@@ -1,0 +1,252 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+}
+@{var json = (HtmlString)ViewBag.json; }
+<h2>Deportistas</h2>
+<div class="row">
+    <div ng-app="listApp" ng-controller="listController">
+        <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
+            <strong>{{ message }}</strong>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true">
+                        </span>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Buscar..." aria-describedby="basic-addon1" ng-model="strCadena" ng-keyup="serch(strCadena)">
+                </div>
+            </div>
+            <div class="col-md-offset-3 col-md-3">
+                <h5>@Html.ActionLink("Registrar nuevo deportista", "Create")</h5>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-striped table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Matricula</th>
+                            <th>Nombre</th>
+                            <th>Genero</th>
+                            <th>Deporte</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in tempItems">
+                            <td scope="row"></td>
+                            <td ng-cloak>{{ x.Matricula }}</td>
+                            <td ng-cloak>{{ x.Nombre }}</td>
+                            <td ng-cloak>{{ x.Genero }}</td>
+                            <td class="dropdown">
+                                <div ng-show="x.Deportes.length == 1">
+                                    {{ x.Deportes[0].Nombre }}
+                                </div>
+                                <button ng-show="x.Deportes.length > 1" class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                    Deportes
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li ng-repeat="d in x.Deportes">
+                                        <a href="@Url.Action("Edit","Deportes")/{{d.DeporteId}}">{{ d.Nombre }}</a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td><a ng-href="@Url.Action("Edit")/{{x.DeportistaId}}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <td><a href="#" ng-click="deleteConfirm('@Url.Action("Delete")', x.DeportistaId)"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12" ng-hide="isHide">
+                <ul class="pagination pull-right">
+                    <li ng-click="changePage(pages[0])" ng-cloak>
+                        <a href="#">
+                            <span>Primera</span>
+                        </a>
+                    </li>
+                    <li ng-click="changePage(currentPage - 1)">
+                        <a href="#">
+                            <span><<</span>
+                        </a>
+                    </li>
+                    <li ng-repeat="x in tempPages" ng-click="changePage(x)" ng-class="{active: x == currentPage}">
+                        <a href="#">
+                            <span>{{x}}</span>
+                        </a>
+                    </li>
+                    <li ng-click="changePage(currentPage + 1)">
+                        <a href="#">
+                            <span>>></span>
+                        </a>
+                    </li>
+                    <li ng-click="changePage(pages[pages.length - 1])">
+                        <a href="#">
+                            <span>Ultima</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        function jsPageingTEMP(jsonObject, jsonUrl, numberOfItemsToShow, numberOfPagesToShow) {
+
+            var app = angular.module('listApp', []);
+
+            app.controller('listController', function ($scope, $http, $filter) {
+
+                //Inicialilzacion Start
+                Validations();
+                Initializer(jsonObject, true);
+                startPagination();
+                //Inicialilzacion End
+
+                function Initializer(_jsonObject, isString) {
+
+                    if (isString)
+                        $scope.items = $.parseJSON(_jsonObject);
+                    else
+                        $scope.items = _jsonObject;
+
+                    $scope.tempItems = [];
+                    $scope.pages = [];
+                    $scope.tempPages = [];
+                    $scope.currentPage = 1;
+                    var pages = Math.round(($scope.items.length / numberOfItemsToShow) + .4999);
+                    for (var i = 0; i < pages; i++) {
+                        $scope.pages.push(i + 1);
+                    }
+                    $scope.notMore = $scope.items.length < $scope.count;
+                    $scope.count = $scope.items.length;
+                    $scope.isHide = numberOfItemsToShow >= $scope.items.length;
+                }
+
+                function Validations() {
+                    var e;
+                    if ($.parseJSON(jsonObject).length == 0)
+                        $scope.message = "No hay ningun registro aun en la base de datos";
+                    else if (numberOfPagesToShow > 17)
+                        e = "The max value for 'numberOfPagesToShow' is 17";
+                    else if (numberOfPagesToShow % 2 != 1)
+                        e = "The 'numberOfPagesToShow' is not a impart number";
+                    else if (numberOfItemsToShow <= 1)
+                        e = "The min value for 'numberOfItemsToShow' is 2";
+                    else if (numberOfPagesToShow < 3)
+                        e = "The min value'numberOfPagesToShow' is 3";
+                    if (e != null)
+                        throw e;
+                }
+
+                function setTempItems(start, end) {
+                    if (!($scope.items.length < numberOfItemsToShow)) {
+                        if ($scope.items.length < end && start != 0) {
+                            end = start + (numberOfItemsToShow - (end - $scope.items.length));
+                        }
+                    } else {
+                        start = 0;
+                        end = $scope.items.length;
+                    }
+                    for (var i = start; i < end; i++) {
+                        $scope.tempItems.push($scope.items[i]);
+                    }
+                }
+
+                function startPagination() {
+                    setTempItems(0, numberOfItemsToShow);
+                    setTempPages(1);
+                }
+
+                function setTempPages(page) {
+                    var pivot = Math.round(numberOfPagesToShow / 2);
+                    var endPage = $scope.pages[$scope.pages.length - 1];
+                    var first = 0;
+                    var last = 0;
+
+                    if (endPage < numberOfPagesToShow) {
+                        first = 1;
+                        last = endPage;
+                    }
+                    else if (page <= pivot) {
+                        first = 1;
+                        last = numberOfPagesToShow;
+                    } else if (page > pivot && page <= (endPage - pivot)) {
+                        first = (page - pivot) + 1;
+                        last = (page + pivot) - 1;
+                    } else if (page >= (endPage - pivot)) {
+                        first = (endPage - numberOfPagesToShow) + 1;
+                        last = endPage;
+                    }
+                    $scope.tempPages = [];
+                    for (first; first <= last; first++) {
+                        $scope.tempPages.push(first);
+                    }
+                }
+
+                function showContentInModal(content) {
+                    $("#idModal .modal-content").replaceWith('<div class="modal-content">' + content + '</div>');
+                    $("#idModal").modal('show');
+                }
+
+                $scope.changePage = function (p) {
+                    if (p <= 0 || p > $scope.pages.length)
+                        return;
+                    $scope.tempItems = [];
+                    setTempItems(((numberOfItemsToShow * p) - numberOfItemsToShow), (numberOfItemsToShow * p));
+                    setTempPages(p);
+
+                    $scope.currentPage = p;
+                }
+
+                ////Reinicialilzacion Start
+                //$scope.sp = function (start, count) {
+                //    $http.get(jsonUrl + '?start=' + start + '&' + 'count=' + count).success(function (jsonObject) {
+                //        Initializer(jsonObject);
+                //        startPagination();
+                //        $scope.n = ($scope.notMore) ? 0 : $scope.n;
+                //    });
+                //}
+                ////Reinicialilzacion End
+
+                $scope.serch = function (str) {
+                    debugger;
+                    if (str == "") {
+                        Initializer(jsonObject, true);
+                        startPagination();
+                        return;
+                    }
+                    else {
+                        Initializer(jsonObject, true);
+                        Initializer($filter("filter")($scope.items, str), false);
+                        startPagination();
+                    }
+                }
+
+                $scope.createItem = function (url) {
+                    $http.get(url).success(function (r) {
+                        showContentInModal(r);
+                    });
+                }
+
+                $scope.editItem = function (url, id) {
+                    $http.get(url + '/' + id).success(function (r) {
+                        showContentInModal(r);
+                    });
+                }
+
+                $scope.deleteConfirm = function (url, id) {
+                    $http.get(url + '/' + id).success(function (r) {
+                        showContentInModal(r)
+                    });
+                }
+            });
+        }
+        jsPageingTEMP('@json', "@Url.Action("GetItemsJson")", 10, 9);
+    </script>
+}

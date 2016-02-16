@@ -1,0 +1,58 @@
+﻿@model CNSirindar.Models.Horario
+
+@using (Html.BeginForm())
+{
+    <div class="modal-header">
+        <h4>Modificar Horario</h4>
+    </div>
+    <div class="modal-body">
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.HorarioId)
+            @Html.HiddenFor(model => model.FechaAlta)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownList("Nombre", null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Inicia, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.Inicia, new { @class = "form-control", type = "time" })
+                    @Html.ValidationMessageFor(model => model.Inicia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Finaliza, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.Finaliza, new { @class = "form-control", type = "time" })
+                    @Html.ValidationMessageFor(model => model.Finaliza, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-offset-7 col-md-2 col-sm-offset-7 col-sm-2">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-actions no-color">
+                    <input type="submit" value="Guardar" class="btn btn-info" />
+                </div>
+            </div>
+            <div class="col-md-1 col-sm-1"></div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+

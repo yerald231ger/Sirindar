@@ -1,0 +1,37 @@
+﻿@model Sirindar.Models.AsignacionHorariosViewModel
+
+@{
+    ViewBag.Title = "UpdateCantidadComidasDeportista";
+}
+@using (Html.BeginForm(new { Model.Nombre, Model.Id }))
+{
+    <div class="modal-header">
+        <h4>Actualizacion de numero de comidas</h4>
+    </div>
+
+    <div class="modal-body">
+        <p>Selecciona la cantidad de Comidas</p>   
+        
+        <div class="form-group">
+            @Html.DropDownList("Numero", null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Numero, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @Html.Partial("tableWeek", Model)  
+    <div class="modal-footer">
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-offset-7 col-md-2 col-sm-offset-7 col-sm-2">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-actions no-color">
+                    <input type="submit" value="Actualizar" class="btn btn-info" />
+                </div>
+            </div>
+            <div class="col-md-1 col-sm-1"></div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
