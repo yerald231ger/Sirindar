@@ -1,15 +1,23 @@
 ﻿@model CNSirindar.Models.ApplicationUser
-@{
-    ViewBag.Title = "Edit";
-}
 
-<h2>Edit</h2>
-@using (Html.BeginForm())
+<h2>Crear</h2>
+
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
+    
     <div class="form-horizontal">
+        <h4>Usuario</h4>
+        <hr />
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(model => model.Email, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-4" })
@@ -22,7 +30,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PrimerApellido, new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.TextBoxFor(model => model.PrimerApellido, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.PrimerApellido, null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PrimerApellido, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -30,7 +38,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SegundoApellido, new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.TextBoxFor(model => model.SegundoApellido, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.SegundoApellido, null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SegundoApellido, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -38,29 +46,20 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Telefono, new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Telefono, null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="form-group">
             @Html.Label("Role", new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.DropDownList("RoleId", null, new { @class = "form-control" })
+                @Html.DropDownList("Role", null, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -69,6 +68,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-@section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-}

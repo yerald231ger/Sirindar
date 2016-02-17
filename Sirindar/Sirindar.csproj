@@ -211,24 +211,10 @@
     </Compile>
     <Compile Include="Helpers\Extensions\SirindarExtensions.cs" />
     <Compile Include="Helpers\Utilities\SirindarControls.cs" />
-    <Compile Include="Migrations\201601051919204_initialCreate.cs" />
-    <Compile Include="Migrations\201601051919204_initialCreate.Designer.cs">
-      <DependentUpon>201601051919204_initialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601061823409_agregartableconventions.cs" />
-    <Compile Include="Migrations\201601061823409_agregartableconventions.Designer.cs">
-      <DependentUpon>201601061823409_agregartableconventions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601071615277_emailrequired.cs" />
-    <Compile Include="Migrations\201601071615277_emailrequired.Designer.cs">
-      <DependentUpon>201601071615277_emailrequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AsignacionBloquesViewModels.cs" />
     <Compile Include="Models\AsignacionHorariosViewModels.cs" />
     <Compile Include="Models\DeportistaViewModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1117,6 +1103,7 @@
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\AsignacionHorarios\TableWeek.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1133,17 +1120,6 @@
       <Project>{f7b9aefc-af3b-4e65-9caf-bdfdcf33e49c}</Project>
       <Name>CNSirindar</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601051919204_initialCreate.resx">
-      <DependentUpon>201601051919204_initialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601061823409_agregartableconventions.resx">
-      <DependentUpon>201601061823409_agregartableconventions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601071615277_emailrequired.resx">
-      <DependentUpon>201601071615277_emailrequired.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
