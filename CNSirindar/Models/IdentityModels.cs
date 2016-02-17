@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
-using System.DirectoryServices;
 using System.Configuration;
 using System;
 
-namespace Sirindar.Models
+namespace CNSirindar.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -40,33 +39,5 @@ namespace Sirindar.Models
 
         public bool EsActivo { get; set; }
     }
-
-    public class SirindarDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public SirindarDbContext()
-            : base("sirindarConnectionString")
-        {
-        }
-    }
-
-    public class SirindarDbContextInizializer : CreateDatabaseIfNotExists<SirindarDbContext>
-    {
-        protected override void Seed(SirindarDbContext context)
-        {            
-            context.Roles.Add(new IdentityRole
-            {
-                Id = "A",
-                Name = "Admin"
-            });
-            context.Roles.Add(new IdentityRole
-            {
-                Id = "U",
-                Name = "User"
-            });
-            context.SaveChanges();
-            base.Seed(context);
-        }
-    }
-
 
 }

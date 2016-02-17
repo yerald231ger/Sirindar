@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201601111702396_agregardiassemana.Designer.cs">
       <DependentUpon>201601111702396_agregardiassemana.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602171839077_agregarIdentityUser.cs" />
+    <Compile Include="Migrations\201602171839077_agregarIdentityUser.Designer.cs">
+      <DependentUpon>201602171839077_agregarIdentityUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AsignacionBloque.cs" />
     <Compile Include="Models\Asistencia.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="Models\Grupo.cs" />
     <Compile Include="Models\GrupoAlimenticio.cs" />
     <Compile Include="Models\Horario.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\TableDbConventions.cs" />
     <Compile Include="Repositories\AsigancionBloqueRepository.cs" />
@@ -109,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601111702396_agregardiassemana.resx">
       <DependentUpon>201601111702396_agregardiassemana.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602171839077_agregarIdentityUser.resx">
+      <DependentUpon>201602171839077_agregarIdentityUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

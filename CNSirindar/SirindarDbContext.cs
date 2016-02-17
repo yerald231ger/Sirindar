@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using CNSirindar.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CNSirindar
 {
-    public class SirindarDbContext : DbContext
+    public class SirindarDbContext : IdentityDbContext<ApplicationUser>
     {
         public SirindarDbContext()
             : base("CNSirindarConnectionString")
@@ -43,7 +44,18 @@ namespace CNSirindar
     {
         protected override void Seed(SirindarDbContext context)
         {
-
+            context.Roles.Add(new IdentityRole
+            {
+                Id = "A",
+                Name = "Admin"
+            });
+            context.Roles.Add(new IdentityRole
+            {
+                Id = "U",
+                Name = "User"
+            });
+            context.SaveChanges();
+            base.Seed(context);
         }
     }
 }
