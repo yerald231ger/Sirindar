@@ -13,15 +13,20 @@
                 <RowDefinition Height="16*"/>
                 <RowDefinition Height="12*"/>
                 <RowDefinition Height="12*"/>
-                <RowDefinition Height="12*"/>
-                <RowDefinition Height="16*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="13*"/>
+                <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="27*"/>
-                <ColumnDefinition Width="47*"/>
-                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="167*"/>
+                <ColumnDefinition Width="236*"/>
+                <ColumnDefinition Width="52*"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="label" Content="Inicio de Sesion" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="40" Margin="10,30,45,10" FontFamily="Segoe UI Semibold" FontSize="24" Foreground="White"/>
+            <Label x:Name="label" Content="Inicio de Sesion" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="40" Margin="126,25,97,15" FontFamily="Segoe UI Semibold" FontSize="24" Foreground="White" Grid.ColumnSpan="2"/>
+            <Label Content="Usuario" HorizontalAlignment="Center" Margin="10" Grid.Row="1" VerticalAlignment="Center" Width="147" Height="40" FontFamily="Segoe UI Semibold" FontSize="22" HorizontalContentAlignment="Center" Foreground="White"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="10" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="216"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="216"/>
+            <Label Content="Contraseña" HorizontalAlignment="Center" Margin="10" Grid.Row="2" VerticalAlignment="Center" Width="147" Height="40" FontFamily="Segoe UI Semibold" FontSize="22" HorizontalContentAlignment="Center" Foreground="White"/>
         </Grid>
     </Grid>
 </Page>
