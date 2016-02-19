@@ -4,10 +4,24 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="340" d:DesignWidth="900"
 	Title="Login">
-
     <Grid>
-        
+        <Rectangle Fill="#FF102F66" Stroke="#FF00498E" Margin="445,0,0,0" RadiusX="14.3" RadiusY="14.3" StrokeThickness="1.4"/>
+        <Grid HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="455" Margin="445,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="16*"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="16*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="27*"/>
+                <ColumnDefinition Width="47*"/>
+                <ColumnDefinition Width="17*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="label" Content="Inicio de Sesion" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="40" Margin="10,30,45,10" FontFamily="Segoe UI Semibold" FontSize="24" Foreground="White"/>
+        </Grid>
     </Grid>
 </Page>
