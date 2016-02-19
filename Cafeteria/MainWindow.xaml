@@ -17,7 +17,32 @@
         <Rectangle Fill="#FFF2F4F6" HorizontalAlignment="Left" Height="55" Margin="0,25,0,0" Grid.Row="2" Stroke="#FFF2F4F6" VerticalAlignment="Top" Width="946"/>
         <Image  Panel.ZIndex="5"  HorizontalAlignment="Left" Height="60" Margin="806,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="121" Source="Images/LogoAdmin.png"/>
         <Frame Content="Frame" HorizontalAlignment="Left" Height="349" Margin="10,12,0,0" Grid.Row="1" VerticalAlignment="Top" Width="917"/>
-       
+        <!--<TextBlock  Panel.ZIndex="32" Grid.Row="2" Name="lblStyled" Text="Hello, styled world!" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="28" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.800" Storyboard.TargetProperty="FontSize" To="18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>-->
         <Button 
             Name="BtnSalir" 
             Content="Salir" 
@@ -30,7 +55,6 @@
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Background" Value="#FFFDB930" />
                     <Setter Property="Foreground" Value="#FF102E65" />
-                    <Setter Property="BorderBrush" Value="Blue" />
                     <Setter Property="Padding" Value="-4" />
                     <Setter Property="Margin" Value="10,35,0,0" />
                     <Setter Property="Template">
@@ -45,11 +69,11 @@
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="#FFF5AA12"/>
-                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Foreground" Value="#FF102E65"/>
                         </Trigger>
-                        <Trigger Property="I" Value="True">
-                            <Setter Property="Background" Value="#FFF5AA12"/>
-                            <Setter Property="Foreground" Value="Black"/>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#FF123573"/>
+                            <Setter Property="Foreground" Value="White"/>                            
                         </Trigger>
                     </Style.Triggers>
                 </Style>
