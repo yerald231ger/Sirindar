@@ -8,6 +8,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SirindarApi.Providers;
+using CNSirindar.Models;
+using CNSirindar;
 
 namespace SirindarApi
 {
@@ -17,7 +19,7 @@ namespace SirindarApi
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            UserManagerFactory = () => new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new SirindarDbContext()));
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -31,7 +33,7 @@ namespace SirindarApi
 
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
-        public static Func<UserManager<IdentityUser>> UserManagerFactory { get; set; }
+        public static Func<UserManager<ApplicationUser>> UserManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 
