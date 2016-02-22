@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNSirindar", "CNSirindar\CN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafeteria", "Cafeteria\Cafeteria.csproj", "{E31CA114-4640-4B77-AB7B-9F8109F36738}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirindarService", "SirindarService\SirindarService.csproj", "{B7CFD1A2-4522-42F8-BE8D-DAC75804888C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirindarApi", "SirindarApi\SirindarApi.csproj", "{AE7548F8-6049-442A-B83B-D9CB0B1102D1}"
 EndProject
 Global
@@ -35,10 +33,6 @@ Global
 		{E31CA114-4640-4B77-AB7B-9F8109F36738}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E31CA114-4640-4B77-AB7B-9F8109F36738}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E31CA114-4640-4B77-AB7B-9F8109F36738}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7CFD1A2-4522-42F8-BE8D-DAC75804888C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7CFD1A2-4522-42F8-BE8D-DAC75804888C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7CFD1A2-4522-42F8-BE8D-DAC75804888C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7CFD1A2-4522-42F8-BE8D-DAC75804888C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE7548F8-6049-442A-B83B-D9CB0B1102D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE7548F8-6049-442A-B83B-D9CB0B1102D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE7548F8-6049-442A-B83B-D9CB0B1102D1}.Release|Any CPU.ActiveCfg = Release|Any CPU

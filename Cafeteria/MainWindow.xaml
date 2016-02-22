@@ -20,7 +20,6 @@
         <Image Panel.ZIndex="3" HorizontalAlignment="Left" Height="100" Margin="853,0,0,0" VerticalAlignment="Top" Width="56" Source="Images/logoFASPYN.png"/>
         <Rectangle Panel.ZIndex="0" Fill="#FFFDB930" HorizontalAlignment="Left" Height="596" Stroke="#FFFDB930" VerticalAlignment="Bottom" Width="954" Grid.RowSpan="3"/>
         <Image Panel.ZIndex="4" HorizontalAlignment="Left" Height="30" Grid.Row="2" VerticalAlignment="Top" Width="954" Source="Images/footer.png" Stretch="Fill"/>
-        <Rectangle Fill="#FFF2F4F6" HorizontalAlignment="Left" Height="55" Margin="-19,138,0,-110" Stroke="#FFF2F4F6" VerticalAlignment="Top" Width="946"/>
         <Image  Panel.ZIndex="5"  HorizontalAlignment="Left" Height="60" Margin="813,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="121" Source="Images/LogoAdmin.png"/>
         <Frame Name="frmA" HorizontalAlignment="Left" Height="349" Margin="25,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="909" Source="/Cafeteria;component/Views/Login.xaml" ContentRendered="frmA_ContentRendered"/>
 
