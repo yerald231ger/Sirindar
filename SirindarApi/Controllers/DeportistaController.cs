@@ -11,47 +11,46 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using CNSirindar.Models;
 using CNSirindar;
-using CNSirindar.Repositories;
 
 namespace SirindarApi.Controllers
 {
-    public class HorariosController : ApiController
+    public class DeportistaController : ApiController
     {
         private SirindarDbContext db = new SirindarDbContext();
 
-        // GET api/Horarios
-        public IQueryable<Horario> GetHorarios()
+        // GET api/Deportista
+        public IQueryable<Deportista> GetDeportistas()
         {
-            return db.Horarios;
+            return db.Deportistas;
         }
 
-        // GET api/Horarios/5
-        [ResponseType(typeof(Horario))]
-        public async Task<IHttpActionResult> GetHorario(int id)
+        // GET api/Deportista/5
+        [ResponseType(typeof(Deportista))]
+        public async Task<IHttpActionResult> GetDeportista(int id)
         {
-            Horario horario = await db.Horarios.FindAsync(id);
-            if (horario == null)
+            Deportista deportista = await db.Deportistas.FindAsync(id);
+            if (deportista == null)
             {
                 return NotFound();
             }
 
-            return Ok(horario);
+            return Ok(deportista);
         }
 
-        // PUT api/Horarios/5
-        public async Task<IHttpActionResult> PutHorario(int id, Horario horario)
+        // PUT api/Deportista/5
+        public async Task<IHttpActionResult> PutDeportista(int id, Deportista deportista)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != horario.HorarioId)
+            if (id != deportista.DeportistaId)
             {
                 return BadRequest();
             }
 
-            db.Entry(horario).State = EntityState.Modified;
+            db.Entry(deportista).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +58,7 @@ namespace SirindarApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!HorarioExists(id))
+                if (!DeportistaExists(id))
                 {
                     return NotFound();
                 }
@@ -72,35 +71,35 @@ namespace SirindarApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST api/Horarios
-        [ResponseType(typeof(Horario))]
-        public async Task<IHttpActionResult> PostHorario(Horario horario)
+        // POST api/Deportista
+        [ResponseType(typeof(Deportista))]
+        public async Task<IHttpActionResult> PostDeportista(Deportista deportista)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Horarios.Add(horario);
+            db.Deportistas.Add(deportista);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = horario.HorarioId }, horario);
+            return CreatedAtRoute("DefaultApi", new { id = deportista.DeportistaId }, deportista);
         }
 
-        // DELETE api/Horarios/5
-        [ResponseType(typeof(Horario))]
-        public async Task<IHttpActionResult> DeleteHorario(int id)
+        // DELETE api/Deportista/5
+        [ResponseType(typeof(Deportista))]
+        public async Task<IHttpActionResult> DeleteDeportista(int id)
         {
-            Horario horario = await db.Horarios.FindAsync(id);
-            if (horario == null)
+            Deportista deportista = await db.Deportistas.FindAsync(id);
+            if (deportista == null)
             {
                 return NotFound();
             }
 
-            db.Horarios.Remove(horario);
+            db.Deportistas.Remove(deportista);
             await db.SaveChangesAsync();
 
-            return Ok(horario);
+            return Ok(deportista);
         }
 
         protected override void Dispose(bool disposing)
@@ -112,9 +111,9 @@ namespace SirindarApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool HorarioExists(int id)
+        private bool DeportistaExists(int id)
         {
-            return db.Horarios.Count(e => e.HorarioId == id) > 0;
+            return db.Deportistas.Count(e => e.DeportistaId == id) > 0;
         }
     }
 }
