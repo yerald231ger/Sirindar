@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cafeteria;
 
 namespace Cafeteria.Views
 {
@@ -19,10 +20,25 @@ namespace Cafeteria.Views
     /// Lógica de interacción para Login.xaml
     /// </summary>
     public partial class Login : Page
-    {
+    {   
         public Login()
         {
             InitializeComponent();
         }
+
+        public async void GetLogin(object sender, RoutedEventArgs e)
+        {
+            pbrLogin.Visibility = Visibility.Visible;
+             var result = await Task.Run(async () =>
+            {
+                await Task.Delay(2000);
+                return true;
+            });
+            var d = 33;
+            if (result) 
+                this.NavigationService.Navigate(new Home());
+            pbrLogin.Visibility = Visibility.Hidden;
+        }
+        
     }
 }

@@ -5,10 +5,69 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Cafeteria.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="340" d:DesignWidth="900"
       Title="Home">
 
     <Grid>
-        
+        <Rectangle Fill="#FF102F66" Stroke="#FF00498E" Margin="445,0,0,0" RadiusX="14.3" RadiusY="14.3" StrokeThickness="1.4"/>
+        <Grid HorizontalAlignment="Left" Height="70" Margin="445,270,0,0" VerticalAlignment="Top" Width="455">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="57*"/>
+                <ColumnDefinition Width="17*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="label" Content="Bienvenido" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="265" Height="50" FontFamily="Segoe UI Semibold" FontSize="29.333" HorizontalContentAlignment="Center" Foreground="White"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="195" Margin="445,75,0,0" VerticalAlignment="Top" Width="455">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="84*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Height="35" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="375">
+                <Label x:Name="lblA" Content="Nombre:" Margin="0,0,0,0" Height="35" FontSize="18.667" Foreground="White" FontFamily="Segoe UI Light"/>
+                <Label x:Name="lblNombre" Content="Juan Perez" Width="293" Foreground="White" FontSize="18.667" FontFamily="Segoe UI Light"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Height="35" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="375">
+                <Label x:Name="lblB" Content="Dependencia:" Height="35" Margin="0,0,0,0" FontSize="18.667" FontFamily="Segoe UI Light" Foreground="White"/>
+                <Label x:Name="lblDependencia" Content="Facultad de Medicina" Width="253" FontSize="18.667" FontFamily="Segoe UI Light" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="75" Margin="445,0,0,0" Width="455" VerticalAlignment="Top">
+            <StackPanel HorizontalAlignment="Center" Height="55" Margin="10,10,0,0" VerticalAlignment="Center" Width="295" Orientation="Horizontal">
+                <Label Name="lblMatricula" Content="Matricula" Width="120" Foreground="White" FontSize="24" FontFamily="Segoe UI Semilight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="txbScanner" MaxLength="10" TextWrapping="Wrap" Width="170" Margin="0,10,0,0" Height="35" VerticalAlignment="Top" FontSize="18.667" FontFamily="Segoe UI Semibold" TextAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="445">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="18*"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="lblheader" Content="Pase su credencial por el lector y recoja su ticket." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="55" Width="425" FontFamily="Segoe UI Semilight" Foreground="#FF102F66" FontSize="18.667" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+            <Label x:Name="lblFooter" Content="Cualquier dudo o comentario favor de contactar al &#xD;&#xA;encargadi de la cafeteria." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="70" Width="425" FontFamily="Segoe UI Semilight" Foreground="#FF102F66" FontSize="14.667" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="5" VerticalContentAlignment="Bottom"/>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="42" Margin="10,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="425">
+                <Label x:Name="lblDesayuno" Content="Desayuno" Width="100" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black"/>
+                <Label x:Name="lblDesayunoHorario" Content="Horario" Width="325" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" HorizontalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="42" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="425">
+                <Label x:Name="lblComida" Content="Comida" Width="100" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black"/>
+                <Label x:Name="lblComidaHorario" Content="Horario" Width="325" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" HorizontalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="42" Margin="10,0,0,0" Grid.Row="3" VerticalAlignment="Top" Width="425">
+                <Label x:Name="lblCena" Content="Cena" Width="100" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black"/>
+                <Label x:Name="lblCenaHorario" Content="Horario" Width="325" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" HorizontalContentAlignment="Center"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

@@ -23,6 +23,7 @@ namespace Cafeteria.Views
         public Home()
         {
             InitializeComponent();
+            txbScanner.Focus();
         }
     }
 }

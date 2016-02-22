@@ -27,6 +27,6 @@
                     <Setter Property="Foreground" Value="White"/>
                 </Trigger>
             </Style.Triggers>
-        </Style>
+        </Style>        
     </Application.Resources>
 </Application>
