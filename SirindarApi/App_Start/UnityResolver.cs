@@ -31,7 +31,7 @@ namespace SirindarApi.App_Start
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
-        {
+        { 
             try
             {
                 return container.ResolveAll(serviceType);
