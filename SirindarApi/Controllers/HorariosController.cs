@@ -18,6 +18,12 @@ namespace SirindarApi.Controllers
     public class HorariosController : ApiController
     {
         private SirindarDbContext db = new SirindarDbContext();
+        private IRepository<Horario, int> horarioR;
+
+        public HorariosController(IRepository<Horario, int> horarioR)
+        {
+            this.horarioR = horarioR;
+        }
 
         // GET api/Horarios
         public IQueryable<Horario> GetHorarios()

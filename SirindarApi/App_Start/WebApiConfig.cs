@@ -5,6 +5,10 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Practices.Unity;
+using CNSirindar.Repositories;
+using CNSirindar.Models;
+using SirindarApi.App_Start;
 
 namespace SirindarApi
 {
@@ -12,6 +16,9 @@ namespace SirindarApi
     {
         public static void Register(HttpConfiguration config)
         {
+            var container = new UnityContainer();
+            container.RegisterType<IRepository<Horario, int>, HorarioRepository>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
             // Configuración y servicios de Web API
             // Configure Web API para usar solo la autenticación de token de portador.
             config.SuppressDefaultHostAuthentication();
