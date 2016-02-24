@@ -16,6 +16,8 @@ using SirindarApiService.AppModels;
 using SirindarApiService;
 using Cafeteria.Cloak;
 using CNSirindar.Models;
+using System.Configuration;
+using System;
 
 namespace Cafeteria.Views
 {
@@ -25,21 +27,36 @@ namespace Cafeteria.Views
     public partial class Home : Page
     {
         private Reloj reloj;
-        private SirindarApi api;
+        private ISirindarApi api;
         private readonly List<Horario> horarios;
 
-        public Home(SirindarApi api, Reloj reloj)
+        private Home(Reloj reloj)
         {
-            this.api = api;
+            this.api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
             this.reloj = reloj;
         }
 
-        public Home() : this(SirindarApi.Instance, Reloj.Instance)
+        public Home() : this(Reloj.Instance)
         {
             InitializeComponent();
             txbScanner.Focus();
-            stkpHorarios.DataContext = horarios;
             reloj.EnCambiaMinuto += reloj_EnCambiaMinuto;
+            var task = api.Horarios();
+
+            task.ContinueWith(t =>
+            {
+                switch (t.Status)
+                {
+                    case TaskStatus.Faulted:
+                        stkpHorarios.DataContext = null;
+                        break;
+                    case TaskStatus.RanToCompletion:
+                        stkpHorarios.DataContext = t.Result;
+                        break;
+                    default:
+                        break;
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         void reloj_EnCambiaMinuto(object sender, CambiaMinutoEventArgs e)

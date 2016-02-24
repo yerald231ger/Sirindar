@@ -50,7 +50,8 @@
     <Compile Include="AppModels\TokenFailModel.cs" />
     <Compile Include="AppModels\TokenModel.cs" />
     <Compile Include="ISirindarApi.cs" />
-    <Compile Include="SirindarApi.cs" />
+    <Compile Include="Resolver.cs" />
+    <Compile Include="SirindarApiServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UriManager.cs" />
   </ItemGroup>

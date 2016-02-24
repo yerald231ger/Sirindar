@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using Cafeteria;
 using Cafeteria.Cloak;
+using SirindarApiService;
 
 namespace Cafeteria
 {
@@ -29,9 +30,9 @@ namespace Cafeteria
     public partial class MainWindow : Window
     {
         public readonly static Cloak.Reloj reloj = Cloak.Reloj.Instance;
-
+      
         public MainWindow()
-        {            
+        {
             InitializeComponent();
             reloj.Start();
             lblHora.Content = reloj.Hora;

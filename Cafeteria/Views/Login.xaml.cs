@@ -16,6 +16,7 @@ using System.Net.Http;
 using Cafeteria;
 using SirindarApiService;
 using SirindarApiService.AppModels;
+using System.Configuration;
 
 namespace Cafeteria.Views
 {
@@ -24,15 +25,11 @@ namespace Cafeteria.Views
     /// </summary>
     public partial class Login : Page
     {
-        private SirindarApi api;
-
-        private Login(SirindarApi api)
+        private ISirindarApi api;
+        
+        public Login()
         {
-            this.api = api;
-        }
-
-        public Login() : this(SirindarApi.Instance)
-        {
+            this.api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
             InitializeComponent();
         }
 
