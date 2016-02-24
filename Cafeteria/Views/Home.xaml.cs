@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Cafeteria.AppModels;
-using Cafeteria.App_Start;
+using SirindarApiService.AppModels;
+using SirindarApiService;
 using Cafeteria.Cloak;
 using CNSirindar.Models;
 

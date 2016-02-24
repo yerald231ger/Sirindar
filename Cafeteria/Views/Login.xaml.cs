@@ -14,8 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Cafeteria;
-using Cafeteria.App_Start;
-using Cafeteria.AppModels;
+using SirindarApiService;
+using SirindarApiService.AppModels;
 
 namespace Cafeteria.Views
 {
