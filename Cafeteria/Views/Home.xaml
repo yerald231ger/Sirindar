@@ -47,16 +47,27 @@
         </Grid>
         <Grid HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="445">
             <Grid.RowDefinitions>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="18*"/>
+                <RowDefinition Height="79*"/>
+                <RowDefinition Height="167*"/>
+                <RowDefinition Height="94*"/>
             </Grid.RowDefinitions>
             <Label x:Name="lblheader" Content="Pase su credencial por el lector y recoja su ticket." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="55" Width="425" FontFamily="Segoe UI Semilight" Foreground="#FF102F66" FontSize="18.667" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-            <Label x:Name="lblFooter" Content="Cualquier dudo o comentario favor de contactar al &#xD;&#xA;encargadi de la cafeteria." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="70" Width="425" FontFamily="Segoe UI Semilight" Foreground="#FF102F66" FontSize="14.667" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="5" VerticalContentAlignment="Bottom"/>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="42" Margin="10,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="425">
+            <Label x:Name="lblFooter" Content="Cualquier dudo o comentario favor de contactar al &#xD;&#xA;encargadi de la cafeteria." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="70" Width="425" FontFamily="Segoe UI Semilight" Foreground="#FF102F66" FontSize="14.667" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="2" VerticalContentAlignment="Bottom"/>
+            <StackPanel x:Name="stkpHorarios" HorizontalAlignment="Left" Height="147" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="425">
+                <ListBox Height="147" Width="425" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Nombre}"></TextBlock>
+                                <TextBlock Text="{Binding Path=Inicia}"></TextBlock>
+                                <TextBlock Text="{Binding Path=Finaliza}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+
+            <!--<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="42" Margin="10,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="425">
                 <Label x:Name="lblDesayuno" Content="Desayuno" Width="100" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black"/>
                 <Label x:Name="lblDesayunoHorario" Content="Horario" Width="325" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" HorizontalContentAlignment="Center"/>
             </StackPanel>
@@ -67,7 +78,7 @@
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="42" Margin="10,0,0,0" Grid.Row="3" VerticalAlignment="Top" Width="425">
                 <Label x:Name="lblCena" Content="Cena" Width="100" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black"/>
                 <Label x:Name="lblCenaHorario" Content="Horario" Width="325" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" HorizontalContentAlignment="Center"/>
-            </StackPanel>
+            </StackPanel>-->
         </Grid>
     </Grid>
 </Page>

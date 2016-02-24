@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Threading;
 
-namespace Cafeteria.Reloj
+namespace Cafeteria.Cloak
 {
     public class Reloj
     {

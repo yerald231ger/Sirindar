@@ -19,7 +19,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using Cafeteria;
-using Cafeteria.Reloj;
+using Cafeteria.Cloak;
 
 namespace Cafeteria
 {
@@ -28,7 +28,7 @@ namespace Cafeteria
     /// </summary>
     public partial class MainWindow : Window
     {
-        public readonly static Reloj.Reloj reloj = Reloj.Reloj.Instance;
+        public readonly static Cloak.Reloj reloj = Cloak.Reloj.Instance;
 
         public MainWindow()
         {            
@@ -43,17 +43,17 @@ namespace Cafeteria
             reloj.EnCambiaSegundo += Reloj_EnCambiaSegundo;
         }
 
-        private void Reloj_EnCambiaHora(object sender, Reloj.CambiaHoraEventArgs e)
+        private void Reloj_EnCambiaHora(object sender, Cloak.CambiaHoraEventArgs e)
         {           
             lblHora.Content = e.Hora;
         }
 
-        private void Reloj_EnCambiaMinuto(object sender, Reloj.CambiaMinutoEventArgs e)
+        private void Reloj_EnCambiaMinuto(object sender, Cloak.CambiaMinutoEventArgs e)
         {
             lblMinutos.Content = e.Minuto;
         }
 
-        private void Reloj_EnCambiaSegundo(object sender, Reloj.CambiaSegundoEventArgs e)
+        private void Reloj_EnCambiaSegundo(object sender, Cloak.CambiaSegundoEventArgs e)
         {
             lblSegundos.Content = e.Segundo;
         }

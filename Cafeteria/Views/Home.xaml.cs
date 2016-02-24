@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Cafeteria.AppModels;
 using Cafeteria.App_Start;
+using Cafeteria.Cloak;
+using CNSirindar.Models;
 
 namespace Cafeteria.Views
 {
@@ -22,17 +24,27 @@ namespace Cafeteria.Views
     /// </summary>
     public partial class Home : Page
     {
+        private Reloj reloj;
         private SirindarApi api;
+        private readonly List<Horario> horarios;
 
-        public Home(SirindarApi api)
+        public Home(SirindarApi api, Reloj reloj)
         {
             this.api = api;
+            this.reloj = reloj;
         }
 
-        public Home() : this(SirindarApi.Instance)
+        public Home() : this(SirindarApi.Instance, Reloj.Instance)
         {
             InitializeComponent();
             txbScanner.Focus();
+            stkpHorarios.DataContext = horarios;
+            reloj.EnCambiaMinuto += reloj_EnCambiaMinuto;
+        }
+
+        void reloj_EnCambiaMinuto(object sender, CambiaMinutoEventArgs e)
+        {
+            
         }
     }
 }
