@@ -15,8 +15,8 @@ namespace Cafeteria.App_Start
             var keyIndex = getKey(appConfigKey);
             if (keyIndex == -1)
                 throw new UriManagerException("No se encontro '" + appConfigKey + "' en 'appSettings'");
-            var uri = new Uri("");
-            if (Uri.TryCreate(getUri(keyIndex), UriKind.Absolute, out uri))
+            Uri uri;
+            if (!Uri.TryCreate(getUri(keyIndex), UriKind.Absolute, out uri))
                 throw new UriManagerException("Se encontro '" + appConfigKey + "' en 'appSettings' pero el value no es una Uri valida");
             return uri;
         }
@@ -35,7 +35,7 @@ namespace Cafeteria.App_Start
 
         private static string getUri(int keyindex) 
         {
-            return ConfigurationManager.AppSettings[0];
+            return ConfigurationManager.AppSettings[keyindex];
         }
     }
 

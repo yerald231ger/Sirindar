@@ -63,7 +63,7 @@
                 <TextBox Name="tbxContraseña" Height="40" TextWrapping="Wrap" Width="216" FontSize="24" FontFamily="Segoe UI Semibold" />
             </StackPanel>
             <ProgressBar Name="pbrLogin" Visibility="Hidden" IsIndeterminate="True" HorizontalAlignment="Left" Height="10" Margin="10,15,0,0" VerticalAlignment="Top" Width="375" Grid.Column="1"></ProgressBar>
-            <Label x:Name="lblLoginFail" Content="UserName Password Invalid" HorizontalAlignment="Left" Height="35" Margin="10,0,0,0" VerticalAlignment="Top" Width="375" Grid.Column="1" Grid.Row="3" Foreground="#FFE42525" HorizontalContentAlignment="Center" Padding="5,5,5,0" FontSize="16"/>
+            <Label x:Name="lblLoginFail" Visibility="Hidden" HorizontalAlignment="Left" Height="35" Margin="10,0,0,0" VerticalAlignment="Top" Width="375" Grid.Column="1" Grid.Row="3" Foreground="#FFE42525" HorizontalContentAlignment="Center" Padding="5,5,5,0" FontSize="16"/>
         </Grid>
     </Grid>
 </Page>

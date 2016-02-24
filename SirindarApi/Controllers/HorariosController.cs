@@ -6,11 +6,10 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using CNSirindar.Models;
 using CNSirindar;
+using CNSirindar.Models;
 using CNSirindar.Repositories;
 
 namespace SirindarApi.Controllers
@@ -44,6 +43,7 @@ namespace SirindarApi.Controllers
             return Ok(horario);
         }
         
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -52,6 +52,6 @@ namespace SirindarApi.Controllers
             }
             base.Dispose(disposing);
         }
-
+        
     }
 }

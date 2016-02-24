@@ -24,17 +24,29 @@ namespace Cafeteria.Views
     /// </summary>
     public partial class Login : Page
     {
-      
+        private SirindarApi api;
 
-        public Login() 
+        private Login(SirindarApi api)
+        {
+            this.api = api;
+        }
+
+        public Login() : this(SirindarApi.Instance)
         {
             InitializeComponent();
         }
 
-        public void GetLogin(object sender, RoutedEventArgs e)
-        {            
+        public async void GetLogin(object sender, RoutedEventArgs e)
+        {
             pbrLogin.Visibility = Visibility.Visible;
-            var d  = App_Start.SirindarApi.Client;
+            var result = await api.LogIn(new LoginModel(tbxUserName.Text, tbxContraseña.Text));
+            if (result)
+            {
+                NavigationService.Navigate(new Home());
+            }
+
+            lblLoginFail.Visibility = Visibility.Visible;
+            lblLoginFail.Content = "Usuario o contraseña incorrectos";
             pbrLogin.Visibility = Visibility.Hidden;
         }
 
