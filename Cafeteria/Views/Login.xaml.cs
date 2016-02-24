@@ -38,16 +38,27 @@ namespace Cafeteria.Views
 
         public async void GetLogin(object sender, RoutedEventArgs e)
         {
+            btnLogIn.IsEnabled = false;
             pbrLogin.Visibility = Visibility.Visible;
-            var result = await api.LogIn(new LoginModel(tbxUserName.Text, tbxContraseña.Text));
-            if (result)
-            {
-                NavigationService.Navigate(new Home());
-            }
 
-            lblLoginFail.Visibility = Visibility.Visible;
-            lblLoginFail.Content = "Usuario o contraseña incorrectos";
-            pbrLogin.Visibility = Visibility.Hidden;
+            try
+            {
+                var result = await api.LogIn(new LoginModel(tbxUserName.Text, tbxContraseña.Text));
+                if (result)
+                    NavigationService.Navigate(new Home());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                btnLogIn.IsEnabled = true;
+                lblLoginFail.Content = "Usuario o contraseña invalidos";
+                pbrLogin.Visibility = Visibility.Hidden;
+                lblLoginFail.Visibility = Visibility.Visible;
+            }
+                        
         }
 
     }

@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using Cafeteria;
+using Cafeteria.Reloj;
 
 namespace Cafeteria
 {
@@ -27,18 +28,19 @@ namespace Cafeteria
     /// </summary>
     public partial class MainWindow : Window
     {
-        public readonly static Reloj.Reloj Reloj = new Reloj.Reloj(autoStart: true);
+        public readonly static Reloj.Reloj reloj = Reloj.Reloj.Instance;
 
         public MainWindow()
         {            
             InitializeComponent();
-            lblHora.Content = Reloj.Hora;
+            reloj.Start();
+            lblHora.Content = reloj.Hora;
             lblMinutos.Content = string.Format("{0:mm}", DateTime.Now);
-            lblSegundos.Content = Reloj.Segundo;
+            lblSegundos.Content = reloj.Segundo;
 
-            Reloj.EnCambiaHora += Reloj_EnCambiaHora;
-            Reloj.EnCambiaMinuto += Reloj_EnCambiaMinuto;
-            Reloj.EnCambiaSegundo += Reloj_EnCambiaSegundo;
+            reloj.EnCambiaHora += Reloj_EnCambiaHora;
+            reloj.EnCambiaMinuto += Reloj_EnCambiaMinuto;
+            reloj.EnCambiaSegundo += Reloj_EnCambiaSegundo;
         }
 
         private void Reloj_EnCambiaHora(object sender, Reloj.CambiaHoraEventArgs e)

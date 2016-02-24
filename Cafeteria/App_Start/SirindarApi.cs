@@ -36,7 +36,6 @@ namespace Cafeteria.App_Start
                 new KeyValuePair<string, string>("username", model.username),
                 new KeyValuePair<string, string>("password", model.password)
             });
-
            
                 var result = await Client.PostAsync("token", content);
             if (result.IsSuccessStatusCode)
@@ -44,8 +43,7 @@ namespace Cafeteria.App_Start
                 SetBearerToken((await result.Content.ReadAsAsync<TokenModel>()).access_token);
                 return true;
             }
-            return false;
-           
+            return false;          
 
         }
 

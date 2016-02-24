@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Cafeteria.AppModels;
+using Cafeteria.App_Start;
 
 namespace Cafeteria.Views
 {
@@ -21,7 +22,14 @@ namespace Cafeteria.Views
     /// </summary>
     public partial class Home : Page
     {
-        public Home()
+        private SirindarApi api;
+
+        public Home(SirindarApi api)
+        {
+            this.api = api;
+        }
+
+        public Home() : this(SirindarApi.Instance)
         {
             InitializeComponent();
             txbScanner.Focus();

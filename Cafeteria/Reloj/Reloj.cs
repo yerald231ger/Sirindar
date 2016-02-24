@@ -21,7 +21,7 @@ namespace Cafeteria.Reloj
                 return hora;
             }
 
-            set
+            private set
             {
                 if (EnCambiaHora != null)
                     EnCambiaHora(this, new CambiaHoraEventArgs(value.ToString()));
@@ -35,7 +35,7 @@ namespace Cafeteria.Reloj
             {
                 return minuto;
             }
-            set
+            private set
             {
                 if (EnCambiaMinuto != null)
                     EnCambiaMinuto(this, new CambiaMinutoEventArgs(string.Format("{0:mm}", DateTime.Now)));
@@ -49,7 +49,7 @@ namespace Cafeteria.Reloj
             {
                 return segundo;
             }
-            set
+            private set
             {
                 if (EnCambiaSegundo != null)
                     EnCambiaSegundo(this, new CambiaSegundoEventArgs(string.Format("{0:ss}", DateTime.Now)));
@@ -57,20 +57,22 @@ namespace Cafeteria.Reloj
             }
         }
 
-
-
         public event CambiaHora EnCambiaHora;
         public event CambiaMinuto EnCambiaMinuto;
         public event CambiaSegundo EnCambiaSegundo;
 
         private readonly static DispatcherTimer timer = new DispatcherTimer();
 
-        public Reloj(bool autoStart = false)
+        private static readonly Lazy<Reloj> instance =
+           new Lazy<Reloj>(() => new Reloj());
+
+        public static Reloj Instance { get { return instance.Value; } }
+
+        private Reloj()
         {
             hora = DateTime.Now.Hour;
             minuto = DateTime.Now.Minute;
             segundo = DateTime.Now.Second;
-            if (autoStart) Start();
             timer.Tick += Timer_Tick;
         }
 
