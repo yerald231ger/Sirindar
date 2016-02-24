@@ -12,7 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.Http;
 using Cafeteria;
+using Cafeteria.App_Start;
+using Cafeteria.AppModels;
 
 namespace Cafeteria.Views
 {
@@ -20,25 +23,20 @@ namespace Cafeteria.Views
     /// Lógica de interacción para Login.xaml
     /// </summary>
     public partial class Login : Page
-    {   
-        public Login()
+    {
+      
+
+        public Login() 
         {
             InitializeComponent();
         }
 
-        public async void GetLogin(object sender, RoutedEventArgs e)
-        {
+        public void GetLogin(object sender, RoutedEventArgs e)
+        {            
             pbrLogin.Visibility = Visibility.Visible;
-             var result = await Task.Run(async () =>
-            {
-                await Task.Delay(2000);
-                return true;
-            });
-            var d = 33;
-            if (result) 
-                this.NavigationService.Navigate(new Home());
+            var d  = App_Start.SirindarApi.Client;
             pbrLogin.Visibility = Visibility.Hidden;
         }
-        
+
     }
 }

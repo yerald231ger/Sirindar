@@ -18,6 +18,7 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
+using Cafeteria;
 
 namespace Cafeteria
 {
@@ -29,8 +30,7 @@ namespace Cafeteria
         public readonly static Reloj.Reloj Reloj = new Reloj.Reloj(autoStart: true);
 
         public MainWindow()
-        {
-            
+        {            
             InitializeComponent();
             lblHora.Content = Reloj.Hora;
             lblMinutos.Content = string.Format("{0:mm}", DateTime.Now);
