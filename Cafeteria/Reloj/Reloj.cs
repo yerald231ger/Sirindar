@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Threading;
+using CNSirindar.Models;
 
 namespace Cafeteria.Cloak
 {
@@ -13,6 +14,8 @@ namespace Cafeteria.Cloak
         private int hora;
         private int minuto;
         private int segundo;
+        private ComidasDia horario;
+        private List<Horario> horarios;
 
         public int Hora
         {
@@ -57,9 +60,24 @@ namespace Cafeteria.Cloak
             }
         }
 
+        public ComidasDia Horario 
+        {
+            get 
+            {
+                return horario; 
+            }
+            set 
+            {
+                if (EnCambiaHorario != null)
+                    EnCambiaHorario(this, new CambiaHorarioEventArgs(value));
+                horario = value;
+            }
+        }
+
         public event CambiaHora EnCambiaHora;
         public event CambiaMinuto EnCambiaMinuto;
         public event CambiaSegundo EnCambiaSegundo;
+        public event CambiaHorario EnCambiaHorario;
 
         private readonly static DispatcherTimer timer = new DispatcherTimer();
 
@@ -86,6 +104,11 @@ namespace Cafeteria.Cloak
             timer.Stop();
         }
 
+        public void RegisterHorarios(IEnumerable<Horario> horarios) 
+        {
+            this.horarios = horarios.ToList();
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             var time = DateTime.Now;
@@ -97,6 +120,12 @@ namespace Cafeteria.Cloak
 
             if (time.Minute != minuto)
                 Minuto = time.Minute;
+
+            if (horarios != null) 
+            {
+                var timeNow = DateTime.Now.TimeOfDay;
+                horarios.Where(h => h.Inicia >= timeNow);
+            }
         }
     }
 
@@ -133,5 +162,16 @@ namespace Cafeteria.Cloak
             Segundo = segundo;
         }
         public string Segundo { get; set; }
+    }
+
+    public delegate void CambiaHorario(object sender, CambiaHorarioEventArgs e);
+
+    public class CambiaHorarioEventArgs
+    {
+        public CambiaHorarioEventArgs(ComidasDia horario)
+        {
+            Horario = horario;
+        }
+        public ComidasDia Horario { get; set; }
     }
 }

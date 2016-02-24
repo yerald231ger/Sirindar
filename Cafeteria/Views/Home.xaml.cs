@@ -28,7 +28,8 @@ namespace Cafeteria.Views
     {
         private Reloj reloj;
         private ISirindarApi api;
-        private readonly List<Horario> horarios;
+        private List<Horario> horarios;
+        private ComidasDia horario;
 
         private Home(Reloj reloj)
         {
@@ -40,7 +41,7 @@ namespace Cafeteria.Views
         {
             InitializeComponent();
             txbScanner.Focus();
-            reloj.EnCambiaMinuto += reloj_EnCambiaMinuto;
+            reloj.EnCambiaHorario += reloj_EnCambiaComida;
             var task = api.Horarios();
 
             task.ContinueWith(t =>
@@ -51,7 +52,8 @@ namespace Cafeteria.Views
                         stkpHorarios.DataContext = null;
                         break;
                     case TaskStatus.RanToCompletion:
-                        stkpHorarios.DataContext = t.Result;
+                        horarios = t.Result.ToList();
+                        stkpHorarios.DataContext = horarios;
                         break;
                     default:
                         break;
@@ -59,9 +61,23 @@ namespace Cafeteria.Views
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        void reloj_EnCambiaMinuto(object sender, CambiaMinutoEventArgs e)
+        void reloj_EnCambiaComida(object sender, CambiaHorarioEventArgs e)
         {
-            
+            switch (horario)
+            {
+                case ComidasDia.Desayuno:
+                    txbScanner.IsEnabled = true;
+                    break;
+                case ComidasDia.Comida:
+                    txbScanner.IsEnabled = true;
+                    break;
+                case ComidasDia.Cena:
+                    txbScanner.IsEnabled = true;
+                    break;
+                default:
+                    txbScanner.IsEnabled = false;
+                    break;
+            }
         }
     }
 }

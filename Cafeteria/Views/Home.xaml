@@ -54,14 +54,14 @@
             <Label x:Name="lblheader" Content="Pase su credencial por el lector y recoja su ticket." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="55" Width="425" FontFamily="Segoe UI Semilight" Foreground="#FF102F66" FontSize="18.667" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
             <Label x:Name="lblFooter" Content="Cualquier duda o comentario favor de contactar al &#xA;encargadi de la cafeteria." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="70" Width="425" FontFamily="Segoe UI Semilight" Foreground="#FF102F66" FontSize="14.667" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="2" VerticalContentAlignment="Bottom"/>
             <StackPanel x:Name="stkpHorarios" HorizontalAlignment="Left" Height="147" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="425">
-                <ListBox Height="147"  IsEnabled="False" Width="425" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True" Foreground="#FF102F66" Background="{x:Null}" BorderBrush="{x:Null}">
+                <ListBox Height="147" Width="425" IsHitTestVisible="False" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True" Foreground="#FF102F66" Background="{x:Null}" BorderBrush="{x:Null}" SelectedIndex="2">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=Nombre}" Height="35" Width="114" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" VerticalAlignment="Center" HorizontalAlignment="Center"  TextAlignment="Center"></TextBlock>
-                                <TextBlock Text="{Binding Path=Inicia}" Height="35" Width="134" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center"></TextBlock>
-                                <TextBlock x:Name="lblComidaHorario_Copy" Height="35" Text="a" Width="21" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0,0,8,0"  TextAlignment="Center"/>
-                                <TextBlock Text="{Binding Path=Finaliza}" Height="35" Width="136" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" VerticalAlignment="Center" HorizontalAlignment="Center"  TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="{Binding Nombre}" Height="37" Width="114" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,6,0,0" TextAlignment="Center"/>
+                                <TextBlock Text="{Binding Inicia}" Height="37" Width="134" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="0,6,0,0" TextAlignment="Center"/>
+                                <TextBlock x:Name="lblComidaHorario_Copy" Height="37" Text="a" Width="21" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,6,0,0" TextAlignment="Center"/>
+                                <TextBlock Text="{Binding Finaliza}" Height="37" Width="136" Foreground="#FF102F66" FontSize="18.667" FontFamily="Segoe WP Black" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,6,0,0" TextAlignment="Center"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

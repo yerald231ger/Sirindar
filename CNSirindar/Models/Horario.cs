@@ -46,6 +46,7 @@ namespace CNSirindar.Models
     {
         Desayuno,
         Comida,
-        Cena
+        Cena,
+        Ninguna
     }
 }
