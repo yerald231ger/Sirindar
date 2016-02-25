@@ -40,7 +40,7 @@ namespace Cafeteria.Views
 
             try
             {
-                var result = await api.LogIn(new LoginModel(tbxUserName.Text, tbxContraseña.Text));
+                var result = await api.LogIn(new LoginModel(tbxUserName.Text, tbxContraseña.Password));
                 if (result)
                     NavigationService.Navigate(new Home());
             }

@@ -29,11 +29,10 @@ namespace Cafeteria.Views
         private Reloj reloj;
         private ISirindarApi api;
         private List<Horario> horarios;
-        private ComidasDia horario;
 
         private Home(Reloj reloj)
         {
-            this.api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
+            api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
             this.reloj = reloj;
         }
 
@@ -53,7 +52,9 @@ namespace Cafeteria.Views
                         break;
                     case TaskStatus.RanToCompletion:
                         horarios = t.Result.ToList();
+                        reloj.RegisterHorarios(horarios);
                         stkpHorarios.DataContext = horarios;
+                        lbxHorarios.SelectedIndex = -1;
                         break;
                     default:
                         break;
@@ -63,20 +64,19 @@ namespace Cafeteria.Views
 
         void reloj_EnCambiaComida(object sender, CambiaHorarioEventArgs e)
         {
-            switch (horario)
+            lbxHorarios.SelectedIndex = horarios.FindIndex(h => h.Nombre == e.Horario);
+
+            if (e.Horario == ComidasDia.Ninguna)
             {
-                case ComidasDia.Desayuno:
-                    txbScanner.IsEnabled = true;
-                    break;
-                case ComidasDia.Comida:
-                    txbScanner.IsEnabled = true;
-                    break;
-                case ComidasDia.Cena:
-                    txbScanner.IsEnabled = true;
-                    break;
-                default:
-                    txbScanner.IsEnabled = false;
-                    break;
+                txbScanner.IsEnabled = false;
+                txbSinHorario.Visibility = Visibility.Visible;
+                rectSinHorario.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                txbScanner.IsEnabled = true;
+                txbSinHorario.Visibility = Visibility.Collapsed;
+                rectSinHorario.Visibility = Visibility.Collapsed;
             }
         }
     }

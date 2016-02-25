@@ -60,13 +60,13 @@ namespace Cafeteria.Cloak
             }
         }
 
-        public ComidasDia Horario 
+        public ComidasDia Horario
         {
-            get 
+            get
             {
-                return horario; 
+                return horario;
             }
-            set 
+            set
             {
                 if (EnCambiaHorario != null)
                     EnCambiaHorario(this, new CambiaHorarioEventArgs(value));
@@ -91,6 +91,7 @@ namespace Cafeteria.Cloak
             hora = DateTime.Now.Hour;
             minuto = DateTime.Now.Minute;
             segundo = DateTime.Now.Second;
+            horario = ComidasDia.Ninguna;
             timer.Tick += Timer_Tick;
         }
 
@@ -104,9 +105,10 @@ namespace Cafeteria.Cloak
             timer.Stop();
         }
 
-        public void RegisterHorarios(IEnumerable<Horario> horarios) 
+        public void RegisterHorarios(IEnumerable<Horario> horarios)
         {
             this.horarios = horarios.ToList();
+            this.Horario = ComidasDia.Ninguna;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -121,10 +123,35 @@ namespace Cafeteria.Cloak
             if (time.Minute != minuto)
                 Minuto = time.Minute;
 
-            if (horarios != null) 
+            if (horarios != null)
             {
                 var timeNow = DateTime.Now.TimeOfDay;
-                horarios.Where(h => h.Inicia >= timeNow);
+
+                var horario = horarios.Where(h => timeNow >= h.Inicia && timeNow <= h.Finaliza).FirstOrDefault();
+
+                if (horario == null)
+                {
+                    if (Horario != ComidasDia.Ninguna)
+                        Horario = ComidasDia.Ninguna;
+                }
+                else
+                {
+                    if (horario.Nombre != Horario)
+                    {
+                        switch (horario.Nombre)
+                        {
+                            case ComidasDia.Desayuno:
+                                Horario = horario.Nombre;
+                                break;
+                            case ComidasDia.Comida:
+                                Horario = horario.Nombre;
+                                break;
+                            case ComidasDia.Cena:
+                                Horario = horario.Nombre;
+                                break;
+                        }
+                    }
+                }
             }
         }
     }
