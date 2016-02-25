@@ -79,5 +79,13 @@ namespace Cafeteria.Views
                 rectSinHorario.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void txbScanner_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) 
+            {
+                
+            }
+        }
     }
 }

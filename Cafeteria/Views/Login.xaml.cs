@@ -26,14 +26,14 @@ namespace Cafeteria.Views
     public partial class Login : Page
     {
         private ISirindarApi api;
-        
+
         public Login()
         {
             this.api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
             InitializeComponent();
         }
 
-        public async void GetLogin(object sender, RoutedEventArgs e)
+        private async void login()
         {
             btnLogIn.IsEnabled = false;
             pbrLogin.Visibility = Visibility.Visible;
@@ -55,7 +55,18 @@ namespace Cafeteria.Views
                 pbrLogin.Visibility = Visibility.Hidden;
                 lblLoginFail.Visibility = Visibility.Visible;
             }
-                        
+
+        }
+
+        public void GetLogin(object sender, RoutedEventArgs e)
+        {
+            login();
+        }
+
+        private void tbxContraseña_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                login();
         }
 
     }
