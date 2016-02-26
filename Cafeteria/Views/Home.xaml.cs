@@ -12,12 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SirindarApiService.AppModels;
-using SirindarApiService;
+using ServiciosCafeteria.AppModels;
+using ServiciosCafeteria;
 using Cafeteria.Cloak;
 using CNSirindar.Models;
 using System.Configuration;
 using System;
+using ServiciosCafeteria.Interfaces;
 
 namespace Cafeteria.Views
 {
@@ -28,11 +29,13 @@ namespace Cafeteria.Views
     {
         private Reloj reloj;
         private ISirindarApi api;
+        private IImpresora impresora;
         private List<Horario> horarios;
 
         private Home(Reloj reloj)
         {
-            api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
+            api = new ApiResolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
+            impresora = new ImpresoraResolver(ConfigurationManager.AppSettings["IImpresora"]).Impresora;
             this.reloj = reloj;
             MainWindow.Exit = false;
         }

@@ -7,8 +7,8 @@
     <ProjectGuid>{467F7CA3-592C-40AE-A0E1-DAB94AF10CB5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SirindarApiService</RootNamespace>
-    <AssemblyName>SirindarApiService</AssemblyName>
+    <RootNamespace>ServiciosCafeteria</RootNamespace>
+    <AssemblyName>ServiciosCafeteria</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -50,9 +50,11 @@
     <Compile Include="AppModels\LoginModel.cs" />
     <Compile Include="AppModels\TokenFailModel.cs" />
     <Compile Include="AppModels\TokenModel.cs" />
-    <Compile Include="ISirindarApi.cs" />
+    <Compile Include="Interfaces\IImpresora.cs" />
+    <Compile Include="Instancias\ServiciosImpresora.cs" />
+    <Compile Include="Interfaces\ISirindarApi.cs" />
     <Compile Include="Resolver.cs" />
-    <Compile Include="SirindarApiServices.cs" />
+    <Compile Include="Instancias\SirindarApiServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UriManager.cs" />
   </ItemGroup>

@@ -20,7 +20,7 @@ using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using Cafeteria;
 using Cafeteria.Cloak;
-using SirindarApiService;
+using ServiciosCafeteria;
 
 namespace Cafeteria
 {

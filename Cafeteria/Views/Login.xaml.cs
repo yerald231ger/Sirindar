@@ -14,8 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Cafeteria;
-using SirindarApiService;
-using SirindarApiService.AppModels;
+using ServiciosCafeteria;
+using ServiciosCafeteria.Interfaces;
+using ServiciosCafeteria.AppModels;
 using System.Configuration;
 
 namespace Cafeteria.Views
@@ -29,7 +30,7 @@ namespace Cafeteria.Views
 
         public Login()
         {
-            this.api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
+            this.api = new ApiResolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
             InitializeComponent();
             MainWindow.Exit = true;
             tbxUserName.Focus();

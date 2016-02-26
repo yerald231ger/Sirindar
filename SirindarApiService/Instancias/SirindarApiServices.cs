@@ -1,4 +1,4 @@
-﻿using SirindarApiService.AppModels;
+﻿using ServiciosCafeteria.AppModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using CNSirindar.Models;
 using Newtonsoft.Json;
+using ServiciosCafeteria.Interfaces;
 
 
-namespace SirindarApiService
+namespace ServiciosCafeteria.Instancias
 {
     public class SirindarApi : ISirindarApi
     {

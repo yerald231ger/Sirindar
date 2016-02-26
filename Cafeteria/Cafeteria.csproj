@@ -144,9 +144,9 @@
       <Project>{f7b9aefc-af3b-4e65-9caf-bdfdcf33e49c}</Project>
       <Name>CNSirindar</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SirindarApiService\SirindarApiService.csproj">
+    <ProjectReference Include="..\SirindarApiService\ServiciosCafeteria.csproj">
       <Project>{467f7ca3-592c-40ae-a0e1-dab94af10cb5}</Project>
-      <Name>SirindarApiService</Name>
+      <Name>ServiciosCafeteria</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CNSirindar.Models;
-using SirindarApiService.AppModels;
+using ServiciosCafeteria.AppModels;
 
-namespace SirindarApiService
+namespace ServiciosCafeteria.Interfaces
 {
     public interface ISirindarApi
     {

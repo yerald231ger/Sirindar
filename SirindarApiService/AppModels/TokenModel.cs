@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace SirindarApiService.AppModels
+namespace ServiciosCafeteria.AppModels
 {
     sealed internal class TokenModel
     {

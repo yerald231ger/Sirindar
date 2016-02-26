@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SirindarApiService.AppModels
+namespace ServiciosCafeteria.AppModels
 {
     public class LoginModel
     {
