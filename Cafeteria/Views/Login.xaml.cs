@@ -48,7 +48,7 @@ namespace Cafeteria.Views
                     NavigationService.Navigate(new Home());
                 lblLoginFail.Content = "Usuario o contraseña incorrectos";
             }
-            catch (System.Net.Http.HttpRequestException ex)
+            catch (ServiciosCafeteriaException ex)
             {
                 MessageBox.Show(ex.Message + ": " + ex.StackTrace);
                 lblLoginFail.Content = "FUERA DE SERVICIO, Intenta mas tarde";

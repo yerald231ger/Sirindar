@@ -17,7 +17,6 @@ using ServiciosCafeteria;
 using Cafeteria.Cloak;
 using CNSirindar.Models;
 using System.Configuration;
-using System;
 using ServiciosCafeteria.Interfaces;
 
 namespace Cafeteria.Views
@@ -52,6 +51,7 @@ namespace Cafeteria.Views
                 switch (t.Status)
                 {
                     case TaskStatus.Faulted:
+                        setCafeteriaExcpetion(t.Exception.InnerException);
                         stkpHorarios.DataContext = null;
                         break;
                     case TaskStatus.RanToCompletion:
@@ -108,6 +108,8 @@ namespace Cafeteria.Views
                             {
                                 setTextLblDeportista("...", "...");
                                 MessageBox.Show("Imprimiendo Ticket...");
+                                txbScanner.IsEnabled = true;
+                                txbScanner.Focus();
                             }
                             else
                             {
@@ -119,16 +121,21 @@ namespace Cafeteria.Views
                             await setErrorAsistencia("Deportista no encontrado");
                         }
                     }
-                    catch (System.Net.Http.HttpRequestException ex)
+                    catch (ServiciosCafeteriaException ex)
                     {
-                        MessageBox.Show(ex.Message + ": " + ex.StackTrace);
-                        txbErrorAsistencia.Text = "FUERA DE SERVICIO";
-                        rectErrores.Visibility = Visibility.Visible;
-                        txbErrorAsistencia.Visibility = Visibility.Visible;
+                        setCafeteriaExcpetion(ex);
                     }
 
                 }                
             }            
+        }
+
+        private void setCafeteriaExcpetion(Exception ex)
+        {
+            MessageBox.Show(ex.Message + ": " + ex.StackTrace);
+            txbErrorAsistencia.Text = "FUERA DE SERVICIO";
+            rectErrores.Visibility = Visibility.Visible;
+            txbErrorAsistencia.Visibility = Visibility.Visible;        
         }
 
         private async Task setErrorAsistencia(string texto)

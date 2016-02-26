@@ -28,10 +28,10 @@ namespace SirindarApi.Controllers
 
         // POST api/Asistencia
         [ResponseType(typeof(AsistenciaResultado))]
-        public IHttpActionResult PostRegistrarAsistencia(Asistencia asistencia)
+        public IHttpActionResult PostRegistrarAsistencia(RegistrarAsistenciaViewModel asistencia)
         {
             var tiempoAhora = DateTime.Now;
-            if (!ModelState.IsValid || asistencia == null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }

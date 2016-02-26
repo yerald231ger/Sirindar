@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CNSirindar.Models;
 using Newtonsoft.Json;
 using ServiciosCafeteria.Interfaces;
+using System.Net;
 
 
 namespace ServiciosCafeteria.Instancias
@@ -40,54 +41,173 @@ namespace ServiciosCafeteria.Instancias
                 new KeyValuePair<string, string>("password", model.password)
             });
 
-            var result = await Client.PostAsync("token", content);
-            if (result.IsSuccessStatusCode)
+            try
             {
-                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", (await result.Content.ReadAsAsync<TokenModel>()).access_token);
+                var response = await httpClient.PostAsync("token", content);
+
+                TokenModel token;
+
+                httpResult<TokenModel>(response, out token);
+
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.access_token);
                 return true;
             }
-            return false;
+            catch (ServiciosCafeteriaException)
+            {
+                return false;
+            }
+            catch (HttpRequestException e)
+            {
+                throw new ServiciosCafeteriaException(e.InnerException.InnerException.Message);
+            }
         }
 
         public async Task<IEnumerable<Horario>> Horarios()
         {
-            var result = await httpClient.GetStringAsync("api/horarios");
             try
             {
-                var horarios = JsonConvert.DeserializeObject<IEnumerable<Horario>>(result);
+                var response = await httpClient.GetAsync("api/horarios");
+
+                IEnumerable<Horario> horarios;
+
+                httpResult<IEnumerable<Horario>>(response, out horarios);
+
                 return horarios;
             }
-            catch (Exception)
+            catch (HttpRequestException e)
             {
-                return null;
+                throw new ServiciosCafeteriaException(e.InnerException.InnerException.Message);
             }
         }
 
         public async Task<Deportista> GetDeportista(int matriculaId)
         {
-            var result = await httpClient.GetStringAsync("api/deportista/" + matriculaId);
             try
             {
-                var deportista = JsonConvert.DeserializeObject<Deportista>(result);
-                return deportista;
-            }
-            catch (Exception)
-            {
+                var result = await httpClient.GetAsync("api/deportista/" + matriculaId);
+
+                Deportista deportista;
+
+                httpResult<Deportista>(result, out deportista);
+
+                if (deportista != null)
+                    return deportista;
+
                 return null;
+            }
+            catch (HttpRequestException e)
+            {
+                throw new ServiciosCafeteriaException(e.InnerException.InnerException.Message);
             }
         }
 
         public async Task<AsistenciaResultado> RegistrarAsistencia(Asistencia asistencia)
         {
-            var result = await httpClient.PostAsJsonAsync("api/asistencia/", asistencia);
             try
             {
-                var response = await result.Content.ReadAsAsync<AsistenciaResultado>();
-                return response;
+                var response = await httpClient.PostAsJsonAsync("api/asistencia/", asistencia);
+
+                var d  = response.Content.ReadAsStringAsync().Result;
+                AsistenciaResultado asistenciaResultado;
+
+                httpResult<AsistenciaResultado>(response, out asistenciaResultado);
+
+                return asistenciaResultado;
             }
-            catch (Exception)
+            catch (HttpRequestException e)
             {
-                return null;
+                throw new ServiciosCafeteriaException(e.InnerException.InnerException.Message);
+            }
+        }
+
+
+        private void httpResult<T>(HttpResponseMessage response, out T objectToReturn) where T : class
+        {
+            objectToReturn = null;
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.Accepted:
+                    break;
+                case HttpStatusCode.BadGateway:
+                    break;
+                case HttpStatusCode.BadRequest:
+                    throw new ServiciosCafeteriaException("BadRequest");
+                case HttpStatusCode.Conflict:
+                    break;
+                case HttpStatusCode.Continue:
+                    break;
+                case HttpStatusCode.Created:
+                    break;
+                case HttpStatusCode.ExpectationFailed:
+                    break;
+                case HttpStatusCode.Forbidden:
+                    break;
+                case HttpStatusCode.Found:
+                    break;
+                case HttpStatusCode.GatewayTimeout:
+                    break;
+                case HttpStatusCode.Gone:
+                    break;
+                case HttpStatusCode.HttpVersionNotSupported:
+                    break;
+                case HttpStatusCode.InternalServerError:
+                    break;
+                case HttpStatusCode.LengthRequired:
+                    break;
+                case HttpStatusCode.MethodNotAllowed:
+                    break;
+                case HttpStatusCode.Moved:
+                    break;
+                case HttpStatusCode.NoContent:
+                    break;
+                case HttpStatusCode.NonAuthoritativeInformation:
+                    break;
+                case HttpStatusCode.NotAcceptable:
+                    break;
+                case HttpStatusCode.NotFound:
+                    objectToReturn = null;
+                    break;
+                case HttpStatusCode.NotImplemented:
+                    break;
+                case HttpStatusCode.NotModified:
+                    break;
+                case HttpStatusCode.OK:
+                    objectToReturn = response.Content.ReadAsAsync<T>().Result;
+                    break;
+                case HttpStatusCode.PartialContent:
+                    throw new ApplicationException(HttpStatusCode.PartialContent.ToString());
+                case HttpStatusCode.PreconditionFailed:
+                    break;
+                case HttpStatusCode.ProxyAuthenticationRequired:
+                    break;
+                case HttpStatusCode.RedirectKeepVerb:
+                    break;
+                case HttpStatusCode.RedirectMethod:
+                    break;
+                case HttpStatusCode.RequestEntityTooLarge:
+                    break;
+                case HttpStatusCode.RequestTimeout:
+                    break;
+                case HttpStatusCode.RequestUriTooLong:
+                    break;
+                case HttpStatusCode.RequestedRangeNotSatisfiable:
+                    break;
+                case HttpStatusCode.ResetContent:
+                    break;
+                case HttpStatusCode.ServiceUnavailable:
+                    break;
+                case HttpStatusCode.SwitchingProtocols:
+                    break;
+                case HttpStatusCode.Unauthorized:
+                    break;
+                case HttpStatusCode.UnsupportedMediaType:
+                    break;
+                case HttpStatusCode.Unused:
+                    break;
+                case HttpStatusCode.UpgradeRequired:
+                    break;
+                case HttpStatusCode.UseProxy:
+                    break;
             }
         }
     }

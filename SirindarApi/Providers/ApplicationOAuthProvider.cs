@@ -42,6 +42,7 @@ namespace SirindarApi.Providers
                 if (user == null)
                 {
                     context.SetError("invalid_grant", "El usuario o la contraseña son incorrectos.");
+                    context.Response.StatusCode = 200;
                     return;
                 }
 
