@@ -29,8 +29,9 @@ namespace Cafeteria
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static bool Exit = true;
         public readonly static Cloak.Reloj reloj = Cloak.Reloj.Instance;
-      
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,7 +46,7 @@ namespace Cafeteria
         }
 
         private void Reloj_EnCambiaHora(object sender, Cloak.CambiaHoraEventArgs e)
-        {           
+        {
             lblHora.Content = e.Hora;
         }
 
@@ -61,7 +62,10 @@ namespace Cafeteria
 
         private void Salir(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            if (MainWindow.Exit)
+                Application.Current.Shutdown();
+            else
+                frmA.Navigate(new Login());            
         }
 
         private void frmA_ContentRendered(object sender, EventArgs e)

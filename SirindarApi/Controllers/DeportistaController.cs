@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using CNSirindar.Repositories;
 using CNSirindar.Models;
+using SirindarApi.Models.Remotos;
 using CNSirindar;
 
 namespace SirindarApi.Controllers
@@ -21,27 +22,29 @@ namespace SirindarApi.Controllers
         private IRepository<Deportista, int> deportistaR;
         private SirindarDbContext db = new SirindarDbContext();
 
-        public DeportistaController(IRepository<Deportista,int> deportistaR) 
+        public DeportistaController(IRepository<Deportista, int> deportistaR)
         {
             this.deportistaR = deportistaR;
         }
-
-        // GET api/Deportista
-        public IEnumerable<Deportista> GetDeportistas()
-        {
-            return deportistaR.List();
-        }
-
         // GET api/Deportista/5
         [ResponseType(typeof(Deportista))]
         public IHttpActionResult GetDeportista(int id)
         {
-            var deportista = deportistaR.Read(id);
+            var deportista = db.Deportistas.Where(d => d.Matricula == id.ToString())
+                .Select(d => new CafeteriaDeportistaModel
+                {
+                    DeportistaId = d.DeportistaId,
+                    Nombre = d.Nombre + " " + d.Apellidos,
+                    Dependencia = new CafeteriaDepenenciaModel
+                        {
+                            Nombre = d.Dependencia.Nombre
+                        }
+                }).FirstOrDefault();
+
             if (deportista == null)
             {
                 return NotFound();
             }
-
             return Ok(deportista);
         }
 

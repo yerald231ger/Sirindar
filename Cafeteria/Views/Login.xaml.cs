@@ -31,6 +31,8 @@ namespace Cafeteria.Views
         {
             this.api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
             InitializeComponent();
+            MainWindow.Exit = true;
+            tbxUserName.Focus();
         }
 
         private async void login()

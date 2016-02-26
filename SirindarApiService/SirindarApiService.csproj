@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppModels\AsistenciaResultado.cs" />
     <Compile Include="AppModels\LoginModel.cs" />
     <Compile Include="AppModels\TokenFailModel.cs" />
     <Compile Include="AppModels\TokenModel.cs" />

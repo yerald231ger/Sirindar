@@ -18,6 +18,8 @@ namespace SirindarApi
         {
             var container = new UnityContainer();
             container.RegisterType<IRepository<Horario, int>, HorarioRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IRepository<Deportista, int>, DeportistaRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IRepository<Asistencia, int>, AsistenciaRepository>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
             // Configuración y servicios de Web API
             // Configure Web API para usar solo la autenticación de token de portador.

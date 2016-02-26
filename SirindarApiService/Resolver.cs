@@ -19,8 +19,6 @@ namespace SirindarApiService
 
             if (resolvedType.IsEquivalentTo(typeof(SirindarApi)))
                 Api = SirindarApi.Instance;
-            else if (resolvedType.IsEquivalentTo(typeof(SirindarApi2)))
-                Api = new SirindarApi2();
             else
                 Api = null;
         }

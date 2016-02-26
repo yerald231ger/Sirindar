@@ -11,10 +11,8 @@ namespace SirindarApiService
     public interface ISirindarApi
     {
         Task<bool> LogIn(LoginModel model);
-        Task<Deportista> GetDeportista(int Id);
+        Task<Deportista> GetDeportista(int matricula);
         Task<IEnumerable<Horario>> Horarios();
-        Task<bool> LimiteComidas();
-        Task<bool> VerificarAsistencia();
-        Task<bool> RegistrarAsistencia();
+        Task<AsistenciaResultado> RegistrarAsistencia(Asistencia asistencia);
     }
 }

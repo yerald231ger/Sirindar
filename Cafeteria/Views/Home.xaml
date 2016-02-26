@@ -32,20 +32,21 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Height="35" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="375">
                 <Label x:Name="lblA" Content="Nombre:" Margin="0,0,0,0" Height="35" FontSize="18.667" Foreground="White" FontFamily="Segoe UI Light"/>
-                <Label x:Name="lblNombre" Content="Juan Perez" Width="293" Foreground="White" FontSize="18.667" FontFamily="Segoe UI Light"/>
+                <Label x:Name="lblNombre" Content="..." Width="293" Foreground="White" FontSize="18.667" FontFamily="Segoe UI Light"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Height="35" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="375">
                 <Label x:Name="lblB" Content="Dependencia:" Height="35" Margin="0,0,0,0" FontSize="18.667" FontFamily="Segoe UI Light" Foreground="White"/>
-                <Label x:Name="lblDependencia" Content="Facultad de Medicina" Width="253" FontSize="18.667" FontFamily="Segoe UI Light" Foreground="White"/>
+                <Label x:Name="lblDependencia" Content="..." Width="253" FontSize="18.667" FontFamily="Segoe UI Light" Foreground="White"/>
             </StackPanel>
-            <Rectangle Name="rectSinHorario" Fill="#FF102F66" Visibility="Collapsed" HorizontalAlignment="Left" Height="175" Margin="13,10,0,0" RadiusY="14.3" RadiusX="14.3" Stroke="#FF00498E" StrokeThickness="1.4" VerticalAlignment="Top" Width="400" Grid.RowSpan="4" Grid.Column="1"/>
-            <TextBlock x:Name="txbSinHorario" HorizontalAlignment="Left" Margin="41,38,0,0" Visibility="Collapsed" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="346"  Text="Fuera de hora de servicio" FontSize="25" Foreground="Red" FontFamily="Segoe UI Light" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" TextAlignment="Center" />
-
+            <Rectangle Visibility="Collapsed" Name="rectErrores" Fill="#FF102F66" HorizontalAlignment="Left" Height="175" Margin="13,10,0,0" RadiusY="14.3" RadiusX="14.3" Stroke="#FF00498E" StrokeThickness="1.4" VerticalAlignment="Top" Width="400" Grid.RowSpan="4" Grid.Column="1"/>
+            <TextBlock Visibility="Collapsed" x:Name="txbSinHorario" HorizontalAlignment="Left" Margin="41,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="346"  Text="Fuera de hora de servicio" FontSize="25" Foreground="Red" FontFamily="Segoe UI Light" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" TextAlignment="Center" />
+            <TextBlock Visibility="Collapsed" x:Name="txbErrorAsistencia" HorizontalAlignment="Left" Margin="41,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="346"  Text="..." FontSize="25" Foreground="Red" FontFamily="Segoe UI Light" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" TextAlignment="Center" />
         </Grid>
         <Grid HorizontalAlignment="Left" Height="75" Margin="445,0,0,0" Width="455" VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Center" Height="55" Margin="10,10,0,0" VerticalAlignment="Center" Width="295" Orientation="Horizontal">
                 <Label Name="lblMatricula" Content="Matricula" Width="120" Foreground="White" FontSize="22" FontFamily="Segoe UI Semilight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                <TextBox Name="txbScanner" MaxLength="10" TextWrapping="Wrap" Width="170" Margin="0,10,0,0" IsEnabled="False" Height="35" VerticalAlignment="Top" FontSize="18.667" FontFamily="Segoe UI Semibold" TextAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="txbScanner_KeyDown"/>
+                <TextBox Name="txbScanner" MaxLength="10" TextWrapping="Wrap" Width="170" Margin="0,10,0,0" IsEnabled="False" Height="35" VerticalAlignment="Top" FontSize="18.667" FontFamily="Segoe UI Semibold" TextAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                         KeyDown="txbScanner_KeyDown"/>
             </StackPanel>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="445">

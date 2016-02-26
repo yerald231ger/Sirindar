@@ -34,12 +34,13 @@ namespace Cafeteria.Views
         {
             api = new Resolver(ConfigurationManager.AppSettings["ISirindarApi"]).Api;
             this.reloj = reloj;
+            MainWindow.Exit = false;
         }
 
-        public Home() : this(Reloj.Instance)
+        public Home()
+            : this(Reloj.Instance)
         {
             InitializeComponent();
-            txbScanner.Focus();
             reloj.EnCambiaHorario += reloj_EnCambiaComida;
             var task = api.Horarios();
 
@@ -70,22 +71,73 @@ namespace Cafeteria.Views
             {
                 txbScanner.IsEnabled = false;
                 txbSinHorario.Visibility = Visibility.Visible;
-                rectSinHorario.Visibility = Visibility.Visible;
+                rectErrores.Visibility = Visibility.Visible;
             }
             else
             {
                 txbScanner.IsEnabled = true;
+                txbScanner.Focus();
                 txbSinHorario.Visibility = Visibility.Collapsed;
-                rectSinHorario.Visibility = Visibility.Collapsed;
+                rectErrores.Visibility = Visibility.Collapsed;
             }
         }
 
-        private void txbScanner_KeyDown(object sender, KeyEventArgs e)
+        private async void txbScanner_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) 
+            int matricula;
+            if(int.TryParse(txbScanner.Text,out matricula))
             {
-                
-            }
+                if (e.Key == Key.Enter)
+                {
+                    txbScanner.IsEnabled = false;
+                    var deportista = await api.GetDeportista(matricula);
+                    if (deportista != null)
+                    {
+                        setTextLblDeportista(deportista.Nombre, deportista.Dependencia.Nombre);
+                        var result = await api.RegistrarAsistencia(new Asistencia 
+                        { 
+                            DeportistaId = deportista.DeportistaId,
+                            HorarioId = horarios.First(h => h.Nombre == Reloj.Instance.Horario).HorarioId
+                        });
+                        if (result.Aceptado)
+                        {
+                            setTextLblDeportista("...", "...");
+                            MessageBox.Show("Imprimiendo Ticket...");
+                        }
+                        else 
+                        {
+                            await setErrorAsistencia(result.Razon);
+                        }
+                    }
+                    else
+                    {
+                       await setErrorAsistencia("Deportista no encontrado");
+                    }
+
+                }                
+            }            
+        }
+
+        private async Task setErrorAsistencia(string texto)
+        {
+            txbErrorAsistencia.Text = texto;
+            showErrorAsistencia(Visibility.Visible);
+            await Task.Delay(1000);
+            showErrorAsistencia(Visibility.Collapsed);
+            txbScanner.IsEnabled = true;
+            txbScanner.Focus();
+        }
+
+        private void showErrorAsistencia(Visibility valor)
+        {
+            rectErrores.Visibility = valor;
+            txbErrorAsistencia.Visibility = valor;
+        }
+
+        private void setTextLblDeportista(string nombre, string dependencia)
+        {
+            lblNombre.Content = nombre;
+            lblDependencia.Content = dependencia;
         }
     }
 }

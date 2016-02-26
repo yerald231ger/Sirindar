@@ -51,10 +51,10 @@ namespace SirindarApiService
 
         public async Task<IEnumerable<Horario>> Horarios()
         {
-            var result = await httpClient.GetStringAsync("api/horarios");
             try
             {
-                IEnumerable<Horario> horarios = JsonConvert.DeserializeObject<IEnumerable<Horario>>(result);
+                var result = await httpClient.GetStringAsync("api/horarios");
+                var horarios = JsonConvert.DeserializeObject<IEnumerable<Horario>>(result);
                 return horarios;
             }
             catch (Exception e)
@@ -63,76 +63,33 @@ namespace SirindarApiService
             }
         }
 
-        public Task<Deportista> GetDeportista(int Id)
+        public async Task<Deportista> GetDeportista(int matriculaId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> LimiteComidas()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> VerificarAsistencia()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> RegistrarAsistencia()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string InstanceName
-        {
-            get;
-            set;
-        }
-    }
-
-    public class SirindarApi2 : ISirindarApi
-    {
-
-        public Task<bool> LogIn(LoginModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<CNSirindar.Models.Deportista> GetDeportista(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<CNSirindar.Models.Horario>> Horarios()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> LimiteComidas()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> VerificarAsistencia()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> RegistrarAsistencia()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string InstanceName
-        {
-            get
+            try
             {
-                throw new NotImplementedException();
+                var result = await httpClient.GetStringAsync("api/deportista/" + matriculaId);
+                var deportista = JsonConvert.DeserializeObject<Deportista>(result);
+                return deportista;
             }
-            set
+            catch (Exception e)
             {
-                throw new NotImplementedException();
+                return null;
+            }
+        }
+
+        public async Task<AsistenciaResultado> RegistrarAsistencia(Asistencia asistencia)
+        {
+            var result = await httpClient.PostAsJsonAsync("api/registrarasistencia/", asistencia);
+            try
+            {
+                var response = await result.Content.ReadAsAsync<AsistenciaResultado>();
+                return response;
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
     }
+
 }
