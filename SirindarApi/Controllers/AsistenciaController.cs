@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CNSirindar.Models;
-using Microsoft.AspNet.Identity;
 using CNSirindar;
 using CNSirindar.Repositories;
 using SirindarApi.Models.Remotos;
@@ -18,19 +11,19 @@ namespace SirindarApi.Controllers
 {
     public class AsistenciaController : ApiController
     {
-        private SirindarDbContext db = new SirindarDbContext();
-        private IRepository<Asistencia, int> asistenciaR;
+        private readonly SirindarDbContext db = new SirindarDbContext();
+        private readonly IRepository<Asistencia, int> _asistenciaR;
         private IRepository<Deportista, int> deportistaR;
-        private IRepository<Horario, int> horarioR;
+        private readonly IRepository<Horario, int> _horarioR;
 
         public AsistenciaController(
             IRepository<Asistencia, int> asistenciaR,
             IRepository<Deportista, int> deportistaR,
             IRepository<Horario, int> horarioR)
         {
-            this.asistenciaR = asistenciaR;
+            _asistenciaR = asistenciaR;
             this.deportistaR = deportistaR;
-            this.horarioR = horarioR;
+            _horarioR = horarioR;
         }
 
         // POST api/Asistencia
@@ -74,7 +67,7 @@ namespace SirindarApi.Controllers
 
             if (esteDiaSi)
             {
-                var horarioAhora = horarioR.List().Where(h => tiempoAhora.TimeOfDay >= h.Inicia && tiempoAhora.TimeOfDay <= h.Finaliza).FirstOrDefault();
+                var horarioAhora = _horarioR.List().FirstOrDefault(h => tiempoAhora.TimeOfDay >= h.Inicia && tiempoAhora.TimeOfDay <= h.Finaliza);
 
                 if (horarioAhora != null)
                 {
@@ -85,13 +78,11 @@ namespace SirindarApi.Controllers
                     if (asistenciasHoy.Count() >= (int)deportista.CantidadComidas.Cantidad)
                         return Json(new AsistenciaResultado { Aceptado = false, Razon = "Becas agotadas" });
 
-                    var yaAsistioHoy = asistenciasHoy.Where(a => 
-                        a.HorarioId == horarioAhora.HorarioId)
-                        .FirstOrDefault();
+                    var yaAsistioHoy = asistenciasHoy.FirstOrDefault(a => a.HorarioId == horarioAhora.HorarioId);
 
                     if (yaAsistioHoy == null)
                     {
-                        if (asistenciaR.Create(new Asistencia
+                        if (_asistenciaR.Create(new Asistencia
                         {
                             HorarioId = horarioAhora.HorarioId,
                             DeportistaId = asistencia.DeportistaId,

@@ -57,8 +57,6 @@ namespace Cafeteria.Views
                         stkpHorarios.DataContext = horarios;
                         lbxHorarios.SelectedIndex = -1;
                         break;
-                    default:
-                        break;
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
