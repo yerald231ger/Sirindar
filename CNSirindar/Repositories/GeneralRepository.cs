@@ -368,6 +368,13 @@ namespace CNSirindar.Repositories
                     db.CantidadComidas.Attach(entity);
                     db.Entry(entity).Property(p => p.FechaModificacion).IsModified = true;
                     db.Entry(entity).Property(p => p.Cantidad).IsModified = true;
+                    db.Entry(entity).Property(p => p.Lunes).IsModified = true;
+                    db.Entry(entity).Property(p => p.Martes).IsModified = true;
+                    db.Entry(entity).Property(p => p.Miercoles).IsModified = true;
+                    db.Entry(entity).Property(p => p.Jueves).IsModified = true;
+                    db.Entry(entity).Property(p => p.Viernes).IsModified = true;
+                    db.Entry(entity).Property(p => p.Sabado).IsModified = true;
+                    db.Entry(entity).Property(p => p.Domingo).IsModified = true;
                     db.SaveChanges();
                     return true;
                 }

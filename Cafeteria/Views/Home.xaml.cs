@@ -90,28 +90,40 @@ namespace Cafeteria.Views
                 if (e.Key == Key.Enter)
                 {
                     txbScanner.IsEnabled = false;
-                    var deportista = await api.GetDeportista(matricula);
-                    if (deportista != null)
+                    try
                     {
-                        setTextLblDeportista(deportista.Nombre, deportista.Dependencia.Nombre);
-                        var result = await api.RegistrarAsistencia(new Asistencia 
-                        { 
-                            DeportistaId = deportista.DeportistaId,
-                            HorarioId = horarios.First(h => h.Nombre == Reloj.Instance.Horario).HorarioId
-                        });
-                        if (result.Aceptado)
+                        var deportista = await api.GetDeportista(matricula);
+
+
+                        if (deportista != null)
                         {
-                            setTextLblDeportista("...", "...");
-                            MessageBox.Show("Imprimiendo Ticket...");
+                            setTextLblDeportista(deportista.Nombre, deportista.Dependencia.Nombre);
+                            var result = await api.RegistrarAsistencia(new Asistencia
+                            {
+                                DeportistaId = deportista.DeportistaId,
+                                HorarioId = horarios.First(h => h.Nombre == Reloj.Instance.Horario).HorarioId
+                            });
+                            if (result.Aceptado)
+                            {
+                                setTextLblDeportista("...", "...");
+                                MessageBox.Show("Imprimiendo Ticket...");
+                            }
+                            else
+                            {
+                                await setErrorAsistencia(result.Razon);
+                            }
                         }
-                        else 
+                        else
                         {
-                            await setErrorAsistencia(result.Razon);
+                            await setErrorAsistencia("Deportista no encontrado");
                         }
                     }
-                    else
+                    catch (System.Net.Http.HttpRequestException ex)
                     {
-                       await setErrorAsistencia("Deportista no encontrado");
+                        MessageBox.Show(ex.Message + ": " + ex.StackTrace);
+                        txbErrorAsistencia.Text = "FUERA DE SERVICIO";
+                        rectErrores.Visibility = Visibility.Visible;
+                        txbErrorAsistencia.Visibility = Visibility.Visible;
                     }
 
                 }                

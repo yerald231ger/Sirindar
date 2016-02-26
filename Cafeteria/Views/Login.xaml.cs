@@ -45,15 +45,16 @@ namespace Cafeteria.Views
                 var result = await api.LogIn(new LoginModel(tbxUserName.Text, tbxContraseña.Password));
                 if (result)
                     NavigationService.Navigate(new Home());
+                lblLoginFail.Content = "Usuario o contraseña incorrectos";
             }
-            catch (Exception ex)
+            catch (System.Net.Http.HttpRequestException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + ": " + ex.StackTrace);
+                lblLoginFail.Content = "FUERA DE SERVICIO, Intenta mas tarde";
             }
             finally
             {
                 btnLogIn.IsEnabled = true;
-                lblLoginFail.Content = "Usuario o contraseña invalidos";
                 pbrLogin.Visibility = Visibility.Hidden;
                 lblLoginFail.Visibility = Visibility.Visible;
             }

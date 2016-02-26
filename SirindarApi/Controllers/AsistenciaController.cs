@@ -37,13 +37,14 @@ namespace SirindarApi.Controllers
         [ResponseType(typeof(AsistenciaResultado))]
         public IHttpActionResult PostRegistrarAsistencia(Asistencia asistencia)
         {
+            var tiempoAhora = DateTime.Now;
             if (!ModelState.IsValid || asistencia == null)
             {
                 return BadRequest(ModelState);
             }
 
             var dia = DateTime.Now.DayOfWeek;
-            var deportista = db.Deportistas.First(d => d.DeportistaId == asistencia.DeportistaId);
+            var deportista = db.Deportistas.Where(d => d.EsActivo).First(d => d.DeportistaId == asistencia.DeportistaId);
             var esteDiaSi = false;
 
             switch (dia)
@@ -73,29 +74,32 @@ namespace SirindarApi.Controllers
 
             if (esteDiaSi)
             {
-                var tiempoAhora = DateTime.Now;
-
-                var asistencias = db.Asistencias.Count(a =>
-                        a.DeportistaId == asistencia.DeportistaId &&
-                        tiempoAhora > a.HoraAsistencia
-                        );
-
-                if (asistencias >= (int)deportista.CantidadComidas.Cantidad)
-                    return Json(new AsistenciaResultado { Aceptado = false, Razon = "Becas agotadas" });
-
                 var horarioAhora = horarioR.List().Where(h => tiempoAhora.TimeOfDay >= h.Inicia && tiempoAhora.TimeOfDay <= h.Finaliza).FirstOrDefault();
 
                 if (horarioAhora != null)
                 {
-                    var yaAsistioHoy = db.Asistencias.Where(a =>
-                        a.HorarioId == asistencia.HorarioId &&
-                        a.DeportistaId == asistencia.DeportistaId &&
-                        tiempoAhora > a.HoraAsistencia
-                        );
+                    var asistenciasHoy = db.Asistencias.Where(a => a.EsActivo).Where(a =>
+                            a.HoraAsistencia > DateTime.Today &&
+                            a.DeportistaId == asistencia.DeportistaId);
+
+                    if (asistenciasHoy.Count() >= (int)deportista.CantidadComidas.Cantidad)
+                        return Json(new AsistenciaResultado { Aceptado = false, Razon = "Becas agotadas" });
+
+                    var yaAsistioHoy = asistenciasHoy.Where(a => 
+                        a.HorarioId == horarioAhora.HorarioId)
+                        .FirstOrDefault();
 
                     if (yaAsistioHoy == null)
                     {
-                        if (asistenciaR.Create(asistencia))
+                        if (asistenciaR.Create(new Asistencia
+                        {
+                            HorarioId = horarioAhora.HorarioId,
+                            DeportistaId = asistencia.DeportistaId,
+                            HoraAsistencia = tiempoAhora,
+                            EsActivo = true,
+                            FechaModificacion = DateTime.Now,
+                            FechaAlta = DateTime.Now
+                        }))
                             return Json(new AsistenciaResultado { Aceptado = true, Razon = "Registro Exitoso" });
                     }
                     else

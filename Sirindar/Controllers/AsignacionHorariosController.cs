@@ -65,7 +65,7 @@ namespace Sirindar.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var cantidadComidas = GeneralRepository.LoadHorarioDeportista(id.Value);
-            ViewBag.Numero = new SelectList(SirindarControls.EnumAsList<NumeroComidas>(), "Value", "Text", cantidadComidas.Cantidad);
+            ViewBag.Numero = new SelectList(SirindarControls.EnumAsList<NumeroComidas>(), "Value", "Text", (int)cantidadComidas.Cantidad);
             return PartialView(new AsignacionHorariosViewModel
             {
                 Nombre = nombre,

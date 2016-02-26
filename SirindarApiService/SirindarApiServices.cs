@@ -46,18 +46,17 @@ namespace SirindarApiService
                 return true;
             }
             return false;
-
         }
 
         public async Task<IEnumerable<Horario>> Horarios()
         {
+            var result = await httpClient.GetStringAsync("api/horarios");
             try
             {
-                var result = await httpClient.GetStringAsync("api/horarios");
                 var horarios = JsonConvert.DeserializeObject<IEnumerable<Horario>>(result);
                 return horarios;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -65,13 +64,13 @@ namespace SirindarApiService
 
         public async Task<Deportista> GetDeportista(int matriculaId)
         {
+            var result = await httpClient.GetStringAsync("api/deportista/" + matriculaId);
             try
             {
-                var result = await httpClient.GetStringAsync("api/deportista/" + matriculaId);
                 var deportista = JsonConvert.DeserializeObject<Deportista>(result);
                 return deportista;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -79,13 +78,13 @@ namespace SirindarApiService
 
         public async Task<AsistenciaResultado> RegistrarAsistencia(Asistencia asistencia)
         {
-            var result = await httpClient.PostAsJsonAsync("api/registrarasistencia/", asistencia);
+            var result = await httpClient.PostAsJsonAsync("api/asistencia/", asistencia);
             try
             {
                 var response = await result.Content.ReadAsAsync<AsistenciaResultado>();
                 return response;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
