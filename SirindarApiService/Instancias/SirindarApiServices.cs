@@ -103,16 +103,20 @@ namespace ServiciosCafeteria.Instancias
 
         public async Task<AsistenciaResultado> RegistrarAsistencia(Asistencia asistencia)
         {
+            AsistenciaResultado asistenciaResultado;
             try
             {
                 var response = await httpClient.PostAsJsonAsync("api/asistencia/", asistencia);
 
-                var d  = response.Content.ReadAsStringAsync().Result;
-                AsistenciaResultado asistenciaResultado;
+                var d = response.Content.ReadAsStringAsync().Result;
 
                 httpResult<AsistenciaResultado>(response, out asistenciaResultado);
 
                 return asistenciaResultado;
+            }
+            catch (ServiciosCafeteriaBadRequestException e)
+            {
+                return new AsistenciaResultado { Aceptado = false, Razon = e.Content.ReadAsStringAsync().Result };                
             }
             catch (HttpRequestException e)
             {
@@ -131,7 +135,8 @@ namespace ServiciosCafeteria.Instancias
                 case HttpStatusCode.BadGateway:
                     break;
                 case HttpStatusCode.BadRequest:
-                    throw new ServiciosCafeteriaException("BadRequest");
+                    objectToReturn = response.Content.ReadAsStringAsync().Result as T;
+                    throw new ServiciosCafeteriaBadRequestException(response.Content, HttpStatusCode.BadRequest.ToString());
                 case HttpStatusCode.Conflict:
                     break;
                 case HttpStatusCode.Continue:

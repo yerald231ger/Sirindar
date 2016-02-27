@@ -31,13 +31,17 @@ namespace SirindarApi.Controllers
         public IHttpActionResult PostRegistrarAsistencia(RegistrarAsistenciaViewModel asistencia)
         {
             var tiempoAhora = DateTime.Now;
-            if (!ModelState.IsValid)
+
+            if (asistencia == null)
             {
+                ModelState.AddModelError("Model", new NullReferenceException("El objeto 'RegistrarAsistenciaViewModel' contiene una referencia nula"));
                 return BadRequest(ModelState);
             }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var dia = DateTime.Now.DayOfWeek;
-            var deportista = db.Deportistas.Where(d => d.EsActivo).First(d => d.DeportistaId == asistencia.DeportistaId);
+            var deportista = db.Deportistas.Where(d => d.EsActivo).First(d => d.DeportistaId == asistencia.DeportistaId.Value);
             var esteDiaSi = false;
 
             switch (dia)
@@ -73,7 +77,7 @@ namespace SirindarApi.Controllers
                 {
                     var asistenciasHoy = db.Asistencias.Where(a => a.EsActivo).Where(a =>
                             a.HoraAsistencia > DateTime.Today &&
-                            a.DeportistaId == asistencia.DeportistaId);
+                            a.DeportistaId == asistencia.DeportistaId.Value);
 
                     if (asistenciasHoy.Count() >= (int)deportista.CantidadComidas.Cantidad)
                         return Json(new AsistenciaResultado { Aceptado = false, Razon = "Becas agotadas" });
@@ -85,7 +89,7 @@ namespace SirindarApi.Controllers
                         if (_asistenciaR.Create(new Asistencia
                         {
                             HorarioId = horarioAhora.HorarioId,
-                            DeportistaId = asistencia.DeportistaId,
+                            DeportistaId = asistencia.DeportistaId.Value,
                             HoraAsistencia = tiempoAhora,
                             EsActivo = true,
                             FechaModificacion = DateTime.Now,

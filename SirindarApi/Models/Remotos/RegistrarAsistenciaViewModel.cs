@@ -9,12 +9,12 @@ namespace SirindarApi.Models.Remotos
     public class RegistrarAsistenciaViewModel
     {
         [Required]
-        public DateTime HoraAsistencia { get; set; }
+        public DateTime? HoraAsistencia { get; set; }
 
         [Required]
-        public int DeportistaId { get; set; }
+        public int? DeportistaId { get; set; }
 
         [Required]
-        public int HorarioId { get; set; }
+        public int? HorarioId { get; set; }
     }
 }

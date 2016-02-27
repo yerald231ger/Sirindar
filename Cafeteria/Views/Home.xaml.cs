@@ -102,7 +102,8 @@ namespace Cafeteria.Views
                             var result = await api.RegistrarAsistencia(new Asistencia
                             {
                                 DeportistaId = deportista.DeportistaId,
-                                HorarioId = horarios.First(h => h.Nombre == Reloj.Instance.Horario).HorarioId
+                                HorarioId = horarios.First(h => h.Nombre == Reloj.Instance.Horario).HorarioId,
+                                HoraAsistencia = DateTime.Now
                             });
                             if (result.Aceptado)
                             {
