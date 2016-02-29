@@ -8,6 +8,6 @@ namespace ServiciosCafeteria.Interfaces
 {
     public interface IImpresora
     {
-        void Imprimir(object reporte);
+        void Imprimir<T>(T reporte);
     }
 }

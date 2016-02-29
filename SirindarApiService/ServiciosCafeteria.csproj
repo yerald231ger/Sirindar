@@ -54,7 +54,7 @@
     <Compile Include="Instancias\ServiciosImpresora.cs" />
     <Compile Include="Interfaces\ISirindarApi.cs" />
     <Compile Include="Resolver.cs" />
-    <Compile Include="Instancias\SirindarApiServices.cs" />
+    <Compile Include="Instancias\ServiciosSirindarApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiciosCafeteriaException.cs" />
     <Compile Include="UriManager.cs" />

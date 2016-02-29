@@ -9,9 +9,17 @@ namespace ServiciosCafeteria.Instancias
 {
     public class Impresora : IImpresora
     {
-        public void Imprimir(object reporte)
+        public void Imprimir<T>(T reporte)
         {
-            throw new NotImplementedException();
+            
+        }
+    }
+
+    public class ImpresoraTest : IImpresora 
+    {
+        public void Imprimir<T>(T reporte)
+        {
+            throw new NotImplementedException("Imprimiendo Ticket");
         }
     }
 }
