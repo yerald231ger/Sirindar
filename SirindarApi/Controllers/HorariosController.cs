@@ -14,6 +14,7 @@ using CNSirindar.Repositories;
 
 namespace SirindarApi.Controllers
 {
+    [Authorize]
     public class HorariosController : ApiController
     {
         private IRepository<Horario, int> horarioR;

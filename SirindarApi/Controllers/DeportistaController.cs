@@ -16,6 +16,7 @@ using CNSirindar;
 
 namespace SirindarApi.Controllers
 {
+    [Authorize]
     public class DeportistaController : ApiController
     {
 

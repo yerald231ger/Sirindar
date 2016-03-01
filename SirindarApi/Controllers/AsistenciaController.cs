@@ -9,6 +9,7 @@ using SirindarApi.Models.Remotos;
 
 namespace SirindarApi.Controllers
 {
+    [Authorize]
     public class AsistenciaController : ApiController
     {
         private readonly SirindarDbContext db = new SirindarDbContext();
