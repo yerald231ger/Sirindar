@@ -17,6 +17,7 @@ using ServiciosCafeteria;
 using Cafeteria.Cloak;
 using CNSirindar.Models;
 using System.Configuration;
+using System.Windows.Media.Animation;
 using ServiciosCafeteria.Interfaces;
 
 namespace Cafeteria.Views
@@ -98,16 +99,26 @@ namespace Cafeteria.Views
                         if (deportista != null)
                         {
                             SetTextLblDeportista(deportista.Nombre, deportista.Dependencia.Nombre);
+                            var dateNow = DateTime.Now;
                             var result = await api.RegistrarAsistencia(new Asistencia
                             {
                                 DeportistaId = deportista.DeportistaId,
                                 HorarioId = horarios.First(h => h.Nombre == Reloj.Instance.Horario).HorarioId,
-                                HoraAsistencia = DateTime.Now
+                                HoraAsistencia = dateNow
                             });
                             if (result.Aceptado)
                             {
                                 SetTextLblDeportista("...", "...");
-                                impresora.Imprimir(deportista);
+                                impresora.Imprimir(new Ticket
+                                {
+                                    Comida = reloj.Horario.ToString(),
+                                    Deportista = deportista.Dependencia.Nombre,
+                                    Fecha = dateNow,
+                                    GramosCarboHidratos = 0,
+                                    GramosLipidos = 0,
+                                    GramosProteina = 0,
+                                    GrupoRaciones = "NoDisponible"
+                                });
                                 txbScanner.IsEnabled = true;
                                 txbScanner.Focus();
                             }

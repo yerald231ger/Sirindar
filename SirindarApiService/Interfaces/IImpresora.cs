@@ -1,9 +1,10 @@
 ﻿using CNSirindar.Models;
+using ServiciosCafeteria.AppModels;
 
 namespace ServiciosCafeteria.Interfaces
 {
     public interface IImpresora
     {
-        void Imprimir(Deportista reporte);
+        void Imprimir(Ticket ticket);
     }
 }
