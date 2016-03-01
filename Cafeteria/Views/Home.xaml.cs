@@ -107,7 +107,7 @@ namespace Cafeteria.Views
                             if (result.Aceptado)
                             {
                                 SetTextLblDeportista("...", "...");
-                                impresora.Imprimir("I");
+                                impresora.Imprimir(deportista);
                                 txbScanner.IsEnabled = true;
                                 txbScanner.Focus();
                             }

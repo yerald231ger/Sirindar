@@ -1,21 +1,15 @@
 ﻿using System;
+using CNSirindar.Models;
 using ServiciosCafeteria.Interfaces;
 
 namespace ServiciosCafeteria.Instancias
 {
     public class Impresora : IImpresora
     {
-        public void Imprimir<T>(T reporte)
+        public void Imprimir(Deportista deportista)
         {
             
         }
     }
-
-    public class ImpresoraTest : IImpresora 
-    {
-        public void Imprimir<T>(T reporte)
-        {
-            throw new NotImplementedException("Imprimiendo Ticket");
-        }
-    }
+    
 }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CNSirindar.Models;
 
 namespace ServiciosCafeteria.Interfaces
 {
     public interface IImpresora
     {
-        void Imprimir<T>(T reporte);
+        void Imprimir(Deportista reporte);
     }
 }
