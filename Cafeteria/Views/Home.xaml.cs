@@ -51,7 +51,7 @@ namespace Cafeteria.Views
                 switch (t.Status)
                 {
                     case TaskStatus.Faulted:
-                        setCafeteriaExcpetion(t.Exception.InnerException);
+                        SetCafeteriaExcpetion(t.Exception.InnerException);
                         stkpHorarios.DataContext = null;
                         break;
                     case TaskStatus.RanToCompletion:
@@ -95,10 +95,9 @@ namespace Cafeteria.Views
                     {
                         var deportista = await api.GetDeportista(matricula);
 
-
                         if (deportista != null)
                         {
-                            setTextLblDeportista(deportista.Nombre, deportista.Dependencia.Nombre);
+                            SetTextLblDeportista(deportista.Nombre, deportista.Dependencia.Nombre);
                             var result = await api.RegistrarAsistencia(new Asistencia
                             {
                                 DeportistaId = deportista.DeportistaId,
@@ -107,31 +106,31 @@ namespace Cafeteria.Views
                             });
                             if (result.Aceptado)
                             {
-                                setTextLblDeportista("...", "...");
+                                SetTextLblDeportista("...", "...");
                                 impresora.Imprimir("I");
                                 txbScanner.IsEnabled = true;
                                 txbScanner.Focus();
                             }
                             else
                             {
-                                await setErrorAsistencia(result.Razon);
+                                await SetErrorAsistencia(result.Razon);
                             }
                         }
                         else
                         {
-                            await setErrorAsistencia("Deportista no encontrado");
+                            await SetErrorAsistencia("Deportista no encontrado");
                         }
                     }
                     catch (ServiciosCafeteriaException ex)
                     {
-                        setCafeteriaExcpetion(ex);
+                        SetCafeteriaExcpetion(ex);
                     }
 
                 }                
             }            
         }
 
-        private void setCafeteriaExcpetion(Exception ex)
+        private void SetCafeteriaExcpetion(Exception ex)
         {
             MessageBox.Show(ex.Message + ": " + ex.StackTrace);
             txbErrorAsistencia.Text = "FUERA DE SERVICIO";
@@ -139,23 +138,23 @@ namespace Cafeteria.Views
             txbErrorAsistencia.Visibility = Visibility.Visible;        
         }
 
-        private async Task setErrorAsistencia(string texto)
+        private async Task SetErrorAsistencia(string texto)
         {
             txbErrorAsistencia.Text = texto;
-            showErrorAsistencia(Visibility.Visible);
+            ShowErrorAsistencia(Visibility.Visible);
             await Task.Delay(1000);
-            showErrorAsistencia(Visibility.Collapsed);
+            ShowErrorAsistencia(Visibility.Collapsed);
             txbScanner.IsEnabled = true;
             txbScanner.Focus();
         }
 
-        private void showErrorAsistencia(Visibility valor)
+        private void ShowErrorAsistencia(Visibility valor)
         {
             rectErrores.Visibility = valor;
             txbErrorAsistencia.Visibility = valor;
         }
 
-        private void setTextLblDeportista(string nombre, string dependencia)
+        private void SetTextLblDeportista(string nombre, string dependencia)
         {
             lblNombre.Content = nombre;
             lblDependencia.Content = dependencia;
