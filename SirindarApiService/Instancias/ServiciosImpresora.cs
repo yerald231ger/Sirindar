@@ -4,6 +4,7 @@ using System.Text;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Collections.Generic;
+using System.Data;
 using Microsoft.Reporting.WinForms;
 using ServiciosCafeteria.AppModels;
 using ServiciosCafeteria.Interfaces;
@@ -12,10 +13,11 @@ namespace ServiciosCafeteria.Instancias
 {
     public class Impresora : IImpresora
     {
-        public void Imprimir(IList<Equipo> ticket)
+        public void Imprimir(Ticket ticket)
         {
+            var table = new DataTable("Ticket");
             var report = new LocalReport { ReportPath = @"..\..\Ticket.rdlc" };
-            report.DataSources.Add(new ReportDataSource("Ticket", ticket));
+            report.DataSources.Add(new ReportDataSource("Ticket", new List<Ticket> { ticket }));
             Export(report);
             Print();
         }
@@ -38,12 +40,12 @@ namespace ServiciosCafeteria.Instancias
             string deviceInfo =
                 @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>8.5in</PageWidth>
-                <PageHeight>11in</PageHeight>
-                <MarginTop>0.25in</MarginTop>
-                <MarginLeft>0.25in</MarginLeft>
-                <MarginRight>0.25in</MarginRight>
-                <MarginBottom>0.25in</MarginBottom>
+                <PageWidth>7.6cm</PageWidth>
+                <PageHeight>10cm</PageHeight>
+                <MarginTop>0.25cm</MarginTop>
+                <MarginLeft>0.25cm</MarginLeft>
+                <MarginRight>0.25cm</MarginRight>
+                <MarginBottom>0.25cm</MarginBottom>
             </DeviceInfo>";
             Warning[] warnings;
             _mStreams = new List<Stream>();

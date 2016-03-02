@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiciosCafeteria
 {
@@ -15,20 +11,25 @@ namespace ServiciosCafeteria
         }
     }
 
+    public class ServiciosCafeteriaInternalServerErrorException : ServiciosCafeteriaException
+    {
+        public HttpContent Content { get; set; }
+
+        public ServiciosCafeteriaInternalServerErrorException(HttpContent content, string message)
+            : base(message)
+        {
+            Content = content;
+        }
+    }
+
     public class ServiciosCafeteriaBadRequestException : ServiciosCafeteriaException
     {
-        private HttpContent content;
-
-        public HttpContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
+        public HttpContent Content { get; set; }
 
         public ServiciosCafeteriaBadRequestException(HttpContent content, string message)
             : base(message)
         {
-            this.content = content;
+            Content = content;
         }
     }
 }

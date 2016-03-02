@@ -72,7 +72,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="ServiciosCafeteria.AppModels.Equipo.datasource" />
+    <None Include="ServiciosCafeteria.AppModels.Ticket.datasource" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Ticket.rdlc" />

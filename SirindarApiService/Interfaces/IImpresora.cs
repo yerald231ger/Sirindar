@@ -6,6 +6,6 @@ namespace ServiciosCafeteria.Interfaces
 {
     public interface IImpresora
     {
-        void Imprimir(IList<Equipo> ticket);
+        void Imprimir(Ticket ticket);
     }
 }

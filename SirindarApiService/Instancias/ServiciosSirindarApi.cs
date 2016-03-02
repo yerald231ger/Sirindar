@@ -47,10 +47,14 @@ namespace ServiciosCafeteria.Instancias
 
                 TokenModel token;
 
-                httpResult<TokenModel>(response, out token);
+                HttpResult(response, out token);
 
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.access_token);
                 return true;
+            }
+            catch (ServiciosCafeteriaInternalServerErrorException e)
+            {
+                throw new ServiciosCafeteriaException(e.Message);
             }
             catch (ServiciosCafeteriaException)
             {
@@ -70,7 +74,7 @@ namespace ServiciosCafeteria.Instancias
 
                 IEnumerable<Horario> horarios;
 
-                httpResult<IEnumerable<Horario>>(response, out horarios);
+                HttpResult(response, out horarios);
 
                 return horarios;
             }
@@ -88,12 +92,9 @@ namespace ServiciosCafeteria.Instancias
 
                 Deportista deportista;
 
-                httpResult<Deportista>(result, out deportista);
+                HttpResult(result, out deportista);
 
-                if (deportista != null)
-                    return deportista;
-
-                return null;
+                return deportista;
             }
             catch (HttpRequestException e)
             {
@@ -103,14 +104,14 @@ namespace ServiciosCafeteria.Instancias
 
         public async Task<AsistenciaResultado> RegistrarAsistencia(Asistencia asistencia)
         {
-            AsistenciaResultado asistenciaResultado;
             try
             {
                 var response = await httpClient.PostAsJsonAsync("api/asistencia/", asistencia);
 
                 var d = response.Content.ReadAsStringAsync().Result;
 
-                httpResult<AsistenciaResultado>(response, out asistenciaResultado);
+                AsistenciaResultado asistenciaResultado;
+                HttpResult(response, out asistenciaResultado);
 
                 return asistenciaResultado;
             }
@@ -125,7 +126,7 @@ namespace ServiciosCafeteria.Instancias
         }
 
 
-        private void httpResult<T>(HttpResponseMessage response, out T objectToReturn) where T : class
+        private static void HttpResult<T>(HttpResponseMessage response, out T objectToReturn) where T : class
         {
             objectToReturn = null;
             switch (response.StatusCode)
@@ -156,7 +157,7 @@ namespace ServiciosCafeteria.Instancias
                 case HttpStatusCode.HttpVersionNotSupported:
                     break;
                 case HttpStatusCode.InternalServerError:
-                    break;
+                    throw new ServiciosCafeteriaInternalServerErrorException(response.Content, response.Content.ReadAsStringAsync().Result);
                 case HttpStatusCode.LengthRequired:
                     break;
                 case HttpStatusCode.MethodNotAllowed:
