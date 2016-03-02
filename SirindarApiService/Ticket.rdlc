@@ -293,9 +293,9 @@
         </Paragraphs>
         <rd:DefaultName>GrupoRaciones</rd:DefaultName>
         <Top>5.08833cm</Top>
-        <Left>1.76948cm</Left>
+        <Left>0.28787cm</Left>
         <Height>0.6cm</Height>
-        <Width>3.50542cm</Width>
+        <Width>6.8127cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -661,7 +661,7 @@
     <Height>10cm</Height>
     <Style />
   </Body>
-  <Width>7.6cm</Width>
+  <Width>7.43965cm</Width>
   <Page>
     <PageHeight>10cm</PageHeight>
     <PageWidth>7.6cm</PageWidth>

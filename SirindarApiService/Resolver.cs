@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
 using ServiciosCafeteria.Interfaces;
 using ServiciosCafeteria.Instancias;
 
@@ -11,39 +6,46 @@ namespace ServiciosCafeteria
 {
     public class ApiResolver
     {
-        private ISirindarApi api;
+        private ISirindarApi _api;
 
-        public ISirindarApi Api { get { return api; } private set { api = value; } }
+        // ReSharper disable once ConvertToAutoProperty
+        public ISirindarApi Api { get { return _api; } private set { _api = value; } }
 
         public ApiResolver(string typeName)
         {
-            Type resolvedType = Type.GetType(typeName);
+            var resolvedType = Type.GetType(typeName);
+            if(resolvedType == null)
+                throw new ServiciosCafeteriaException("Referencia Nulla en ApiReolver");
 
             if (resolvedType.IsEquivalentTo(typeof(SirindarApi)))
                 Api = SirindarApi.Instance;
-            else
-                Api = null;
+            else if(resolvedType.IsEquivalentTo(typeof(SirindarApi2)))
+                Api = SirindarApi.Instance;
         }
     }
 
     public class ImpresoraResolver 
     {
-        private IImpresora impresora;
+        private IImpresora _impresora;
 
+        // ReSharper disable once ConvertToAutoProperty
         public IImpresora Impresora
         {
-            get { return impresora; }
-            private set { impresora = value; }
+            get { return _impresora; }
+            private set { _impresora = value; }
         }
 
         public ImpresoraResolver(string typeName) 
         {
-            Type resolvedType = Type.GetType(typeName);
+            var resolvedType = Type.GetType(typeName);
+
+            if (resolvedType == null)
+                throw new ServiciosCafeteriaException("Referencia Nulla en ApiReolver");
 
             if (resolvedType.IsEquivalentTo(typeof(Impresora)))
                 Impresora = new Impresora();
-            else
-                Impresora = null;
+            else if(resolvedType.IsEquivalentTo(typeof(Impresora2)))
+                Impresora = new Impresora2();
         }
     }
 }

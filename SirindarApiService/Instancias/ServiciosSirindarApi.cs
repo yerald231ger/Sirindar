@@ -217,5 +217,26 @@ namespace ServiciosCafeteria.Instancias
             }
         }
     }
+    public class SirindarApi2 : ISirindarApi
+    {
+        public Task<bool> LogIn(LoginModel model)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<Deportista> GetDeportista(int matricula)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Horario>> Horarios()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AsistenciaResultado> RegistrarAsistencia(Asistencia asistencia)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

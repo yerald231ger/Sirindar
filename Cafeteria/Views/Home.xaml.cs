@@ -114,12 +114,13 @@ namespace Cafeteria.Views
                                    Comida = reloj.Horario.ToString(),
                                    Dependencia = deportista.Dependencia.Nombre,
                                    Deportista = deportista.Nombre,
+                                   Deporte = "Futboll",
                                    Fecha = dateNow,
-                                   GramosProteina = 0,
-                                   GramosCarboHidratos = 0,
-                                   GrupoRaciones = "",
-                                   GramosLipidos = 0,
-                                   KiloCalorias = 0
+                                   GramosProteina = 230,
+                                   GramosCarboHidratos = 200,
+                                   GrupoRaciones = "Sin Grupo y Alimentacion",
+                                   GramosLipidos = 500,
+                                   KiloCalorias = 1000
                                 }
                             );
                                 txbScanner.IsEnabled = true;

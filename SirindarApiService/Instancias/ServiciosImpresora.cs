@@ -4,10 +4,10 @@ using System.Text;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Collections.Generic;
-using System.Data;
 using Microsoft.Reporting.WinForms;
 using ServiciosCafeteria.AppModels;
 using ServiciosCafeteria.Interfaces;
+using System.Drawing;
 
 namespace ServiciosCafeteria.Instancias
 {
@@ -15,16 +15,13 @@ namespace ServiciosCafeteria.Instancias
     {
         public void Imprimir(Ticket ticket)
         {
-            var table = new DataTable("Ticket");
             var report = new LocalReport { ReportPath = @"..\..\Ticket.rdlc" };
             report.DataSources.Add(new ReportDataSource("Ticket", new List<Ticket> { ticket }));
             Export(report);
             Print();
         }
 
-        private int _mCurrentPageIndex;
         private IList<Stream> _mStreams;
-
 
         // Routine to provide to the report renderer, in order to
         //    save an image for each page of the report.
@@ -47,41 +44,41 @@ namespace ServiciosCafeteria.Instancias
                 <MarginRight>0.25cm</MarginRight>
                 <MarginBottom>0.25cm</MarginBottom>
             </DeviceInfo>";
+
             Warning[] warnings;
+
             _mStreams = new List<Stream>();
+
             report.Render("Image", deviceInfo, CreateStream, out warnings);
+
             foreach (Stream stream in _mStreams)
                 stream.Position = 0;
         }
         // Handler for PrintPageEvents
         private void PrintPage(object sender, PrintPageEventArgs ev)
         {
-            Metafile pageImage = new
-                Metafile(_mStreams[_mCurrentPageIndex]);
+            var pageImage = new
+                Metafile(_mStreams[0]);
 
             // Adjust rectangular area with printer margins.
-            System.Drawing.Rectangle adjustedRect = new System.Drawing.Rectangle(
+            var adjustedRect = new Rectangle(
                 ev.PageBounds.Left - (int)ev.PageSettings.HardMarginX,
                 ev.PageBounds.Top - (int)ev.PageSettings.HardMarginY,
                 ev.PageBounds.Width,
                 ev.PageBounds.Height);
 
             // Draw a white background for the report
-            ev.Graphics.FillRectangle(System.Drawing.Brushes.White, adjustedRect);
+            ev.Graphics.FillRectangle(Brushes.White, adjustedRect);
 
             // Draw the report content
             ev.Graphics.DrawImage(pageImage, adjustedRect);
-
-            // Prepare for the next page. Make sure we haven't hit the end.
-            _mCurrentPageIndex++;
-            ev.HasMorePages = (_mCurrentPageIndex < _mStreams.Count);
         }
 
         private void Print()
         {
             if (_mStreams == null || _mStreams.Count == 0)
                 throw new Exception("Error: no stream to print.");
-            PrintDocument printDoc = new PrintDocument();
+            var printDoc = new PrintDocument();
 
             if (!printDoc.PrinterSettings.IsValid)
             {
@@ -90,20 +87,81 @@ namespace ServiciosCafeteria.Instancias
             else
             {
                 printDoc.PrintPage += PrintPage;
-                _mCurrentPageIndex = 0;
                 printDoc.Print();
             }
         }
 
         public void Dispose()
         {
-            if (_mStreams != null)
+            if (_mStreams == null)
+                return;
+            foreach (var stream in _mStreams)
+                stream.Close();
+            _mStreams = null;
+        }
+    }
+
+    public class Impresora2 : IImpresora
+    {
+        public void Imprimir(Ticket ticket)
+        {
+            Printing();
+        }
+        private Font _printFont;
+        private StreamReader _streamToPrint;
+        public static string FilePath;
+
+        // The PrintPage event is raised for each page to be printed.
+        private void pd_PrintPage(object sender, PrintPageEventArgs ev)
+        {
+            var count = 0;
+            float leftMargin = ev.MarginBounds.Left;
+            float topMargin = ev.MarginBounds.Top;
+            string line = null;
+
+            // Calculate the number of lines per page.
+            var linesPerPage = ev.MarginBounds.Height /
+                                 _printFont.GetHeight(ev.Graphics);
+
+            // Iterate over the file, printing each line.
+            while (count < linesPerPage &&
+               ((line = _streamToPrint.ReadLine()) != null))
             {
-                foreach (var stream in _mStreams)
-                    stream.Close();
-                _mStreams = null;
+                var yPos = topMargin + (count * _printFont.GetHeight(ev.Graphics));
+                ev.Graphics.DrawString(line, _printFont, Brushes.Black,
+                   leftMargin, yPos, new StringFormat());
+                count++;
+            }
+
+            // If more lines exist, print another page.
+            ev.HasMorePages = line != null;
+        }
+
+        // Print the file.
+        public void Printing()
+        {
+            try
+            {
+                _streamToPrint = new StreamReader(@"..\..\App.config");
+                try
+                {
+                    _printFont = new Font("Arial", 10);
+                    var pd = new PrintDocument();
+                    pd.PrintPage += pd_PrintPage;
+                    // Print the document.
+                    pd.Print();
+                }
+                finally
+                {
+                    _streamToPrint.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
+
     }
 }
 
