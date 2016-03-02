@@ -109,16 +109,13 @@ namespace Cafeteria.Views
                             if (result.Aceptado)
                             {
                                 SetTextLblDeportista("...", "...");
-                                impresora.Imprimir(new Ticket
-                                {
-                                    Comida = reloj.Horario.ToString(),
-                                    Deportista = deportista.Dependencia.Nombre,
-                                    Fecha = dateNow,
-                                    GramosCarboHidratos = 0,
-                                    GramosLipidos = 0,
-                                    GramosProteina = 0,
-                                    GrupoRaciones = "NoDisponible"
-                                });
+                                impresora.Imprimir(new List<Equipo> {
+            new Equipo {Nombre = "America", Id = 1},
+            new Equipo {Nombre = "Cruz kjkljlAzul", Id = 2},
+            new Equipo {Nombre = "Pachucasaasa", Id = 3},
+            new Equipo {Nombre = "Doradoasass", Id = 4},
+            new Equipo {Nombre = "Chivas", Id = 5},
+        });
                                 txbScanner.IsEnabled = true;
                                 txbScanner.Focus();
                             }

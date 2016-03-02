@@ -21,4 +21,10 @@ namespace ServiciosCafeteria.AppModels
         public int GramosLipidos { get; set; }
         public string Observaciones { get; set; }
     }
+
+    public class Equipo
+    {
+        public string Nombre { get; set; }
+        public int Id { get; set; }
+    }
 }

@@ -12,10 +12,10 @@ namespace ServiciosCafeteria.Instancias
 {
     public class Impresora : IImpresora
     {
-        public void Imprimir(Ticket ticket)
+        public void Imprimir(IList<Equipo> ticket)
         {
-            var report = new LocalReport { ReportPath = @"\Ticket.rdlc" };
-            report.DataSources.Add(new ReportDataSource("DataSetTicket", ticket));
+            var report = new LocalReport { ReportPath = @"..\..\Ticket.rdlc" };
+            report.DataSources.Add(new ReportDataSource("Ticket", ticket));
             Export(report);
             Print();
         }
