@@ -103,58 +103,65 @@ namespace ServiciosCafeteria.Instancias
 
     public class Impresora2 : IImpresora
     {
-        public void Imprimir(Ticket ticket)
-        {
-            Printing();
-        }
-        private Font _printFont;
-        private StreamReader _streamToPrint;
-        public static string FilePath;
+        public static Font PrintFont { get; } = new Font("Arial", 10);
+        private Ticket _ticketToPrint;
 
         // The PrintPage event is raised for each page to be printed.
         private void pd_PrintPage(object sender, PrintPageEventArgs ev)
         {
-            var count = 0;
             float leftMargin = ev.MarginBounds.Left;
             float topMargin = ev.MarginBounds.Top;
-            string line = null;
+            float rightMargin = ev.MarginBounds.Right;
+            var lineSpaceing = PrintFont.GetHeight(ev.Graphics) + 1;
 
-            // Calculate the number of lines per page.
-            var linesPerPage = ev.MarginBounds.Height /
-                                 _printFont.GetHeight(ev.Graphics);
+            ev.Graphics.DrawString(_ticketToPrint.Fecha.ToString("G"), PrintFont, Brushes.DodgerBlue, rightMargin, topMargin, new StringFormat(StringFormatFlags.DirectionRightToLeft));
 
-            // Iterate over the file, printing each line.
-            while (count < linesPerPage &&
-               ((line = _streamToPrint.ReadLine()) != null))
+            ev.Graphics.DrawString("Deportista", PrintFont, Brushes.DodgerBlue, leftMargin, topMargin + 2 * lineSpaceing);
+            ev.Graphics.DrawString(_ticketToPrint.Deportista, PrintFont, Brushes.DodgerBlue, leftMargin + 100, topMargin + 2 * lineSpaceing);
+
+            ev.Graphics.DrawString("Deporte", PrintFont, Brushes.DodgerBlue, leftMargin, topMargin + 3 * lineSpaceing);
+            ev.Graphics.DrawString(_ticketToPrint.Deporte, PrintFont, Brushes.DodgerBlue, leftMargin + 100, topMargin + 3 * lineSpaceing);
+
+            ev.Graphics.DrawString("Dependencia", PrintFont, Brushes.DodgerBlue, leftMargin, topMargin + 4 * lineSpaceing);
+            ev.Graphics.DrawString(_ticketToPrint.Dependencia, PrintFont, Brushes.DodgerBlue, leftMargin + 100, topMargin + 4 * lineSpaceing);
+
+            ev.Graphics.DrawString("Comida", PrintFont, Brushes.DodgerBlue, leftMargin, topMargin + 5 * lineSpaceing);
+            ev.Graphics.DrawString(_ticketToPrint.Comida, PrintFont, Brushes.DodgerBlue, leftMargin + 100, topMargin + 5 * lineSpaceing);
+
+            var sf = new StringFormat
             {
-                var yPos = topMargin + (count * _printFont.GetHeight(ev.Graphics));
-                ev.Graphics.DrawString(line, _printFont, Brushes.Black,
-                   leftMargin, yPos, new StringFormat());
-                count++;
-            }
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+            ev.Graphics.DrawString("Grupo y Raciones", PrintFont, Brushes.DodgerBlue, leftMargin + 140, topMargin + 8 * lineSpaceing, sf);
+            ev.Graphics.DrawString(_ticketToPrint.GrupoRaciones, PrintFont, Brushes.DodgerBlue, leftMargin + 140, topMargin + 9 * lineSpaceing, sf);
 
-            // If more lines exist, print another page.
-            ev.HasMorePages = line != null;
+
+            ev.Graphics.DrawString("Proteninas", PrintFont, Brushes.DodgerBlue, leftMargin + (float)46.66666666666667, topMargin + 14 * lineSpaceing, sf);
+            ev.Graphics.DrawString("Carbohidratos", PrintFont, Brushes.DodgerBlue, leftMargin + 140, topMargin + 14 * lineSpaceing, sf);
+            ev.Graphics.DrawString("Lipidos", PrintFont, Brushes.DodgerBlue, leftMargin + (float)233.33333333333333, topMargin + 14 * lineSpaceing, sf);
+
+            ev.Graphics.DrawString(_ticketToPrint.GramosProteina.ToString(), PrintFont, Brushes.DodgerBlue, leftMargin + (float)46.66666666666667, topMargin + 15 * lineSpaceing, sf);
+            ev.Graphics.DrawString(_ticketToPrint.GramosCarboHidratos.ToString(), PrintFont, Brushes.DodgerBlue, leftMargin + 140, topMargin + 15 * lineSpaceing, sf);
+            ev.Graphics.DrawString(_ticketToPrint.GramosLipidos.ToString(), PrintFont, Brushes.DodgerBlue, leftMargin + (float)233.33333333333333, topMargin + 15 * lineSpaceing, sf);
+
+            ev.Graphics.DrawString("Observaciones", PrintFont, Brushes.DodgerBlue, leftMargin, topMargin + 16 * lineSpaceing);
+            ev.Graphics.DrawString(_ticketToPrint.GrupoRaciones, PrintFont, Brushes.DodgerBlue, leftMargin, topMargin + 17 * lineSpaceing);
         }
-
-        // Print the file.
-        public void Printing()
+        
+        public void Printing(Ticket ticket)
         {
             try
             {
-                _streamToPrint = new StreamReader(@"..\..\App.config");
-                try
-                {
-                    _printFont = new Font("Arial", 10);
-                    var pd = new PrintDocument();
-                    pd.PrintPage += pd_PrintPage;
-                    // Print the document.
-                    pd.Print();
-                }
-                finally
-                {
-                    _streamToPrint.Close();
-                }
+                _ticketToPrint = ticket;
+                var pd = new PrintDocument();
+                var paper = new PaperSize("Custom", 300, 394);
+                pd.DefaultPageSettings.PaperSize = paper;
+                pd.DefaultPageSettings.Margins = new Margins(10, 10, 10, 10);
+                pd.PrintPage += pd_PrintPage;
+                // Print the document.
+                pd.Print();
+
             }
             catch (Exception ex)
             {
@@ -162,6 +169,10 @@ namespace ServiciosCafeteria.Instancias
             }
         }
 
+        public void Imprimir(Ticket ticket)
+        {
+            Printing(ticket);
+        }
     }
 }
 

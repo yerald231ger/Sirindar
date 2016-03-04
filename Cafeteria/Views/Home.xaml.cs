@@ -25,7 +25,7 @@ namespace Cafeteria.Views
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
-    public partial class Home : Page
+    public partial class Home
     {
         private Reloj reloj;
         private ISirindarApi api;
