@@ -7,26 +7,70 @@
       d:DesignHeight="340" d:DesignWidth="900"
 	Title="Login">
     <Grid Focusable="False">
-        <Rectangle Fill="#FF102F66" Stroke="#FF00498E" Margin="445,0,0,0" RadiusX="14.3" RadiusY="14.3" StrokeThickness="1.4"/>
-        <Grid HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="455" Margin="445,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="28*"/>
-                <RowDefinition Height="7*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="13*"/>
-                <RowDefinition Height="4*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="79*"/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="label" Content="Inicio de Sesion" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="40" Margin="107,25,108,15" FontFamily="Segoe UI Semibold" FontSize="24" Foreground="White" Grid.Column="1" Grid.RowSpan="2"/>
-            <DockPanel Grid.Column="1" Height="65" LastChildFill="False" Grid.Row="4" VerticalAlignment="Top" Margin="220,0,0,0">
-                <Button x:Name="btnLogIn" Focusable="True"  Content="Entrar" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" Width="160" Height="45" FontSize="24" FontFamily="Segoe UI Semibold" Grid.Row="2" Grid.Column="1" DockPanel.Dock="Top" Click="GetLogin">
+            <Rectangle Fill="#FF102F66" Stroke="#FF00498E" RadiusX="4.3" RadiusY="4.3" StrokeThickness="1.4" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3"/>
+            <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="1">
+                <ProgressBar Name="pbrLogin" Visibility="Hidden" IsIndeterminate="True" DockPanel.Dock="Top" Margin="0,0,0,50" Height="10"/>
+                <Label x:Name="lblInicioSesion" DockPanel.Dock="Bottom" Content="Inicio de Sesion" FontFamily="Segoe UI Light" FontSize="20" Foreground="White" Margin="0,-25,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,1,5,5">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.168"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.497"/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+            </DockPanel>
+            <Grid Grid.Column="1" Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="18*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="9*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="9*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" Grid.Row="1">
+                    <Label Content="Usuario" Name="lblUsuario" FontFamily="Segoe UI Light" FontSize="20" Height="35" Foreground="White" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="tbxUserName" TextWrapping="Wrap" FontSize="18" MaxLength="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="35" FontFamily="Segoe UI Light" UndoLimit="20"/>
+                    <Label Content="Contraseña" x:Name="lblContraseña" FontFamily="Segoe UI Light" FontSize="20" Foreground="White" Height="35" HorizontalContentAlignment="Center" Margin="0,15,0,0"/>
+                    <PasswordBox x:Name="tbxContraseña" PasswordChar="*" FontSize="18"  MaxLength="18"  FontFamily="Segoe UI Light" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="tbxContraseña_KeyDown" Height="35"/>
+                    <Label x:Name="lblLoginFail" Content="Escribe tu usuario/contraseña" Visibility="Visible" Height="25" VerticalAlignment="Top" Foreground="#FFE42525" HorizontalContentAlignment="Center" Padding="5,5,5,0" FontSize="13.333"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24*"/>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="9*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnLogIn" Focusable="True"  Content="Entrar" FontSize="20" FontFamily="Segoe UI Semibold" Click="GetLogin" Margin="0" Grid.Column="1" Grid.Row="1">
                     <Button.Style>
-                        <Style TargetType="Button">
+                        <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#FFFDB930" />
                             <Setter Property="Foreground" Value="#FF102E65" />
                             <Setter Property="Padding" Value="-4" />
@@ -53,17 +97,9 @@
                         </Style>
                     </Button.Style>
                 </Button>
-            </DockPanel>
-            <StackPanel HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="375" Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-                <Label Content="Usuario" VerticalAlignment="Center" Width="115" Height="40" FontFamily="Segoe UI Semibold" FontSize="20" Foreground="White"/>
-                <TextBox Name="tbxUserName" Height="40" Margin="30,10,0,10" TextWrapping="Wrap" Width="216" FontSize="18" MaxLength="23" FontFamily="Segoe UI Semibold" UndoLimit="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalScrollBarVisibility="Disabled"/>
-            </StackPanel>
-            <StackPanel  Grid.Column="1" Grid.Row="2" Margin="10,86,10,14" Orientation="Horizontal">
-                <Label Content="Contraseña" Width="146" Height="40" FontFamily="Segoe UI Semibold" FontSize="20"  Foreground="White"/>
-                <PasswordBox Name="tbxContraseña" PasswordChar="*" Height="40" Width="216" FontSize="18"  MaxLength="18"  FontFamily="Segoe UI Semibold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="tbxContraseña_KeyDown"/>
-            </StackPanel>
-            <ProgressBar Name="pbrLogin" Visibility="Hidden" IsIndeterminate="True" HorizontalAlignment="Left" Height="10" Margin="10,15,0,0" VerticalAlignment="Top" Width="375" Grid.Column="1"></ProgressBar>
-            <Label x:Name="lblLoginFail" Visibility="Hidden" HorizontalAlignment="Left" Height="35" Margin="10,0,0,0" VerticalAlignment="Top" Width="375" Grid.Column="1" Grid.Row="3" Foreground="#FFE42525" HorizontalContentAlignment="Center" Padding="5,5,5,0" FontSize="16"/>
+            </Grid>
+
         </Grid>
+
     </Grid>
 </Page>
