@@ -139,8 +139,7 @@ namespace Sirindar.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
-        //
+        
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -185,10 +184,7 @@ namespace Sirindar.Controllers
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
             return View(model);
         }
-
-
-        //
-        // POST: /Account/Register
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
