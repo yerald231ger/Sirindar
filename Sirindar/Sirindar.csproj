@@ -226,12 +226,15 @@
     <Content Include="Content\ng-grid.css" />
     <Content Include="Content\ng-grid.min.css" />
     <Content Include="Content\sb-admin-2.css" />
+    <Content Include="Content\sirindar.css" />
     <Content Include="Content\timeline.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Resource Include="LogoAdmin.png" />
+    <Resource Include="logoFASPYN.png" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -1053,6 +1056,10 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sb-admin-2.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="sHeaderSirindar.bmp" />
+    <Content Include="sHeaderSirindar.jpg" />
+    <Content Include="sHeaderSirindar.png" />
+    <Content Include="sHeaderSirindarTransparent.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
