@@ -1,0 +1,105 @@
+﻿<Page x:Class="Cafeteria.Views.Login"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="340" d:DesignWidth="900"
+	Title="Login">
+    <Grid Focusable="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="13*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="#FF102F66" Stroke="#FF00498E" RadiusX="4.3" RadiusY="4.3" StrokeThickness="1.4" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3"/>
+            <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="1">
+                <ProgressBar Name="pbrLogin" Visibility="Hidden" IsIndeterminate="True" DockPanel.Dock="Top" Margin="0,0,0,50" Height="10"/>
+                <Label x:Name="lblInicioSesion" DockPanel.Dock="Bottom" Content="Inicio de Sesion" FontFamily="Segoe UI Light" FontSize="20" Foreground="White" Margin="0,-25,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,1,5,5">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.168"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.497"/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+            </DockPanel>
+            <Grid Grid.Column="1" Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="18*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="9*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="9*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" Grid.Row="1">
+                    <Label Content="Usuario" Name="lblUsuario" FontFamily="Segoe UI Light" FontSize="20" Height="35" Foreground="White" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="tbxUserName" TextWrapping="Wrap" FontSize="18" MaxLength="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="35" FontFamily="Segoe UI Light" UndoLimit="20"/>
+                    <Label Content="Contraseña" x:Name="lblContraseña" FontFamily="Segoe UI Light" FontSize="20" Foreground="White" Height="35" HorizontalContentAlignment="Center" Margin="0,15,0,0"/>
+                    <PasswordBox x:Name="tbxContraseña" PasswordChar="*" FontSize="18"  MaxLength="18"  FontFamily="Segoe UI Light" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="tbxContraseña_KeyDown" Height="35"/>
+                    <Label x:Name="lblLoginFail" Content="Escribe tu usuario/contraseña" Visibility="Visible" Height="25" VerticalAlignment="Top" Foreground="#FFE42525" HorizontalContentAlignment="Center" Padding="5,5,5,0" FontSize="13.333"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24*"/>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="9*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnLogIn" Focusable="True"  Content="Entrar" FontSize="20" FontFamily="Segoe UI Semibold" Click="GetLogin" Margin="0" Grid.Column="1" Grid.Row="1">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#FFFDB930" />
+                            <Setter Property="Foreground" Value="#FF102E65" />
+                            <Setter Property="Padding" Value="-4" />
+                            <Setter Property="Margin" Value="10,35,0,0" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FFF5AA12"/>
+                                    <Setter Property="Foreground" Value="#FF102E65"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Foreground" Value="#FF102F66"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Page>

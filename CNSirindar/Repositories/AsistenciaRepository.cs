@@ -33,7 +33,7 @@ namespace CNSirindar.Repositories
             {
                 try
                 {
-                    db.Entry(entity);
+                    db.Entry(entity).State = EntityState.Added;
                     db.SaveChanges();
                 }
                 catch (Exception)

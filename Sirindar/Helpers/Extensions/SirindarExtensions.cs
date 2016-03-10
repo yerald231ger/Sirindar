@@ -7,6 +7,7 @@ using Sirindar.Models;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
+using CNSirindar;
 
 namespace Sirindar.Helpers.Extensions
 {

@@ -15,16 +15,28 @@ namespace CNSirindar.Models
     [Table("TblHorarios")]
     public class Horario : TableDbConventions
     {
+        /// <summary>
+        /// Id del horario
+        /// </summary>
         public int HorarioId { get; set; }
 
+        /// <summary>
+        /// Nombre del Horario
+        /// </summary>
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public ComidasDia Nombre { get; set; }
 
+        /// <summary>
+        /// Hora en la que inicia el horario
+        /// </summary>
         [Required]
         [DataType(DataType.Time)]
         public virtual TimeSpan Inicia { get; set; }
 
+        /// <summary>
+        /// Hora en la que termina el horario
+        /// </summary>
         [Required]
         [DataType(DataType.Time)]
         public virtual TimeSpan Finaliza { get; set; }      
@@ -34,6 +46,7 @@ namespace CNSirindar.Models
     {
         Desayuno,
         Comida,
-        Cena
+        Cena,
+        Ninguna
     }
 }

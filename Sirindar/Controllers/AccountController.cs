@@ -14,6 +14,8 @@ using Newtonsoft.Json;
 using System.DirectoryServices;
 using System.Configuration;
 using System.Data.Entity;
+using CNSirindar.Models;
+using CNSirindar;
 
 namespace Sirindar.Controllers
 {
@@ -21,15 +23,17 @@ namespace Sirindar.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new SirindarDbContext())))
+            : this(
+                new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new SirindarDbContext())),
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new SirindarDbContext())))
         {
 
         }
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             UserManager = userManager;
-            RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new SirindarDbContext()));
+            RoleManager = roleManager;
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -86,6 +90,28 @@ namespace Sirindar.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Create()
+        {
+            ViewBag.Role = new SelectList(RoleManager.Roles.ToList(), "Name", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Nombre,PrimerApellido,SegundoApellido,Telefono,Email")] ApplicationUser user, string role)
+        {
+            user.UserName = user.Email.Split('@')[0];
+            user.FechaModificacion = DateTime.Now;
+            user.FechaAlta = DateTime.Now;
+            user.EsActivo = true;
+            if (UserManager.Create(user).Succeeded)
+                if (UserManager.AddToRole(user.Id, role).Succeeded)
+                    return RedirectToAction("Index");
+
+            ViewBag.Role = new SelectList(RoleManager.Roles.ToList(), "Name", "Name");
+            return RedirectToAction("Create");
+        }
+
         public ActionResult Delete(string id)
         {
             return PartialView(UserManager.FindById(id));
@@ -97,7 +123,7 @@ namespace Sirindar.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             UserManager.FindById(id).EsActivo = false;
-            using (var db = new SirindarDbContext()) 
+            using (var db = new SirindarDbContext())
             {
                 db.Users.Where(u => u.Id == id).First().EsActivo = false;
                 db.SaveChanges();
@@ -113,8 +139,7 @@ namespace Sirindar.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
-        //
+        
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -138,11 +163,13 @@ namespace Sirindar.Controllers
 
                     string messageResult = null;
 
-                    user = new ApplicationUser { UserName = model.UserName };
-                    var result = await UserManager.CreateAsync(user, model.Password);
+                    user = new ApplicationUser { UserName = model.UserName, Email = model.UserName + "@uanl.mx" };
+
+                    var result = UserManager.Create(user, model.Password);
 
                     if (result.Succeeded)
                     {
+                        UserManager.AddToRole(user.Id, "User");
                         await SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", "Home");
                     }
@@ -157,10 +184,7 @@ namespace Sirindar.Controllers
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
             return View(model);
         }
-
-
-        //
-        // POST: /Account/Register
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -168,10 +192,10 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() 
-                { 
-                    UserName = model.UserName, 
-                    Nombre = model.Nombre, 
+                var user = new ApplicationUser()
+                {
+                    UserName = model.UserName,
+                    Nombre = model.Nombre,
                     Email = model.Email,
                     EsActivo = true,
                     FechaAlta = DateTime.Now

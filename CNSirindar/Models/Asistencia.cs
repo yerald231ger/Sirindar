@@ -6,11 +6,13 @@ using CNSirindar.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization.Formatters;
+using System.Runtime.Serialization;
 using CNSirindar;
+using Newtonsoft.Json;
 
 namespace CNSirindar.Models
 {
-
     [Table("TblAsistencias")]
     public class Asistencia : TableDbConventions
     {
@@ -22,11 +24,13 @@ namespace CNSirindar.Models
         public int DeportistaId { get; set; }
 
         public int HorarioId { get; set; }
-
-        [Required]
+        
+        [JsonIgnore]
+        [IgnoreDataMember]
         public Deportista Deportista { get; set; }
 
-        [Required]
+        [JsonIgnore]
+        [IgnoreDataMember]
         public Horario Horario { get; set; }        
     
         public List<Asistencia> List()

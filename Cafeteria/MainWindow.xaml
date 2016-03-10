@@ -1,8 +1,42 @@
 ﻿<Window x:Class="Cafeteria.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" 
+        Height="679" Width="952" 
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" WindowState="Maximized">
+    <Grid Background="#FFFDB930">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="118*"/>
+            <RowDefinition Height="409*"/>
+            <RowDefinition Height="86*"/>
+        </Grid.RowDefinitions>
+        <Frame Focusable="False"  Name="frmA" Source="/Cafeteria;component/Views/Login.xaml" ContentRendered="frmA_ContentRendered" Grid.Row="3"/>
+        <Image x:Name="image1" Source="Images/logo.png" Panel.ZIndex="2" HorizontalAlignment="Left" Width="175" Stretch="Fill" Grid.RowSpan="2"/>
+        <Image x:Name="image2" Source="Images/header.png" Stretch="Fill" Panel.ZIndex="1" Margin="0,-5,0,0"/>
+        <Image x:Name="image" OpacityMask="Black" Source="Images/header_image_.jpg" Stretch="Fill" Grid.Row="1" Grid.RowSpan="2"/>
+        <StackPanel Height="90" VerticalAlignment="Top" Width="160" Orientation="Horizontal" HorizontalAlignment="Right" Panel.ZIndex="4" Grid.RowSpan="3">
+            <StackPanel Orientation="Horizontal" Panel.ZIndex="5" Width="105" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,4,0,0">
+                <Label x:Name="lblHora" Content="00" HorizontalAlignment="Left" Padding="0" VerticalAlignment="Top" Width="26" FontSize="22.667" Foreground="White" FontFamily="Segoe UI Semilight" Height="37" HorizontalContentAlignment="Right"/>
+                <Label Content=":" HorizontalAlignment="Left" Padding="0,0,0,2" VerticalAlignment="Top" Width="4" FontSize="22.667" Foreground="White" FontFamily="Segoe UI Semilight" Height="30" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,-1,0,0"/>
+                <Label x:Name="lblMinutos" Content="00" HorizontalAlignment="Left" Padding="2,0,0,0" VerticalAlignment="Top" Width="28" FontSize="22.667" Foreground="White" FontFamily="Segoe UI Semilight" Height="37" HorizontalContentAlignment="Right"/>
+                <Label Content=":" HorizontalAlignment="Left" Padding="0,0,0,2" VerticalAlignment="Top" Width="6" FontSize="22.667" Foreground="White" FontFamily="Segoe UI Semilight" Height="30" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,-1,0,0"/>
+                <Label x:Name="lblSegundos" Content="00" HorizontalAlignment="Left" Padding="0" VerticalAlignment="Top" Width="25" FontSize="22.667" Foreground="White" FontFamily="Segoe UI Semilight" Height="37" HorizontalContentAlignment="Right" Margin="0"/>
+            </StackPanel>
+            <Image Margin="0,-2,269,2" Width="56" Source="Images/logoFASPYN.png" HorizontalAlignment="Right"/>
+        </StackPanel>
+        <DockPanel LastChildFill="False" Grid.Row="4" Background="#FFF2F4F6">
+            <Image Panel.ZIndex="4" Height="30" VerticalAlignment="Top" Source="Images/footer.png" Stretch="Fill" DockPanel.Dock="Top"/>
+            <Button 
+            	x:Name="BtnSalir" 
+            	Content="Salir" FontSize="24" 
+            	FontFamily="Segoe UI Semibold" 
+            	Click="Salir"
+            	Panel.ZIndex="5" DockPanel.Dock="Left" Margin="10,9,0,10" Width="65"/>
+            <Image Panel.ZIndex="5" Source="Images/LogoAdmin.png" DockPanel.Dock="Right" Margin="0,-12,0,12"/>
+        </DockPanel>
+
     </Grid>
 </Window>

@@ -39,7 +39,6 @@ namespace CNSirindar.Repositories
                 }
                 catch (Exception e)
                 {
-
                     return false;
                 }
             }

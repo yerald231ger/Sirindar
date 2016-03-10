@@ -69,6 +69,10 @@ namespace CNSirindar.Models
         public virtual ICollection<AsignacionBloque> AsignacionesBloques { get; set; }
         public virtual ICollection<DeporteDeportista> DeportesDeportistas { get; set; }
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 
     public enum Status

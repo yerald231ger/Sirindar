@@ -1,0 +1,123 @@
+﻿.sirindar-login {
+    background-color: #163E7C;
+}
+
+    .sirindar-login fieldset {
+        margin: 20px;
+    }
+
+#sirindar-login-logoFaspyn {
+    position: absolute;
+    margin-left: 70%;
+    margin-right: 30%;
+    margin-top: -1px;
+}
+
+#sirindar-login-panel {
+    border-top-color: gray;
+}
+
+#sirindar-navbar {
+    background: rgba(20,60,128,1);
+    background: -moz-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(20,60,128,1)), color-stop(100%, rgba(15,44,93,1)));
+    background: -webkit-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    background: -o-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    background: -ms-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    background: linear-gradient(to bottom, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#143c80', endColorstr='#0f2c5d', GradientType=0 );
+}
+
+    #sirindar-navbar > div > a {
+        color: white;
+    }
+
+        #sirindar-navbar > div > a:hover {
+            color: yellow;
+        }
+
+#sirindar-user-manage > a {
+    color: white;
+}
+
+    #sirindar-user-manage > a:hover {
+        background: rgba(20,60,128,1);
+        background: -moz-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(20,60,128,1)), color-stop(100%, rgba(15,44,93,1)));
+        background: -webkit-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+        background: -o-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+        background: -ms-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+        background: linear-gradient(to bottom, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#143c80', endColorstr='#0f2c5d', GradientType=0 );
+        color: yellow;
+    }
+
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background: rgba(20,60,128,1);
+    background: -moz-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(20,60,128,1)), color-stop(100%, rgba(15,44,93,1)));
+    background: -webkit-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    background: -o-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    background: -ms-linear-gradient(top, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    background: linear-gradient(to bottom, rgba(20,60,128,1) 0%, rgba(15,44,93,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#143c80', endColorstr='#0f2c5d', GradientType=0 );
+}
+
+.sirinadr-login-panel-head {
+    color: #FFF;
+    background-color: #F0AD4E;
+    border-color: #F0AD4E;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.sirindar-nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.sirindar-nav > li {
+    position: relative;
+    display: block;
+    background-color: gray;
+    border-bottom: 1px solid #62666D;
+}
+
+.sirindar-nav > li:hover {
+    background-color: #969696;
+}
+
+.sirindar-nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    color: white;
+}
+
+.sirindar-nav > li > a:hover {
+    text-decoration: none;
+}
+
+li.sirindar-header {
+    background-color: #FEBA31;
+    background-image: url('../fondo-universidad.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    font-weight: bold;
+}
+
+li.sirindar-header:hover {
+    background-color: #FEBA31;
+}
+
+li.sirindar-subheader, li.sirindar-subheader:hover {
+    background-color: #11336D;
+}
+
+.sirindar-disable-pointer {
+    cursor: default;
+}
