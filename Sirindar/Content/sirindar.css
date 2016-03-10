@@ -72,3 +72,52 @@
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
+
+.sirindar-nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.sirindar-nav > li {
+    position: relative;
+    display: block;
+    background-color: gray;
+    border-bottom: 1px solid #62666D;
+}
+
+.sirindar-nav > li:hover {
+    background-color: #969696;
+}
+
+.sirindar-nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    color: white;
+}
+
+.sirindar-nav > li > a:hover {
+    text-decoration: none;
+}
+
+li.sirindar-header {
+    background-color: #FEBA31;
+    background-image: url('../fondo-universidad.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    font-weight: bold;
+}
+
+li.sirindar-header:hover {
+    background-color: #FEBA31;
+}
+
+li.sirindar-subheader, li.sirindar-subheader:hover {
+    background-color: #11336D;
+}
+
+.sirindar-disable-pointer {
+    cursor: default;
+}

@@ -16,7 +16,7 @@
     <!-- Morris Charts CSS -->
     <link href="~/Content/morris.css" rel="stylesheet" />
     <!-- Custom Fonts -->
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet"/>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom Sirindar CSS -->
     <link href="~/Content/sirindar.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -38,12 +38,12 @@
         </div>
         <div id="wrapper" style="background-color: white">
             <!-- Navigation -->
-            <nav class="navbar navbar-default navbar-static-top" role="navigation"  style="margin-bottom: 0;border-bottom-width: thin;border-bottom-color: #0E2D62;">
-                <div class="col-md-12" style="background-image: url('../../sHeaderSirindar.png'); background-repeat: round;">
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;border-bottom-width: thin;border-bottom-color: #0E2D62;">
+                <div class="col-md-12" style="background-image: url('../../sHeaderSirindar.png'); background-repeat: round; background-size: contain;">
                     <img src="~/sHeaderSirindarTransparent.png" style="width: 100%; height: 100%;" />
                 </div>
             </nav>
-            <nav id="sirindar-navbar" class="navbar navbar-default navbar-static-top" role="navigation"  style="margin-bottom: 0;border-bottom-width: thin;border-bottom-color: #091E5D;">
+            <nav id="sirindar-navbar" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;border-bottom-width: thin;border-bottom-color: #091E5D;">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -60,50 +60,36 @@
                 {
                     <div class="navbar-default sidebar" role="navigation">
                         <div class="sidebar-nav navbar-collapse">
-                            <ul class="nav" id="side-menu">
-
-                                <li>
-                                    @Html.ActionLink("UTILERIAS", "Index", "Home")
+                            <ul class="sirindar-nav">
+                                <li class="sirindar-header">
+                                    <a class="sirindar-disable-pointer">UTILERIAS</a>
                                 </li>
-                                <li class="divider"></li>
-                                <li class="divider"></li>
-                                <li class="divider"></li>
-                                <li class="divider"></li>
-                                <li class="divider"></li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#"><i class="fa fa-th-list fa-fw"></i> CATALAGOS<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-second-level">
-                                        <li>
-                                            @Html.ActionLink("Usuarios", "Index", "Account")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Deportes", "Index", "Deportes")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Bloques", "Index", "Bloques")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Horarios", "Index", "Horarios")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Deportistas", "Index", "Deportistas")
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-second-level -->
+                                <li class="sirindar-subheader">
+                                    <a class="sirindar-disable-pointer">CATALAGOS</a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-edit fa-fw"></i> ASIGNACIONES<span class="fa arrow"></span>
-                                    </a>
-                                    <ul class="nav nav-second-level">
-                                        <li>
-                                            @Html.ActionLink("Asignacion Bloques", "Index", "AsignacionBloques")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Asignacion Comidas", "Index", "AsignacionHorarios")
-                                        </li>
-                                    </ul>
+                                    <a href="@Url.Action("Index", "Account")"><i class="fa fa-users fa-fw"></i> Usuarios</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Deportes")"><i class="fa fa-dribbble fa-fw"></i> Deportes</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Bloques")"><i class="fa fa-tasks fa-fw"></i> Bloques</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index","Horarios")"><i class="fa fa-clock-o fa-fw"></i> Horarios</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Deportistas")"><i class="fa fa-trophy fa-fw"></i> Deportistas</a>
+                                </li>
+                                <li class="sirindar-subheader">
+                                    <a class="sirindar-disable-pointer">ASIGNACIONES</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "AsignacionBloques")"><i class="fa fa-edit fa-fw"></i> Asignacion Bloques</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "AsignacionHorarios")"><i class="fa fa-edit fa-fw"></i> Asignacion Comidas</a>
                                 </li>
                             </ul>
                         </div>
