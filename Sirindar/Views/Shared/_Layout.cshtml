@@ -5,134 +5,138 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- MetisMenu CSS -->
+    <link href="~/Content/metisMenu.min.css" rel="stylesheet" />
+    <!-- Timeline CSS -->
+    <link href="~/Content/timeline.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/Content/sb-admin-2.css" rel="stylesheet" />
+    <!-- Morris Charts CSS -->
+    <link href="~/Content/morris.css" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom Sirindar CSS -->
+    <link href="~/Content/sirindar.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body>
-    <div class="modal fade" id="idModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+<body style="background-color: lightgray">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        @*Modal que se muestra en toda la pagina*@
+        <div class="modal fade" id="idModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
+        <div id="wrapper" style="background-color: white">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;border-bottom-width: thin;border-bottom-color: #0E2D62;">
+                <div class="col-md-12" style="background-image: url('../../sHeaderSirindar.png'); background-repeat: round; background-size: contain;">
+                    <img src="~/sHeaderSirindarTransparent.png" style="width: 100%; height: 100%;" />
+                </div>
+            </nav>
+            <nav id="sirindar-navbar" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;border-bottom-width: thin;border-bottom-color: #091E5D;">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home", null)">SIRINDAR</a>
+                </div>
+                <!-- /.navbar-header -->
                 @Html.Partial("_LoginPartial")
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-                    <li><a href="@Url.Action("Index","Account",new{})">Usuarios</a></li>
-                    <li><a href="@Url.Action("Index","Deportes",new{})">Deportes</a></li>
-                    <li><a href="@Url.Action("Index","Bloques",new{})">Bloques</a></li>
-                    <li><a href="@Url.Action("Index","Horarios",new{})">Horarios</a></li>
-                    <li><a href="@Url.Action("Index","Deportistas",new{})">Deportistas</a></li>
-                    <li><a href="@Url.Action("Index","AsignacionBloques", new { })">Asignacion Bloques</a></li>
-                    <li><a href="@Url.Action("Index","AsignacionHorarios",new{})">Asignacion Comidas</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        <div class="row">
-            <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
+                <!-- /.navbar-top-links -->
                 @if (User.IsInRole("Admin"))
                 {
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Utilerias</h3>
+                    <div class="navbar-default sidebar" role="navigation">
+                        <div class="sidebar-nav navbar-collapse">
+                            <ul class="sirindar-nav">
+                                <li class="sirindar-header">
+                                    <a class="sirindar-disable-pointer">UTILERIAS</a>
+                                </li>
+                                <li class="sirindar-subheader">
+                                    <a class="sirindar-disable-pointer">CATALAGOS</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Account")"><i class="fa fa-users fa-fw"></i> Usuarios</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Deportes")"><i class="fa fa-dribbble fa-fw"></i> Deportes</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Bloques")"><i class="fa fa-tasks fa-fw"></i> Bloques</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index","Horarios")"><i class="fa fa-clock-o fa-fw"></i> Horarios</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Deportistas")"><i class="fa fa-trophy fa-fw"></i> Deportistas</a>
+                                </li>
+                                <li class="sirindar-subheader">
+                                    <a class="sirindar-disable-pointer">ASIGNACIONES</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "AsignacionBloques")"><i class="fa fa-edit fa-fw"></i> Asignacion Bloques</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "AsignacionHorarios")"><i class="fa fa-edit fa-fw"></i> Asignacion Comidas</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="panel-body">
-
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>CATÁLOGOS</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td> </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="@Url.Action("Index","Account",new{})"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Usuarios</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="@Url.Action("Index", "Deportes", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Deportes</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="@Url.Action("Index", "Bloques", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Bloques</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="@Url.Action("Index", "Horarios", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Horarios</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="@Url.Action("Index", "Deportistas", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Deportistas</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br />
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ASIGNACIONES</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td> </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="@Url.Action("Index", "AsignacionBloques", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Asignacion Bloques</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="@Url.Action("Index", "AsignacionHorarios", new { })"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> Asignacion Horarios</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <!-- /.sidebar-collapse -->
                     </div>
                 }
-                else
-                {
-                    <div class="alert alert-info" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span class="sr-only">Error:</span>
-                        Sirindar by DGI.
-                    </div>
-                }
-            </div>
-            <div class="col-md-9 col-sm-8 col-xs-12">
+                <!-- /.navbar-static-side -->
+            </nav>
+            <div id="page-wrapper">
                 @RenderBody()
-                <hr />
-                <footer>
-                    <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-                </footer>
             </div>
+
+            <!-- /#page-wrapper -->
         </div>
+
+
+
+        @*@Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")*@
+        <!-- /#wrapper -->
+        <!-- jQuery -->
+        <script src="~/Scripts/jquery.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="~/Scripts/metisMenu.min.js"></script>
+        <!-- Morris Charts JavaScript -->
+        <script src="~/Scripts/raphael-min.js"></script>
+        @*<script src="~/Scripts/morris.min.js"></script>
+            <script src="~/Scripts/morris-data.js"></script>*@
+        <!-- Custom Theme JavaScript -->
+        <script src="~/Scripts/sb-admin-2.js"></script>
+        @Scripts.Render("~/bundles/angularjs")
+        @RenderSection("scripts", required: false)
+        <script>
+            $("#myCollapsible").on('show.bs.collapse', function () {
+                alert(2);
+            });
+            $("#myCollapsible").on('hide.bs.collapse', function () {
+                alert(2);
+            });
+
+            function ff() { $("#myCollapsible").collapse('toggle'); }
+
+        </script>
     </div>
+    <div class="col-md-1"></div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/angularjs")
-    @RenderSection("scripts", required: false)
-    <script>
-        $("#myCollapsible").on('show.bs.collapse', function () {
-            alert(2);
-        });
-        $("#myCollapsible").on('hide.bs.collapse', function () {
-            alert(2);
-        });
-        function ff() { $("#myCollapsible").collapse('toggle'); }
-
-    </script>
 </body>
 </html>
