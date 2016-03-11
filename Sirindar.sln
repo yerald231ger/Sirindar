@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirindarApi", "SirindarApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiciosCafeteria", "SirindarApiService\ServiciosCafeteria.csproj", "{467F7CA3-592C-40AE-A0E1-DAB94AF10CB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar.Common", "Sirindar.Common\Sirindar.Common.csproj", "{E98A29B7-22D6-42F3-9864-6E64E3800D8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar.Entity", "Sirindar.Entity\Sirindar.Entity.csproj", "{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -43,6 +47,14 @@ Global
 		{467F7CA3-592C-40AE-A0E1-DAB94AF10CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{467F7CA3-592C-40AE-A0E1-DAB94AF10CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{467F7CA3-592C-40AE-A0E1-DAB94AF10CB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E98A29B7-22D6-42F3-9864-6E64E3800D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E98A29B7-22D6-42F3-9864-6E64E3800D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E98A29B7-22D6-42F3-9864-6E64E3800D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E98A29B7-22D6-42F3-9864-6E64E3800D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

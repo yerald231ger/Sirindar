@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
-using CNSirindar.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace CNSirindar
+namespace Sirindar.Entity
 {
     public class SirindarDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -21,7 +18,7 @@ namespace CNSirindar
             modelBuilder.Properties<DateTime>().Where(t => t.Name == "FechaAlta").Configure(c => c.HasColumnType("datetime"));
             modelBuilder.Properties<DateTime>().Where(t => t.Name == "FechaModificacion").Configure(c => c.HasColumnType("datetime"));
             modelBuilder.Properties<DateTime>().Where(t => t.Name == "FechaNacimiento").Configure(c => c.HasColumnType("date"));
-            
+
             base.OnModelCreating(modelBuilder);
         }
 
