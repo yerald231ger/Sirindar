@@ -39,9 +39,6 @@ namespace CNSirindar.Models
 
         public virtual GrupoAlimenticio GrupoAlimenticio { get; set; }
 
-        public virtual Bloque Bloque { get; set; }
-
-
-        
+        public virtual Bloque Bloque { get; set; }        
     }
 }

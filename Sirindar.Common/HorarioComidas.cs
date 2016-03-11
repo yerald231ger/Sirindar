@@ -1,6 +1,6 @@
 ﻿namespace Sirindar.Common
 {
-    public class CantidadComidas : TableDbConventions
+    public class HorarioComidas : TableDbConventions
     {
         public int DeportistaId { get; set; }
         public NumeroComidas Cantidad { get; set; }

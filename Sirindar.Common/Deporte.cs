@@ -9,10 +9,10 @@ namespace Sirindar.Common
         public int ClasificacionDeporteId { get; set; }
 
         public ClasificacionDeporte Clasificacion { get; set; }
-        public virtual IEnumerable<Deportista> Deportistas { get; set; }
-        public IEnumerable<Entrenador> Entrenadores { get; set; }
-        public IEnumerable<DeporteDeportista> DeportesDeportistas { get; set; }
-        public IEnumerable<AsignacionBloque> AsignacionesBloques { get; set; }       
+        public virtual ICollection<Deportista> Deportistas { get; set; }
+        public ICollection<Entrenador> Entrenadores { get; set; }
+        public ICollection<DeporteDeportista> DeportesDeportistas { get; set; }
+        public ICollection<AsignacionBloque> AsignacionesBloques { get; set; }       
     }
 
     public enum Energia

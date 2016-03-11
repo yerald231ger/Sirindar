@@ -7,7 +7,7 @@ namespace Sirindar.Common
         public string Nombre { get; set; }
         public int KilocaloriasTotales { get; set; }
 
-        public IEnumerable<Grupo> Grupos { get; set; }
-        public IEnumerable<AsignacionBloque> AsignacionesBloques { get; set; }
+        public ICollection<Grupo> Grupos { get; set; }
+        public ICollection<AsignacionBloque> AsignacionesBloques { get; set; }
     }
 }

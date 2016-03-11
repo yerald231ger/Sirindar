@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sirindar.Common;
 
 namespace Sirindar.Entity
 {
@@ -33,7 +36,7 @@ namespace Sirindar.Entity
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<GrupoAlimenticio> GruposAlimenticios { get; set; }
         public DbSet<DeporteDeportista> DeportesDeportistas { get; set; }
-        public DbSet<CantidadComidas> CantidadComidas { get; set; }
+        public DbSet<HorarioComidas> CantidadComidas { get; set; }
         public DbSet<AsignacionBloque> AsigancionesBloques { get; set; }
     }
 

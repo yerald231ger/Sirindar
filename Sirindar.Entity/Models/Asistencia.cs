@@ -10,19 +10,16 @@ using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization;
 using CNSirindar;
 using Newtonsoft.Json;
-using Sirindar.Common;
 
 namespace CNSirindar.Models
 {
     [Table("TblAsistencias")]
-    public class Asistencia_ : Sirindar.Common.Asistencia
+    public class Asistencia : TableDbConventions
     {
         public int AsistenciaId { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime HoraAsistencia { get; set; }
-
-        
 
         public int DeportistaId { get; set; }
 
@@ -36,5 +33,14 @@ namespace CNSirindar.Models
         [IgnoreDataMember]
         public Horario Horario { get; set; }        
     
+        public List<Asistencia> List()
+        {
+            var list = new List<Asistencia>();
+            using (var db = new SirindarDbContext())
+            {
+                list = db.Asistencias.WhereIsActive();
+            }
+            return list;
+        }
     }
 }

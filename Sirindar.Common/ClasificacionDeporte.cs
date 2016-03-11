@@ -6,6 +6,6 @@ namespace Sirindar.Common
         public int ClasificacionDeporteId { get; set; }
         public string Descripcion { get; set; }
         public string Abreviatura { get; set; }
-        public IEnumerable<Deporte> Deportes { get; set; }        
+        public ICollection<Deporte> Deportes { get; set; }        
     }
 }

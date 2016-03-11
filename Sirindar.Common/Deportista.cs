@@ -10,12 +10,12 @@ namespace Sirindar.Common
         public Status Status { get; set; }
         public DateTime FechaRegistro { get; set; }
         public Dependencia Dependencia { get; set; }
-        public CantidadComidas CantidadComidas { get; set; }
+        public HorarioComidas HorarioComidas { get; set; }
 
         public virtual IEnumerable<Deporte> Deportes { get; set; }
-        public IEnumerable<Asistencia> Asistencias { get; set; }
-        public IEnumerable<AsignacionBloque> AsignacionesBloques { get; set; }
-        public IEnumerable<DeporteDeportista> DeportesDeportistas { get; set; }
+        public ICollection<Asistencia> Asistencias { get; set; }
+        public ICollection<AsignacionBloque> AsignacionesBloques { get; set; }
+        public ICollection<DeporteDeportista> DeportesDeportistas { get; set; }
     }
 
     public enum Status
