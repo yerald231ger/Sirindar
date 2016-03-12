@@ -42,7 +42,7 @@
     <Compile Include="AsignacionBloque.cs" />
     <Compile Include="Asistencia.cs" />
     <Compile Include="Bloque.cs" />
-    <Compile Include="CantidadComidas.cs" />
+    <Compile Include="HorarioComidas.cs" />
     <Compile Include="ClasificacionDeporte.cs" />
     <Compile Include="Dependencia.cs" />
     <Compile Include="Deporte.cs" />

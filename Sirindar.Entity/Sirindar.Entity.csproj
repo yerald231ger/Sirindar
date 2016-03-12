@@ -36,6 +36,12 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -46,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConfigurations\AsignacionBloqueConfiguration.cs" />
+    <Compile Include="EntityConfigurations\AsistenciaConfiguration.cs" />
+    <Compile Include="EntityConfigurations\BloqueConfiguration.cs" />
+    <Compile Include="EntityConfigurations\ClasificacionDeporteConfiguration.cs" />
+    <Compile Include="EntityConfigurations\DependenciaConfiguration.cs" />
+    <Compile Include="EntityConfigurations\HorarioComidasConfiguration.cs" />
     <Compile Include="Models\AsignacionBloque.cs" />
     <Compile Include="Models\Asistencia.cs" />
     <Compile Include="Models\Bloque.cs" />
