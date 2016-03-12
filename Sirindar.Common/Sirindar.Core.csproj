@@ -53,12 +53,26 @@
     <Compile Include="GrupoAlimenticio.cs" />
     <Compile Include="Horario.cs" />
     <Compile Include="Persona.cs" />
+    <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IApplicationUserRepository.cs" />
+    <Compile Include="Repositories\IAsignacionBloqueRepository.cs" />
+    <Compile Include="Repositories\IAsistenciaRepository.cs" />
+    <Compile Include="Repositories\IBloqueRepository.cs" />
+    <Compile Include="Repositories\IClasificacionDeporte.cs" />
+    <Compile Include="Repositories\IDependenciaRepository.cs" />
+    <Compile Include="Repositories\IDeporteDeportistaRepository.cs" />
+    <Compile Include="Repositories\IDeporteRepository.cs" />
+    <Compile Include="Repositories\IDeportistaRepository.cs" />
+    <Compile Include="Repositories\IEntrenadorRepository.cs" />
+    <Compile Include="Repositories\IGrupoAlimenticioRepository.cs" />
+    <Compile Include="Repositories\IGrupoRepository.cs" />
+    <Compile Include="Repositories\IHorarioComidasRepository.cs" />
+    <Compile Include="Repositories\IHorarioRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="TableDbConventions.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

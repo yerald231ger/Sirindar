@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar", "Sirindar\Sirindar.csproj", "{F9114D87-89FE-43D0-94CE-DD947A3363EA}"
 EndProject
@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirindarApi", "SirindarApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiciosCafeteria", "SirindarApiService\ServiciosCafeteria.csproj", "{467F7CA3-592C-40AE-A0E1-DAB94AF10CB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar.Common", "Sirindar.Common\Sirindar.Common.csproj", "{E98A29B7-22D6-42F3-9864-6E64E3800D8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar.Core", "Sirindar.Common\Sirindar.Core.csproj", "{E98A29B7-22D6-42F3-9864-6E64E3800D8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar.Entity", "Sirindar.Entity\Sirindar.Entity.csproj", "{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}"
 EndProject
