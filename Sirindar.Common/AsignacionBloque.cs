@@ -3,9 +3,9 @@
     public class AsignacionBloque : TableDbConventions
     {
         public int AsignacionBloqueId { get; set; }
-        public virtual int DeportistaId { get; set; }
-        public virtual int DeporteId { get; set; }
-        public virtual int BloqueId { get; set; }
+        public int DeportistaId { get; set; }
+        public int DeporteId { get; set; }
+        public int BloqueId { get; set; }
         public virtual Deportista Deportista { get; set; }
         public virtual Deporte Deporte { get; set; }
         public virtual Bloque Bloque { get; set; }

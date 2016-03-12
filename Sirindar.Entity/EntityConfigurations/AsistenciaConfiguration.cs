@@ -17,13 +17,13 @@ namespace Sirindar.Entity.EntityConfigurations
             HasKey(a => a.AsistenciaId);
 
             Property(a => a.HoraAsistencia)
-                .HasColumnType("DataTime");
+                .HasColumnType("DateTime");
 
-            HasRequired<Deportista>(a => a.Deportista)
+            HasRequired(a => a.Deportista)
                 .WithMany(d => d.Asistencias)
                 .HasForeignKey(a => a.AsistenciaId);
 
-            HasRequired<Horario>(a => a.Horario);
+            HasRequired(a => a.Horario);
         }
     }
             //Property(c => c.Description)

@@ -5,7 +5,7 @@ namespace Sirindar.Common
     {
         public virtual int GrupoAlimenticioId { get; set; }
         public virtual string Grupo { get; set; }
-        public virtual IEnumerable<Grupo> Grupos { get; set; } 
+        public virtual ICollection<Grupo> Grupos { get; set; } 
 
     }
     

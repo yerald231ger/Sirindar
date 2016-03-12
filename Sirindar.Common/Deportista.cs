@@ -9,13 +9,13 @@ namespace Sirindar.Common
         public string Matricula { get; set; }
         public Status Status { get; set; }
         public DateTime FechaRegistro { get; set; }
-        public Dependencia Dependencia { get; set; }
-        public HorarioComidas HorarioComidas { get; set; }
+        public virtual Dependencia Dependencia { get; set; }
+        public virtual HorarioComidas HorarioComidas { get; set; }
 
-        public virtual IEnumerable<Deporte> Deportes { get; set; }
-        public ICollection<Asistencia> Asistencias { get; set; }
-        public ICollection<AsignacionBloque> AsignacionesBloques { get; set; }
-        public ICollection<DeporteDeportista> DeportesDeportistas { get; set; }
+        public IEnumerable<Deporte> Deportes { get; set; }
+        public virtual ICollection<Asistencia> Asistencias { get; set; }
+        public virtual ICollection<AsignacionBloque> AsignacionesBloques { get; set; }
+        public virtual ICollection<DeporteDeportista> DeportesDeportistas { get; set; }
     }
 
     public enum Status
