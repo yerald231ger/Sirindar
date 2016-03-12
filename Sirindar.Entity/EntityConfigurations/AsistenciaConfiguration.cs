@@ -12,7 +12,7 @@ namespace Sirindar.Entity.EntityConfigurations
     {
         public AsistenciaConfiguration() 
         {
-            ToTable("TblAsistencia");
+            ToTable("TblAsistencias");
 
             HasKey(a => a.AsistenciaId);
 

@@ -12,7 +12,7 @@ namespace Sirindar.Entity.EntityConfigurations
     {
         public ClasificacionDeporteConfiguration() 
         {
-            ToTable("TblClasificacionDeporte");
+            ToTable("TblClasificacionDeportes");
 
             HasKey(c => c.ClasificacionDeporteId);
 
@@ -25,13 +25,9 @@ namespace Sirindar.Entity.EntityConfigurations
                 .HasMaxLength(5);
 
             HasMany(c => c.Deportes)
-                .WithRequired(d => d.Clasificaion)
+                .WithRequired(d => d.Clasificacion)
                 .HasForeignKey(d => d.ClasificacionDeporteId);
         }
 
-        private object HasMany(Func<ClasificacionDeporte, ICollection<TTargetEntity>> func)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

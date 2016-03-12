@@ -6,7 +6,7 @@ namespace Sirindar.Common
         public virtual int DependenciaId { get; set; }
         public virtual string Nombre { get; set; }
         public virtual string Clave { get; set; }
-        public virtual IEnumerable<Deportista> Deportistas { get; set; }
-        public virtual IEnumerable<Entrenador> Entrenadores { get; set; }
+        public virtual ICollection<Deportista> Deportistas { get; set; }
+        public virtual ICollection<Entrenador> Entrenadores { get; set; }
     }
 }

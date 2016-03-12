@@ -12,7 +12,7 @@ namespace Sirindar.Entity.EntityConfigurations
     {
         public AsignacionBloqueConfiguration() 
         {
-            ToTable("TblAsignacionBloque");
+            ToTable("TblAsignacionBloques");
 
             HasKey(b => b.AsignacionBloqueId);
 
