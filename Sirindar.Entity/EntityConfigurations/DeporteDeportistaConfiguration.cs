@@ -12,11 +12,11 @@ namespace Sirindar.Entity.EntityConfigurations
             HasKey(dd => dd.DeporteDeportistaId);
 
             Property(dd => dd.IniciaEntrenamiento)
-                .HasColumnType("Time(7)")
+                .HasColumnType("Time")
                 .IsOptional();
 
             Property(dd => dd.FinalizaEntrenamiento)
-                .HasColumnType("Time(7)")
+                .HasColumnType("Time")
                 .IsOptional();
            
             HasRequired(dd => dd.Deporte)

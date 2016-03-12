@@ -3,12 +3,12 @@ namespace Sirindar.Common
 {
     public class Asistencia : TableDbConventions
     {
-        public virtual int AsistenciaId { get; set; }
-        public virtual DateTime HoraAsistencia { get; set; }
+        public int AsistenciaId { get; set; }
+        public DateTime HoraAsistencia { get; set; }
         public int DeportistaId { get; set; }
         public int HorarioId { get; set; }        
-        public Deportista Deportista { get; set; }
-        public Horario Horario { get; set; }   
+        public virtual Deportista Deportista { get; set; }
+        public virtual Horario Horario { get; set; }   
     }
 
 }

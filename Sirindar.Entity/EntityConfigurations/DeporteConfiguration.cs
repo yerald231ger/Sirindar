@@ -20,13 +20,8 @@ namespace Sirindar.Entity.EntityConfigurations
             HasRequired(d => d.Clasificacion)
                 .WithMany(c => c.Deportes)
                 .HasForeignKey(d => d.ClasificacionDeporteId);
-
-            HasMany(d => d.Entrenadores)
-                .WithMany(e => e.Deportes);
-
-            HasMany(d => d.DeportesDeportistas)
-                .WithRequired(dd => dd.Deporte)
-                .HasForeignKey(dd => dd.DeporteId);
+            
+            
         }
     }
 }

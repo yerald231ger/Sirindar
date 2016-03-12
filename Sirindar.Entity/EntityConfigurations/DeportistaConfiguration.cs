@@ -31,9 +31,6 @@ namespace Sirindar.Entity.EntityConfigurations
             HasRequired(d => d.HorarioComidas)
                 .WithRequiredPrincipal(d => d.Deportista);
             
-            HasMany(d => d.DeportesDeportistas)
-                .WithRequired(dd => dd.Deportista)
-                .HasForeignKey(dd => dd.DeportistaId);
             
         }
     }

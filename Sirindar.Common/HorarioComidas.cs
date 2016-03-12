@@ -11,7 +11,7 @@
         public bool Viernes { get; set; }
         public bool Sabado { get; set; }
         public bool Domingo { get; set; }
-        public Deportista Deportista { get; set; }
+        public virtual Deportista Deportista { get; set; }
     }
 
     public enum NumeroComidas

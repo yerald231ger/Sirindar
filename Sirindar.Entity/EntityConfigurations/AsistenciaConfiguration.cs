@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity.ModelConfiguration;
 using Sirindar.Common;
 
 namespace Sirindar.Entity.EntityConfigurations
@@ -21,7 +16,7 @@ namespace Sirindar.Entity.EntityConfigurations
 
             HasRequired(a => a.Deportista)
                 .WithMany(d => d.Asistencias)
-                .HasForeignKey(a => a.AsistenciaId);
+                .HasForeignKey(a => a.DeportistaId);
 
             HasRequired(a => a.Horario);
         }

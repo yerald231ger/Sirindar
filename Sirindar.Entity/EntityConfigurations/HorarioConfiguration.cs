@@ -20,11 +20,11 @@ namespace Sirindar.Entity.EntityConfigurations
                 .IsRequired();
 
             Property(h => h.Inicia)
-                .HasColumnType("Time(7)")
+                .HasColumnType("Time")
                 .IsRequired();
 
             Property(h => h.Finaliza)
-                .HasColumnType("Time(7)")
+                .HasColumnType("Time")
                 .IsRequired();
         }
     }

@@ -8,8 +8,8 @@ namespace Sirindar.Common
         public int DeportistaId { get; set; }
         public int DeporteId { get; set; }
 
-        public Deportista Deportista { get; set; }
-        public Deporte Deporte { get; set; }
+        public virtual Deportista Deportista { get; set; }
+        public virtual Deporte Deporte { get; set; }
         
         public TimeSpan IniciaEntrenamiento { get; set; }
         public TimeSpan FinalizaEntrenamiento { get; set; }

@@ -10,7 +10,7 @@
         public string Equivalencias { get; set; }
         public int BloqueId { get; set; }
         public int GrupoAlimenticioId { get; set; }
-        public GrupoAlimenticio GrupoAlimenticio { get; set; }
-        public Bloque Bloque { get; set; }        
+        public virtual GrupoAlimenticio GrupoAlimenticio { get; set; }
+        public virtual Bloque Bloque { get; set; }        
     }
 }

@@ -5,7 +5,7 @@ namespace Sirindar.Common
     {
         public int EntrenadorId { get; set; }
 
-        public ICollection<Deporte> Deportes { get; set; }
-        public ICollection<Dependencia> Dependencias { get; set; }
+        public virtual ICollection<Deporte> Deportes { get; set; }
+        public virtual ICollection<Dependencia> Dependencias { get; set; }
     }
 }
