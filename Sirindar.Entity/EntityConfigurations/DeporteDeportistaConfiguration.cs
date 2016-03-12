@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using Sirindar.Common;
+using Sirindar.Core;
 
 namespace Sirindar.Entity.EntityConfigurations
 {

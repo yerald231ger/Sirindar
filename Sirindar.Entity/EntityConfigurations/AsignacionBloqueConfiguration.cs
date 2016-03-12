@@ -1,4 +1,4 @@
-﻿using Sirindar.Common;
+﻿using Sirindar.Core;
 using System.Data.Entity.ModelConfiguration;
 
 namespace Sirindar.Entity.EntityConfigurations

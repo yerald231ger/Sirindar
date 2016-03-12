@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sirindar.Common;
+using Sirindar.Core;
 
 namespace Sirindar.Entity.EntityConfigurations
 {

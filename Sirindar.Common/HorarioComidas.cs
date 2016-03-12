@@ -1,4 +1,4 @@
-﻿namespace Sirindar.Common
+﻿namespace Sirindar.Core
 {
     public class HorarioComidas : TableDbConventions
     {

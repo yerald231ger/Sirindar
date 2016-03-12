@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace Sirindar.Common
+namespace Sirindar.Core
 {
-    public class Deportista : Persona
+    public class Deportista : IPersona
     {
         public int DeportistaId { get; set; }
         public int DependenciaId { get; set; }

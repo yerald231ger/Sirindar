@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Sirindar.Common;
+using Sirindar.Core;
 using Sirindar.Entity.EntityConfigurations;
 
 namespace Sirindar.Entity
@@ -33,9 +33,6 @@ namespace Sirindar.Entity
             modelBuilder.Properties<DateTime>().Where(t => t.Name == "FechaAlta").Configure(c => c.HasColumnType("datetime"));
             modelBuilder.Properties<DateTime>().Where(t => t.Name == "FechaModificacion").Configure(c => c.HasColumnType("datetime"));
             modelBuilder.Properties<DateTime>().Where(t => t.Name == "FechaNacimiento").Configure(c => c.HasColumnType("date"));
-            modelBuilder.Properties<string>().Where(t => t.Name == "Nombre").Configure(c => c.IsRequired());
-            modelBuilder.Properties<string>().Where(t => t.Name == "Appellidos").Configure(c => c.IsRequired());
-            modelBuilder.Properties<Generos>().Configure(c => c.IsRequired());
             base.OnModelCreating(modelBuilder);
         }
 

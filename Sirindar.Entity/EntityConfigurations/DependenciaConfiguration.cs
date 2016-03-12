@@ -1,4 +1,4 @@
-﻿using Sirindar.Common;
+﻿using Sirindar.Core;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-namespace Sirindar.Common
+namespace Sirindar.Core
 {
     public class Deporte : TableDbConventions
     {
@@ -8,8 +8,9 @@ namespace Sirindar.Common
         public Energia TipoEnergia { get; set; }
         public int ClasificacionDeporteId { get; set; }
 
-        public ClasificacionDeporte Clasificacion { get; set; }
-        public virtual ICollection<Deportista> Deportistas { get; set; }
+        public ICollection<Deportista> Deportistas { get; set; }
+
+        public virtual ClasificacionDeporte Clasificacion { get; set; }
         public virtual ICollection<Entrenador> Entrenadores { get; set; }
         public virtual ICollection<DeporteDeportista> DeportesDeportistas { get; set; }
         public virtual ICollection<AsignacionBloque> AsignacionesBloques { get; set; }       

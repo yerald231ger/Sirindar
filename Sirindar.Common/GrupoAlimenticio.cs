@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-namespace Sirindar.Common
+namespace Sirindar.Core
 {
     public class GrupoAlimenticio : TableDbConventions
     {

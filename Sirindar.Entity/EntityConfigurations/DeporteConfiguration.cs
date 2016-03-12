@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using Sirindar.Common;
+using Sirindar.Core;
 
 namespace Sirindar.Entity.EntityConfigurations
 {
@@ -10,6 +10,8 @@ namespace Sirindar.Entity.EntityConfigurations
             ToTable("TblDeportes");
 
             HasKey(d => d.DeporteId);
+
+            Ignore(d => d.Deportistas);
 
             Property(d => d.Nombre)
                 .HasMaxLength(50);

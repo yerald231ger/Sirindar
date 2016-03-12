@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Sirindar.Common
+namespace Sirindar.Core
 {
     public class DeporteDeportista : TableDbConventions
     {
