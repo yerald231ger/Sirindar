@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
-using CNSirindar.Models;
-using CNSirindar;
-using CNSirindar.Repositories;
+using Sirindar.Entity;
 using SirindarApi.Models.Remotos;
 
 namespace SirindarApi.Controllers

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}</ProjectGuid>
+    <ProjectGuid>{176316F4-9DD8-4FA3-83BB-05B42B179A70}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sirindar.Entity</RootNamespace>
-    <AssemblyName>Sirindar.Entity</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Sirindar.Repositories</RootNamespace>
+    <AssemblyName>Sirindar.Repositories</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,17 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -49,31 +45,28 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityConfigurations\ApplicationUserConfiguration.cs" />
-    <Compile Include="EntityConfigurations\AsignacionBloqueConfiguration.cs" />
-    <Compile Include="EntityConfigurations\AsistenciaConfiguration.cs" />
-    <Compile Include="EntityConfigurations\BloqueConfiguration.cs" />
-    <Compile Include="EntityConfigurations\ClasificacionDeporteConfiguration.cs" />
-    <Compile Include="EntityConfigurations\DependenciaConfiguration.cs" />
-    <Compile Include="EntityConfigurations\DeporteConfiguration.cs" />
-    <Compile Include="EntityConfigurations\DeporteDeportistaConfiguration.cs" />
-    <Compile Include="EntityConfigurations\DeportistaConfiguration.cs" />
-    <Compile Include="EntityConfigurations\EntrenadorConfiguration.cs" />
-    <Compile Include="EntityConfigurations\GrupoAlimenticioConfiguration.cs" />
-    <Compile Include="EntityConfigurations\GrupoConfiguration.cs" />
-    <Compile Include="EntityConfigurations\HorarioComidasConfiguration.cs" />
-    <Compile Include="EntityConfigurations\HorarioConfiguration.cs" />
-    <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\201603122335436_InitialCreate.cs" />
-    <Compile Include="Migrations\201603122335436_InitialCreate.Designer.cs">
-      <DependentUpon>201603122335436_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AsignacionBloqueRepository.cs" />
+    <Compile Include="AsistenciaRepository.cs" />
+    <Compile Include="BloqueRepository.cs" />
+    <Compile Include="ClasificacionRepository.cs" />
+    <Compile Include="DependenciaRepository.cs" />
+    <Compile Include="DeporteDeportistaRepository.cs" />
+    <Compile Include="DeporteRepository.cs" />
+    <Compile Include="DeportistaRepository.cs" />
+    <Compile Include="EntrenadorRepository.cs" />
+    <Compile Include="GrupoAlimenticioRepository.cs" />
+    <Compile Include="GrupoRepository.cs" />
+    <Compile Include="HorarioComidasRepository.cs" />
+    <Compile Include="HorarioRepository.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="SirindarDbContext.cs" />
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="UsuarioRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sirindar.Common\Sirindar.Core.csproj">
@@ -84,11 +77,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603122335436_InitialCreate.resx">
-      <DependentUpon>201603122335436_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

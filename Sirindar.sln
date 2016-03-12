@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar.Core", "Sirindar.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar.Entity", "Sirindar.Entity\Sirindar.Entity.csproj", "{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirindar.Repositories", "Sirindar.Repositories\Sirindar.Repositories.csproj", "{176316F4-9DD8-4FA3-83BB-05B42B179A70}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -55,6 +57,10 @@ Global
 		{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4B582E6-2DA6-4B34-9CC2-E51198C1502A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{176316F4-9DD8-4FA3-83BB-05B42B179A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{176316F4-9DD8-4FA3-83BB-05B42B179A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{176316F4-9DD8-4FA3-83BB-05B42B179A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{176316F4-9DD8-4FA3-83BB-05B42B179A70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

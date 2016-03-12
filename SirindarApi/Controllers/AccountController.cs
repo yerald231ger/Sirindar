@@ -13,10 +13,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Sirindar.Entity;
 using SirindarApi.Models;
 using SirindarApi.Providers;
 using SirindarApi.Results;
-using CNSirindar.Models;
 
 namespace SirindarApi.Controllers
 {

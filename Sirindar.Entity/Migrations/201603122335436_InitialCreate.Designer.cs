@@ -13,7 +13,7 @@ namespace Sirindar.Entity.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201603121731588_InitialCreate"; }
+            get { return "201603122335436_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

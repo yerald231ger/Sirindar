@@ -1,6 +1,4 @@
-﻿using Sirindar.Common;
-
-namespace Sirindar.Core
+﻿namespace Sirindar.Core
 {
     public class Usuario : Persona
     {

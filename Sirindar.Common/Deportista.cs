@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace Sirindar.Core
 {
-    public class Deportista : IPersona
+    public class Deportista : Persona
     {
         public int DeportistaId { get; set; }
         public int DependenciaId { get; set; }

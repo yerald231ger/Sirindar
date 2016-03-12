@@ -9,7 +9,7 @@ namespace Sirindar.Entity
     public class SirindarDbContext : IdentityDbContext<ApplicationUser>
     {
         public SirindarDbContext()
-            : base("CNSirindarConnectionString")
+            : base("SirindarEntityConnectionString")
         {
         }
 
