@@ -1,51 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using Sirindar.Helpers.Extensions;
+using Sirindar.Core;
+using Sirindar.Core.UnitOfWork;
 using Sirindar.Helpers;
-using CNSirindar.Models;
-using CNSirindar.Repositories;
 
 namespace Sirindar.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class DeportesController : Controller
     {
-        private IRepository<Deporte, int> _deporte;
-        private IRepository<ClasificacionDeporte, int> _clasificacion;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeportesController(
-            IRepository<Deporte, int> deporte,
-            IRepository<ClasificacionDeporte, int> clasificacion
-            )
+        public DeportesController(IUnitOfWork unitOfWork)
         {
-            this._deporte = deporte;
-            this._clasificacion = clasificacion;
+            _unitOfWork = unitOfWork;
         }
 
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_deporte.List().Take(100), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, NullValueHandling = NullValueHandling.Include }));
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportes.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, NullValueHandling = NullValueHandling.Include }));
             return View();
         }
-
-        public JsonResult GetItemsJson(int start, int count)
-        {
-            var l = _deporte.List().Count;
-            if (start > l)
-                return null;
-            count = (start + count > l) ? l - start : count;
-            return Json(JsonConvert.SerializeObject(_deporte.List().GetRange(start, count), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), JsonRequestBehavior.AllowGet);
-        }
-
+        
         public ActionResult Create()
         {
-            ViewBag.clasificacionDeporteId = new SelectList(_clasificacion.List(), "ClasificacionDeporteId", "Descripcion");
+            ViewBag.clasificacionDeporteId = new SelectList(_unitOfWork.ClasificacionesDeportes.GetAll(), "ClasificacionDeporteId", "Descripcion");
             return View();
         }
 
@@ -58,10 +39,11 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _deporte.Create(deporte);
+                _unitOfWork.Deportes.Add(deporte);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            ViewBag.clasificacionDeporteId = new SelectList(_clasificacion.List(), "ClasificacionDeporteId", "Descripcion");
+            ViewBag.clasificacionDeporteId = new SelectList(_unitOfWork.ClasificacionesDeportes.GetAll(), "ClasificacionDeporteId", "Descripcion");
             return View(deporte);
         }
 
@@ -72,14 +54,14 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Deporte deporte = _deporte.Read(id);
+            var deporte = _unitOfWork.Deportes.Get(id.Value);
             if (deporte == null)
             {
                 return HttpNotFound();
             }
 
             ViewBag.TipoEnergia = new SelectList(SirindarControls.EnumAsList<Energia>(), "Value", "Text", (int)deporte.TipoEnergia);
-            ViewBag.clasificacionDeporteId = new SelectList(_clasificacion.List(), "ClasificacionDeporteId", "Descripcion", deporte.Clasificacion.ClasificacionDeporteId);
+            ViewBag.clasificacionDeporteId = new SelectList(_unitOfWork.ClasificacionesDeportes.GetAll(), "ClasificacionDeporteId", "Descripcion", deporte.Clasificacion.ClasificacionDeporteId);
             return View(deporte);
         }
 
@@ -92,12 +74,16 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                deporte.ClasificacionDeporteId = clasificacionDeporteId;
-                _deporte.Update(deporte);
+                var _deporte = _unitOfWork.Deportes.Get(deporte.DeporteId);
+                _deporte.Nombre = deporte.Nombre;
+                _deporte.TipoEnergia = deporte.TipoEnergia;
+                _deporte.Clasificacion = deporte.Clasificacion;
+                _deporte.ClasificacionDeporteId = deporte.ClasificacionDeporteId;
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
             ViewBag.TipoEnergia = new SelectList(SirindarControls.EnumAsList<Energia>(), "Value", "Text", (int)deporte.TipoEnergia);
-            ViewBag.clasificacionDeporteId = new SelectList(_clasificacion.List(), "ClasificacionDeporteId", "Descripcion", deporte.Clasificacion.ClasificacionDeporteId);
+            ViewBag.clasificacionDeporteId = new SelectList(_unitOfWork.ClasificacionesDeportes.GetAll(), "ClasificacionDeporteId", "Descripcion", deporte.Clasificacion.ClasificacionDeporteId);
             return View(deporte);
         }
 
@@ -108,7 +94,7 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Deporte deporte = _deporte.Read(id);
+            var deporte = _unitOfWork.Deportes.Get(id.Value);
             if (deporte == null)
             {
                 return HttpNotFound();
@@ -121,7 +107,7 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _deporte.Delete(id);
+            _unitOfWork.Deportes.Remove(id);
             return RedirectToAction("Index");
         }
 
