@@ -2,6 +2,6 @@
 {
     public interface IDeporteDeportistaRepository : IRepository<DeporteDeportista, int>
     {
-         
+        DeporteDeportista FindByDeporteId(int deporteId);
     }
 }

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using System.Web.UI;
+using Sirindar.Core;
+using Sirindar.Core.UnitOfWork;
 using Sirindar.Helpers;
-using CNSirindar.Repositories;
-using CNSirindar.Models;
 using Sirindar.Models;
 
 namespace Sirindar.Controllers
@@ -18,45 +14,25 @@ namespace Sirindar.Controllers
     [Authorize(Roles = "Admin")]
     public class DeportistasController : Controller
     {
-        private IRepository<DeporteDeportista, int> _deporteDeportista;
-        private IRepository<Dependencia, int> _dependencia;
-        private IRepository<Deportista, int> _deportista;
-        private IRepository<Deporte, int> _deporte;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeportistasController(
-            IRepository<DeporteDeportista, int> deporteDeportista,
-            IRepository<Dependencia, int> dependencia,
-            IRepository<Deportista, int> deportista,
-            IRepository<Deporte, int> deporte            
-            ) 
+        public DeportistasController(IUnitOfWork unitOfWork)
         {
-            this._deporte = deporte;
-            this._deportista = deportista;
-            this._dependencia = dependencia;
-            this._deporteDeportista = deporteDeportista;
+            _unitOfWork = unitOfWork;
         }
- 
+
         // GET: /Deportistas/
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_deportista.List(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportes.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             return View();
         }
-
-        //public ActionResult GetItemsJson(int start, int count)
-        //{
-        //    var l = deportistaR.List().Count;
-        //    if (start > l)
-        //        return null;
-        //    count = (start + count > l) ? l - start : count;
-        //    return Json(JsonConvert.SerializeObject(deportistaR.List().GetRange(start, count), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), JsonRequestBehavior.AllowGet);
-        //}
 
         // GET: /Deportistas/Create
         public ActionResult Create()
         {
-            ViewBag.DependenciaId = new SelectList(_dependencia.List(), "DependenciaId", "Nombre");
-            ViewBag.DeporteId = new SelectList(_deporte.List(), "DeporteId", "Nombre");
+            ViewBag.DependenciaId = new SelectList(_unitOfWork.Dependencias.GetAll(), "DependenciaId", "Nombre");
+            ViewBag.DeporteId = new SelectList(_unitOfWork.Deportes.GetAll(), "DeporteId", "Nombre");
             return View();
         }
 
@@ -78,18 +54,18 @@ namespace Sirindar.Controllers
                     Status = model.Status,
                     DependenciaId = model.DependenciaId,
                     FechaNacimiento = model.FechaNacimiento,
-                    DeportesDeportistas = new List<DeporteDeportista> 
+                    DeportesDeportistas = new List<DeporteDeportista>
                     {
                         new DeporteDeportista
                         {
                             DeporteId = model.DeporteId,
-                            IniciaEntrenamiento = model.IniciaEntrenamiento,
-                            FinalizaEntrenamiento = model.FinalizaEntrenamiento,
-                            FechaAlta = DateTime.Now,                        
+                            IniciaEntrenamiento = model.IniciaEntrenamiento.Value,
+                            FinalizaEntrenamiento = model.FinalizaEntrenamiento.Value,
+                            FechaAlta = DateTime.Now,
                             EsActivo = true
                         }
                     },
-                    AsignacionesBloques = new List<AsignacionBloque> 
+                    AsignacionesBloques = new List<AsignacionBloque>
                     {
                         new AsignacionBloque
                         {
@@ -98,18 +74,18 @@ namespace Sirindar.Controllers
                             EsActivo = true
                         }
                     },
-                    CantidadComidas = new CantidadComidas
+                    HorarioComidas = new HorarioComidas
                     {
                         Cantidad = NumeroComidas.Uno,
                         FechaAlta = DateTime.Now,
                         EsActivo = true
                     }
                 };
-                _deportista.Create(deportista);
+                _unitOfWork.Deportistas.Add(deportista);
                 return RedirectToAction("Index");
             }
-            ViewBag.DeporteId = new SelectList(_deporte.List(), "DeporteId", "Nombre");
-            ViewBag.DependenciaId = new SelectList(_dependencia.List(), "DependenciaId", "Nombre");
+            ViewBag.DeporteId = new SelectList(_unitOfWork.Deportes.GetAll(), "DeporteId", "Nombre");
+            ViewBag.DependenciaId = new SelectList(_unitOfWork.Dependencias.GetAll(), "DependenciaId", "Nombre");
             return View(model);
         }
 
@@ -120,7 +96,13 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var deportista = _deportista.Read(id);
+            var deportista = _unitOfWork.Deportistas.GetWithDeportes(id.Value);
+
+            if (deportista == null)
+            {
+                return HttpNotFound();
+            }
+
             var model = new DeportistaEditViewModel
             {
                 DeportistaId = deportista.DeportistaId,
@@ -128,20 +110,16 @@ namespace Sirindar.Controllers
                 Nombre = deportista.Nombre,
                 Apellidos = deportista.Apellidos,
                 Genero = deportista.Genero,
-                FechaNacimiento = (DateTime)deportista.FechaNacimiento,
+                FechaNacimiento = deportista.FechaNacimiento,
                 DependenciaId = deportista.DependenciaId,
                 Status = deportista.Status
             };
-            if (deportista == null)
-            {
-                return HttpNotFound();
-            }
 
             ViewBag.Deportes = deportista.Deportes;
-            ViewBag.Edad = ((TimeSpan)(DateTime.Now - deportista.FechaNacimiento)).Days / 365;
+            ViewBag.Edad = (DateTime.Now - deportista.FechaNacimiento).Days / 365;
             ViewBag.Status = new SelectList(SirindarControls.EnumAsList<Status>(), "Value", "Text", (int)deportista.Status);
             ViewBag.Genero = new SelectList(SirindarControls.EnumAsList<Generos>(), "Value", "Text", (int)deportista.Genero);
-            ViewBag.DependenciaId = new SelectList(_dependencia.List(), "DependenciaId", "Nombre", deportista.DependenciaId);
+            ViewBag.DependenciaId = new SelectList(_unitOfWork.Dependencias.GetAll(), "DependenciaId", "Nombre", deportista.DependenciaId);
             return View(model);
         }
 
@@ -154,26 +132,28 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var deportista = new Deportista
-                {
-                    DeportistaId = model.DeportistaId,
-                    Matricula = model.Matricula,
-                    Nombre = model.Nombre,
-                    Apellidos = model.Apellidos,
-                    Genero = model.Genero,
-                    Status = model.Status,
-                    DependenciaId = model.DependenciaId,
-                    FechaNacimiento = model.FechaNacimiento
-                };
-                _deportista.Update(deportista);
+
+                var deportista = _unitOfWork.Deportistas.GetWithDeportes(model.DeportistaId);
+
+                deportista.DeportistaId = model.DeportistaId;
+                deportista.Matricula = model.Matricula;
+                deportista.Nombre = model.Nombre;
+                deportista.Apellidos = model.Apellidos;
+                deportista.Genero = model.Genero;
+                deportista.Status = model.Status;
+                deportista.DependenciaId = model.DependenciaId;
+                deportista.FechaNacimiento = model.FechaNacimiento;
+
+                _unitOfWork.Complete();
+
                 return RedirectToAction("Edit", new { id = model.DeportistaId });
             }
 
-            ViewBag.Deportes = GeneralRepository.GetDeportes(model.DeportistaId);
-            ViewBag.Edad = ((TimeSpan)(DateTime.Now - model.FechaNacimiento)).Days / 365;
+            ViewBag.Deportes = _unitOfWork.Deportistas.GetWithDeportes(model.DeportistaId).Deportes;
+            ViewBag.Edad = (DateTime.Now - model.FechaNacimiento).Days / 365;
             ViewBag.Status = new SelectList(SirindarControls.EnumAsList<Status>(), "Value", "Text", (int)model.Status);
             ViewBag.Genero = new SelectList(SirindarControls.EnumAsList<Generos>(), "Value", "Text", (int)model.Genero);
-            ViewBag.DependenciaId = new SelectList(_dependencia.List(), "DependenciaId", "Nombre", model.DependenciaId);
+            ViewBag.DependenciaId = new SelectList(_unitOfWork.Dependencias.GetAll(), "DependenciaId", "Nombre", model.DependenciaId);
             return View(model);
         }
 
@@ -184,7 +164,7 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Deportista deportista = _deportista.Read(id);
+            var deportista = _unitOfWork.Deportistas.Get(id.Value);
             if (deportista == null)
             {
                 return HttpNotFound();
@@ -197,8 +177,8 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Deportista deportista = _deportista.Read(id);
-            _deportista.Delete(deportista.DeportistaId);
+            _unitOfWork.Deportistas.Remove(id);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
 
@@ -209,7 +189,7 @@ namespace Sirindar.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             ViewBag.DeportistaId = deportistaId;
-            ViewBag.DeporteId = new SelectList(_deporte.List(), "DeporteId", "Nombre");
+            ViewBag.DeporteId = new SelectList(_unitOfWork.Deportes.GetAll(), "DeporteId", "Nombre");
             return PartialView();
         }
 
@@ -217,13 +197,14 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddDeporte([Bind(Include = "DeporteId,DeportistaId,IniciaEntrenamiento,FinalizaEntrenamiento")] CreateDeporteDeportistaViewModel model)
         {
-            _deporteDeportista.Create(new DeporteDeportista
+            _unitOfWork.DeportesDeportistas.Add(new DeporteDeportista
             {
                 DeporteId = model.DeporteId,
                 DeportistaId = model.DeportistaId,
-                IniciaEntrenamiento = model.IniciaEntrenamiento,
-                FinalizaEntrenamiento = model.FinalizaEntrenamiento
+                IniciaEntrenamiento = model.IniciaEntrenamiento.Value,
+                FinalizaEntrenamiento = model.FinalizaEntrenamiento.Value
             });
+            
             return RedirectToAction("Edit", new { id = model.DeportistaId });
         }
 
@@ -232,8 +213,8 @@ namespace Sirindar.Controllers
         {
             if (deporteId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            ///
-            var deportistaDeporte = GeneralRepository.FindByDeporteId((int)deporteId);
+           
+            var deportistaDeporte = _unitOfWork.DeportesDeportistas.FindByDeporteId(deporteId.Value);
             return PartialView(deportistaDeporte);
         }
 
@@ -241,7 +222,8 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteDeporte([Bind(Include = "DeporteDeportistaId,DeportistaId")]DeporteDeportista model)
         {
-            _deporteDeportista.Delete(model.DeporteDeportistaId);
+            _unitOfWork.DeportesDeportistas.Remove(model.DeporteDeportistaId);
+            _unitOfWork.Complete();
             return RedirectToAction("Edit", new { id = model.DeportistaId });
         }
 
