@@ -6,6 +6,11 @@ namespace Sirindar.Entity.Repositories
 {
     public class HorarioComidasRepository : Repository<HorarioComidas>, IHorarioComidasRepository
     {
+        private SirindarDbContext SirindarDbContext
+        {
+            get { return Context as SirindarDbContext; }
+        }
+
         public HorarioComidasRepository(DbContext context) : base(context)
         {
         }

@@ -4,10 +4,17 @@ using Sirindar.Core.Repositories;
 
 namespace Sirindar.Entity.Repositories
 {
-    class DeporteDeportistaRepository : Repository<DeporteDeportista>, IDeporteDeportistaRepository
+    public class DeporteDeportistaRepository : Repository<DeporteDeportista>, IDeporteDeportistaRepository
     {
+        private SirindarDbContext sirindarDbContext
+        {
+            get { return Context as SirindarDbContext; }
+        }
+
         public DeporteDeportistaRepository(DbContext context) : base(context)
         {
         }
+
+
     }
 }

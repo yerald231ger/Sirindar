@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -13,9 +10,8 @@ using Sirindar.Models;
 using Newtonsoft.Json;
 using System.DirectoryServices;
 using System.Configuration;
-using System.Data.Entity;
-using CNSirindar.Models;
-using CNSirindar;
+using Sirindar.Core.UnitOfWork;
+using Sirindar.Entity;
 
 namespace Sirindar.Controllers
 {
@@ -27,7 +23,6 @@ namespace Sirindar.Controllers
                 new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new SirindarDbContext())),
                 new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new SirindarDbContext())))
         {
-
         }
 
         public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
@@ -42,20 +37,15 @@ namespace Sirindar.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            using (var db = new SirindarDbContext())
-            {
-                ViewBag.json = new HtmlString(JsonConvert.SerializeObject(db.Users.Where(u => u.EsActivo == true).ToList(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-            }
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(UserManager.Users.Where(u => u.EsActivo).ToList(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             return View();
         }
 
         public ActionResult Edit(string id)
         {
             var user = UserManager.FindById(id);
-            using (var db = new SirindarDbContext())
-            {
-                ViewBag.RoleId = new SelectList(db.Roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name }).ToList(), "Value", "Text", user.Roles.First().RoleId);
-            }
+            ViewBag.RoleId = new SelectList(RoleManager.Roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name }).ToList(), "Value", "Text", user.Roles.First().RoleId);
+
             return View(user);
         }
 
@@ -122,12 +112,9 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            UserManager.FindById(id).EsActivo = false;
-            using (var db = new SirindarDbContext())
-            {
-                db.Users.Where(u => u.Id == id).First().EsActivo = false;
-                db.SaveChanges();
-            }
+            var user = UserManager.FindById(id);
+            user.EsActivo = false;
+            UserManager.Update(user);
             return RedirectToAction("Index");
         }
 
@@ -139,7 +126,7 @@ namespace Sirindar.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-        
+
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -184,7 +171,7 @@ namespace Sirindar.Controllers
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
             return View(model);
         }
-        
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

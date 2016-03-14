@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using CNSirindar.Models;
-using CNSirindar.Repositories;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Sirindar.Core;
 
 namespace Sirindar.Models
 {

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sirindar.Core.Repositories
 {
     public interface IAsignacionBloqueRepository : IRepository<AsignacionBloque,int>
     {
-
+        IEnumerable<IGrouping<string, AsignacionBloque>> GetAsignacionBloquesGrupoByMatriucla();
+        bool IsAsigancionGrupos(int deporteId, int deportistaId, int bloqueId);
     }
 }

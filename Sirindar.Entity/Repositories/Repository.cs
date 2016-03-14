@@ -11,10 +11,12 @@ namespace Sirindar.Entity.Repositories
     public class Repository<TEntity> : IRepository<TEntity, int> where TEntity : TableDbConventions 
     {
         protected readonly DbContext Context;
+        protected readonly DbSet<TEntity> DbSet; 
 
         public Repository(DbContext context)
         {
             Context = context;
+            DbSet = context.Set<TEntity>();
         }
 
         public TEntity Get(int id)
@@ -50,6 +52,11 @@ namespace Sirindar.Entity.Repositories
         public void Remove(TEntity entity)
         {
             entity.EsActivo = false;
+        }
+
+        public void Remove(int id)
+        {
+            Context.Set<TEntity>().Find(id).EsActivo = false;
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)

@@ -24,7 +24,7 @@ namespace SirindarApi.Controllers
         [ResponseType(typeof(Deportista))]
         public IHttpActionResult GetDeportista(int id)
         {
-            var deportista = _unitOfWork.Deportistas.GetDeportistaByMatricula(id.ToString());
+            var deportista = _unitOfWork.Deportistas.GetByMatricula(id.ToString());
 
             if (deportista == null)
             {

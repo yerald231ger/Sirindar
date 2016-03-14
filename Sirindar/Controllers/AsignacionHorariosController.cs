@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Newtonsoft.Json;
-using CNSirindar.Repositories;
-using CNSirindar.Models;
 using Sirindar.Models;
 using System.Net;
+using Sirindar.Core;
+using Sirindar.Core.UnitOfWork;
 using Sirindar.Helpers;
 
 
@@ -15,6 +11,13 @@ namespace Sirindar.Controllers
 {
     public class AsignacionHorariosController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public AsignacionHorariosController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         //
         // GET: /AsignacionHorarios/
         public ActionResult Index(string updateState)
@@ -25,37 +28,37 @@ namespace Sirindar.Controllers
 
         public JsonResult GetDeportistaByMatricula(string matricula)
         {
-            var deportistas = GeneralRepository.SearchDeportistasByMatricula(matricula);
+            var deportistas = _unitOfWork.Deportistas.SearchByMatricula(matricula);
             return Json(JsonConvert.SerializeObject(deportistas), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDeportistaByStringExpression(string expression)
         {
-            var deportistas = GeneralRepository.SearchDeportistasByStringExpression(expression);
+            var deportistas = _unitOfWork.Deportistas.SearchByStringExpression(expression);
             return Json(JsonConvert.SerializeObject(deportistas), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDeportistasByDeporteNombre(string deporteName)
         {
-            var deportistas = GeneralRepository.SearchDeportistasByDeporteName(deporteName);
+            var deportistas = _unitOfWork.Deportistas.SearchByDeporte(deporteName);
             return Json(JsonConvert.SerializeObject(deportistas), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDeportistasByDepenenciaNombre(string dependenciaNombre)
         {
-            var deportistas = GeneralRepository.SearchDeportistasByDepenenciaNombre(dependenciaNombre);
+            var deportistas = _unitOfWork.Deportistas.SearchByDependencia(dependenciaNombre);
             return Json(JsonConvert.SerializeObject(deportistas), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDeportesByNombre(string deporte)
         {
-            var deportes = GeneralRepository.SearchDeportesByName(deporte);
+            var deportes = _unitOfWork.Deportes.SearchByNombre(deporte);
             return Json(JsonConvert.SerializeObject(deportes), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDependenciasByNombre(string dependencia)
         {
-            var dependencias = GeneralRepository.SearchDependenciasByName(dependencia);
+            var dependencias = _unitOfWork.Dependencias.SearchByNombre(dependencia);
             return Json(JsonConvert.SerializeObject(dependencias), JsonRequestBehavior.AllowGet);
         }
 
@@ -64,7 +67,7 @@ namespace Sirindar.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var cantidadComidas = GeneralRepository.LoadHorarioDeportista(id.Value);
+            var cantidadComidas = _unitOfWork.HorariosComidas.Get(id.Value);
             ViewBag.Numero = new SelectList(SirindarControls.EnumAsList<NumeroComidas>(), "Value", "Text", (int)cantidadComidas.Cantidad);
             return PartialView(new AsignacionHorariosViewModel
             {
@@ -86,21 +89,17 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ok = GeneralRepository.UpdateCantidadComidas(
-                    new CantidadComidas
-                        {
-                            Cantidad = model.Numero,
-                            DeportistaId = model.Id,
-                            Lunes = model.Monday,
-                            Martes = model.Tuesday,
-                            Miercoles = model.Wednesday,
-                            Jueves = model.Thursday,
-                            Viernes = model.Friday,
-                            Sabado = model.Saturday,
-                            Domingo = model.Sunday
-                        });
-                if (ok)
-                    return RedirectToAction("Index", new { updateState = ok.ToString() });
+                var horarioComidas = _unitOfWork.HorariosComidas.Get(model.Id);
+                horarioComidas.Cantidad = model.Numero;
+                horarioComidas.Lunes = model.Monday;
+                horarioComidas.Martes = model.Tuesday;
+                horarioComidas.Miercoles = model.Wednesday;
+                horarioComidas.Jueves = model.Tuesday;
+                horarioComidas.Viernes = model.Friday;
+                horarioComidas.Sabado = model.Saturday;
+                horarioComidas.Domingo = model.Sunday;
+                _unitOfWork.Complete();
+                return RedirectToAction("Index", new { updateState = "Ok" });
             }
             return RedirectToAction("Index", new { updateState = "false" });
         }
@@ -119,21 +118,17 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ok = GeneralRepository.UpdateCantidadComidasByDeporte(model.Id,
-                     new CantidadComidas
-                     {
-                         Cantidad = model.Numero,
-                         DeportistaId = model.Id,
-                         Lunes = model.Monday,
-                         Martes = model.Tuesday,
-                         Miercoles = model.Wednesday,
-                         Jueves = model.Thursday,
-                         Viernes = model.Friday,
-                         Sabado = model.Saturday,
-                         Domingo = model.Sunday
-                     });
-                if (ok)
-                    return RedirectToAction("Index", new { updateState = ok.ToString() });
+                var horarioComidas = _unitOfWork.HorariosComidas.Get(model.Id);
+                horarioComidas.Cantidad = model.Numero;
+                horarioComidas.Lunes = model.Monday;
+                horarioComidas.Martes = model.Tuesday;
+                horarioComidas.Miercoles = model.Wednesday;
+                horarioComidas.Jueves = model.Tuesday;
+                horarioComidas.Viernes = model.Friday;
+                horarioComidas.Sabado = model.Saturday;
+                horarioComidas.Domingo = model.Sunday;
+                _unitOfWork.Complete();
+                return RedirectToAction("Index", new { updateState = "Ok" });
             }
             return RedirectToAction("Index", new { updateState = "false" });
         }
@@ -152,21 +147,17 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ok = GeneralRepository.UpdateCantidadComidasByDependencia(model.Id,
-                     new CantidadComidas
-                     {
-                         Cantidad = model.Numero,
-                         DeportistaId = model.Id,
-                         Lunes = model.Monday,
-                         Martes = model.Tuesday,
-                         Miercoles = model.Wednesday,
-                         Jueves = model.Thursday,
-                         Viernes = model.Friday,
-                         Sabado = model.Saturday,
-                         Domingo = model.Sunday
-                     });
-                if (ok)
-                    return RedirectToAction("Index", new { updateState = ok.ToString() });
+                var horarioComidas = _unitOfWork.HorariosComidas.Get(model.Id);
+                horarioComidas.Cantidad = model.Numero;
+                horarioComidas.Lunes = model.Monday;
+                horarioComidas.Martes = model.Tuesday;
+                horarioComidas.Miercoles = model.Wednesday;
+                horarioComidas.Jueves = model.Tuesday;
+                horarioComidas.Viernes = model.Friday;
+                horarioComidas.Sabado = model.Saturday;
+                horarioComidas.Domingo = model.Sunday;
+                _unitOfWork.Complete();
+                return RedirectToAction("Index", new { updateState = "Ok" });
             }
             return RedirectToAction("Index", new { updateState = "false" });
         }

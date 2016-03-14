@@ -1,3 +1,6 @@
+using Sirindar.Core.Repositories;
+using Sirindar.Entity.Repositories;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Sirindar.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Sirindar.App_Start.NinjectWebCommon), "Stop")]
 
@@ -11,12 +14,9 @@ namespace Sirindar.App_Start
     using Ninject;
     using Ninject.Web.Common;
 
-    using CNSirindar.Repositories;
-    using CNSirindar.Models;
-
     public static class NinjectWebCommon 
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
@@ -25,7 +25,7 @@ namespace Sirindar.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            bootstrapper.Initialize(CreateKernel);
+            Bootstrapper.Initialize(CreateKernel);
         }
         
         /// <summary>
@@ -33,7 +33,7 @@ namespace Sirindar.App_Start
         /// </summary>
         public static void Stop()
         {
-            bootstrapper.ShutDown();
+            Bootstrapper.ShutDown();
         }
         
         /// <summary>
@@ -64,17 +64,17 @@ namespace Sirindar.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IRepository<Deporte, int>>().To<DeporteRepository>();
-            kernel.Bind<IRepository<Deportista, int>>().To<DeportistaRepository>();
-            kernel.Bind<IRepository<DeporteDeportista, int>>().To<DeporteDeportistaRepository>();
-            kernel.Bind<IRepository<Dependencia, int>>().To<DependenciaRepository>();
-            kernel.Bind<IRepository<AsignacionBloque, int>>().To<AsignacionBloqueRepository>();
-            kernel.Bind<IRepository<Asistencia, int>>().To<AsistenciaRepository>();
-            kernel.Bind<IRepository<GrupoAlimenticio, int>>().To<GrupoAlimenticioRepository>();
-            kernel.Bind<IRepository<Horario, int>>().To<HorarioRepository>();
-            kernel.Bind<IRepository<Grupo, int>>().To<GrupoRepository>();
-            kernel.Bind<IRepository<Bloque, int>>().To<BloqueRepository>();
-            kernel.Bind<IRepository<ClasificacionDeporte, int>>().To<ClasificacionDeporteRepository>();
+            kernel.Bind<IDeporteRepository>().To<DeporteRepository>();
+            kernel.Bind<IDeportistaRepository>().To<DeportistaRepository>();
+            kernel.Bind<IDeporteDeportistaRepository>().To<DeporteDeportistaRepository>();
+            kernel.Bind<IDependenciaRepository>().To<DependenciaRepository>();
+            kernel.Bind<IAsignacionBloqueRepository>().To<AsignacionBloqueRepository>();
+            kernel.Bind<IAsistenciaRepository>().To<AsistenciaRepository>();
+            kernel.Bind<IGrupoAlimenticioRepository>().To<GrupoAlimenticioRepository>();
+            kernel.Bind<IHorarioRepository>().To<HorarioRepository>();
+            kernel.Bind<IGrupoRepository>().To<GrupoRepository>();
+            kernel.Bind<IBloqueRepository>().To<BloqueRepository>();
+            kernel.Bind<IClasificacionDeporteRepository>().To<ClasificacionRepository>();
         }        
     }
 }

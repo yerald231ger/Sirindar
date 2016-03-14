@@ -1,39 +1,26 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Web;
-using System.Linq;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using Sirindar.Models;
-using System.Data.Entity;
-using System.Collections.Generic;
-using CNSirindar.Models;
-using CNSirindar.Repositories;
+using Sirindar.Core;
+using Sirindar.Core.UnitOfWork;
 
 namespace Sirindar.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class BloquesController : Controller
     {
-        private IRepository<GrupoAlimenticio, int> _grupoAlimenticio;
-        private IRepository<Bloque, int> _bloque;
-        private IRepository<Grupo, int> _grupo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BloquesController(
-            IRepository<GrupoAlimenticio, int> grupoAlimenticio,
-            IRepository<Bloque, int> bloque,
-            IRepository<Grupo, int> grupo
-            )
+        public BloquesController(IUnitOfWork unitOfWork)
         {
-            this._grupo = grupo;
-            this._bloque = bloque;
-            this._grupoAlimenticio = grupoAlimenticio;
+            _unitOfWork = unitOfWork;
         }
 
 
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_bloque.List().Take(1000), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Bloques.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             return View();
         }
 
@@ -52,9 +39,9 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ok = _bloque.Create(bloque);
-                if (ok)
-                    return RedirectToAction("Edit", new { id = bloque.BloqueId });
+                _unitOfWork.Bloques.Add(bloque);
+                _unitOfWork.Complete();
+                return RedirectToAction("Edit", new { id = bloque.BloqueId });
             }
             return View(bloque);
         }
@@ -66,7 +53,7 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var bloque = _bloque.Read(id);
+            var bloque = _unitOfWork.Bloques.GetWithGrupos(id.Value);
             if (bloque == null)
             {
                 return HttpNotFound();
@@ -84,7 +71,11 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _bloque.Update(bloque);
+                var _bloque = _unitOfWork.Bloques.Get(bloque.BloqueId);
+
+                _bloque.Nombre = bloque.Nombre;
+                _bloque.KilocaloriasTotales = bloque.KilocaloriasTotales;
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
             return View(bloque);
@@ -97,7 +88,7 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var bloque = _bloque.Read(id);
+            var bloque = _unitOfWork.Bloques.Get(id.Value);
             if (bloque == null)
             {
                 return HttpNotFound();
@@ -110,7 +101,8 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _bloque.Delete(id);
+            _unitOfWork.Bloques.Remove(id);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
 
@@ -118,7 +110,7 @@ namespace Sirindar.Controllers
         public ActionResult GrupoCreate(int bloqueId)
         {
             ViewBag.BloqueId = bloqueId;
-            ViewBag.GrupoAlimenticioId = new SelectList(_grupoAlimenticio.List(), "GrupoAlimenticioId", "Grupo");
+            ViewBag.GrupoAlimenticioId = new SelectList(_unitOfWork.GruposAlimenticios.GetAll(), "GrupoAlimenticioId", "Grupo");
             return PartialView("GrupoCreate");
         }
 
@@ -129,11 +121,10 @@ namespace Sirindar.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ok = _grupo.Create(grupo);
-                if (ok)
-                {
-                    return RedirectToAction("Edit", new { id = grupo.BloqueId });
-                }
+                _unitOfWork.Grupos.Add(grupo);
+                _unitOfWork.Complete();
+                return RedirectToAction("Edit", new { id = grupo.BloqueId });
+
             }
             return RedirectToAction("Edit", grupo.BloqueId);
         }
@@ -145,29 +136,35 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var grupo = _grupo.Read(id);
+            var grupo = _unitOfWork.Grupos.Get(id.Value);
             if (grupo == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.GrupoAlimenticioId = new SelectList(_grupoAlimenticio.List(), "GrupoAlimenticioId", "Grupo", grupo.GrupoAlimenticio.GrupoAlimenticioId);
+            ViewBag.GrupoAlimenticioId = new SelectList(_unitOfWork.GruposAlimenticios.GetAll(), "GrupoAlimenticioId", "Grupo", grupo.GrupoAlimenticio.GrupoAlimenticioId);
             return PartialView("GrupoEdit", grupo);
         }
 
         // POST: /Bloques/GrupoEdit/1
         [HttpPost, ActionName("GrupoEdit")]
         [ValidateAntiForgeryToken]
-        public ActionResult GrupoEdit([Bind(Include = "Nombre,Grupo,Porcentaje,Gramos,Kilocalorias,Equivalencias,GrupoId,BloqueId,GrupoAlimenticioId")] Grupo grupo)
+        public ActionResult GrupoEdit([Bind(Include = "Nombre,Grupo,Porcentaje,Gramos,Kilocalorias,Equivalencias,GrupoId,BloqueId,GrupoAlimenticioId")] Grupo model)
         {
             if (ModelState.IsValid)
             {
-                var ok = _grupo.Update(grupo);
-                if (ok)
-                {
-                    return RedirectToAction("Edit", new { id = grupo.BloqueId });
-                }
+                var _grupo = _unitOfWork.Grupos.Get(model.GrupoId);
+                _grupo.Nombre = model.Nombre;
+                _grupo.Porcentaje = model.Porcentaje;
+                _grupo.Gramos = model.Gramos;
+                _grupo.Kilocalorias = model.Kilocalorias;
+                _grupo.Equivalencias = model.Equivalencias;
+                _grupo.BloqueId = model.BloqueId;
+                _grupo.GrupoAlimenticioId = model.GrupoAlimenticioId;
+                _unitOfWork.Complete();
+                    return RedirectToAction("Edit", new { id = model.BloqueId });
+                
             }
-            return RedirectToAction("Edit", new { id = grupo.BloqueId });
+            return RedirectToAction("Edit", new { id = model.BloqueId });
         }
 
         // GET: /Bloques/GrupoDelete/1
@@ -177,7 +174,7 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var grupo = _grupo.Read(id);
+            var grupo = _unitOfWork.Grupos.Get(id.Value);
             if (grupo == null)
             {
                 return HttpNotFound();
@@ -190,9 +187,10 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GrupoDelete(int id)
         {
-            var bloqueId = _grupo.Read(id).BloqueId;
-            _grupo.Delete(id);
-            return RedirectToAction("Edit", new { id = bloqueId });
+            var grupo = _unitOfWork.Grupos.Get(id);
+            grupo.EsActivo = false;
+            _unitOfWork.Complete();
+            return RedirectToAction("Edit", new { id = grupo.BloqueId });
         }
 
         protected override void Dispose(bool disposing)

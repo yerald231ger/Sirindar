@@ -1,6 +1,6 @@
 ﻿namespace Sirindar.Core.Repositories
 {
-    public interface IGrupoAlimenticioRepository
+    public interface IGrupoAlimenticioRepository : IRepository<GrupoAlimenticio, int>
     {
          
     }

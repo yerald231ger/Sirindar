@@ -17,6 +17,7 @@ namespace Sirindar.Core.Repositories
         void AddRange(IEnumerable<TEntity> entities);
 
         void Remove(TEntity entity);
+        void Remove(TKey id);
         void RemoveRange(IEnumerable<TEntity> entities);
     }
 }

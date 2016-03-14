@@ -1,46 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CNSirindar.Repositories;
-using CNSirindar.Models;
 using Newtonsoft.Json;
 using System.Net;
+using Sirindar.Core;
+using Sirindar.Core.UnitOfWork;
 using Sirindar.Models;
 
 namespace Sirindar.Controllers
 {
     public class AsignacionBloquesController : Controller
     {
-        private IRepository<AsignacionBloque, int> _asignacionBloque;
-        private IRepository<Deporte, int> _deporte;
-        private IRepository<Deportista, int> _deportista;
-        private IRepository<Bloque, int> _bloque;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AsignacionBloquesController(
-            IRepository<AsignacionBloque, int> asignacionBloque,
-            IRepository<Deporte, int> deporte,
-            IRepository<Deportista, int> deportista,
-            IRepository<Bloque, int> bloque)
+        public AsignacionBloquesController(IUnitOfWork unitOfWork)
         {
-            this._asignacionBloque = asignacionBloque;
-            this._deporte = deporte;
-            this._deportista = deportista;
-            this._bloque = bloque;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: /AsignacionBloques
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(GeneralRepository.GridAsignaciones().Deportistas, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(GridAsignaciones().Deportistas, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             return View();
         }
 
         public ActionResult CreateNew()
         {
-            ViewBag.BloqueId = new SelectList(_bloque.List(), "BloqueId", "Nombre");
-            ViewBag.DeportistaId = new SelectList(_deportista.List(), "DeportistaId", "Nombre");
+            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre");
+            ViewBag.DeportistaId = new SelectList(_unitOfWork.Deportistas.GetAll(), "DeportistaId", "Nombre");
             return View();
         }
 
@@ -51,24 +40,23 @@ namespace Sirindar.Controllers
             CreateAsignacionBloquesViewModel model
             )
         {
-            var asignacionBloque = new AsignacionBloque
-            {
-                DeporteId = model.DeporteId,
-                DeportistaId = model.DeportistaId,
-                BloqueId = model.BloqueId
-            };
-
-            if (GeneralRepository.IsDeporteDeportista(asignacionBloque))
+            if (_unitOfWork.AsignacionesBloques.IsAsigancionGrupos(model.DeporteId, model.DeportistaId, model.BloqueId))
                 ModelState.AddModelError("ExistDeporteDeportista", "La asignacion seleccionada ya existe");
 
             if (ModelState.IsValid)
             {
-                _asignacionBloque.Create(asignacionBloque);
+                _unitOfWork.AsignacionesBloques.Add(new AsignacionBloque
+                {
+                    DeporteId = model.DeporteId,
+                    DeportistaId = model.DeportistaId,
+                    BloqueId = model.BloqueId
+                });
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BloqueId = new SelectList(_bloque.List(), "BloqueId", "Nombre", model.BloqueId);
-            ViewBag.DeportistaId = new SelectList(_deportista.List(), "DeportistaId", "Nombre", model.DeportistaId);
+            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre", model.BloqueId);
+            ViewBag.DeportistaId = new SelectList(_unitOfWork.Deportistas.GetAll(), "DeportistaId", "Nombre", model.DeportistaId);
             return View();
         }
 
@@ -78,16 +66,16 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var deportista = _deportista.Read(deportistaId);
+            var deportista = _unitOfWork.Deportistas.GetWithDeportes(deportistaId.Value);
             if (deportista == null)
             {
                 return HttpNotFound();
             }
 
             ViewBag.DeportistaId = deportistaId;
-            ViewBag.DeportistaNombre = GeneralRepository.GetFullName(deportistaId.Value);
+            ViewBag.DeportistaNombre = deportista.ToString();
             ViewBag.DeporteId = new SelectList(deportista.Deportes, "DeporteId", "Nombre", deporteId);
-            ViewBag.BloqueId = new SelectList(_bloque.List(), "BloqueId", "Nombre");
+            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre");
             return View();
         }
 
@@ -98,26 +86,27 @@ namespace Sirindar.Controllers
             CreateAsignacionBloquesViewModel model
             )
         {
-            var asignacionBloque = new AsignacionBloque
-                {
-                    DeporteId = model.DeporteId,
-                    DeportistaId = model.DeportistaId,
-                    BloqueId = model.BloqueId
-                };
-
-            if (GeneralRepository.IsDeporteDeportista(asignacionBloque))
+            if (_unitOfWork.AsignacionesBloques.IsAsigancionGrupos(model.DeporteId, model.DeportistaId, model.BloqueId))
                 ModelState.AddModelError("ExistDeporteDeportista", "La asignacion seleccionada ya existe");
 
             if (ModelState.IsValid)
             {
-                _asignacionBloque.Create(asignacionBloque);
+                _unitOfWork.AsignacionesBloques.Add(new AsignacionBloque
+                {
+                    DeporteId = model.DeporteId,
+                    DeportistaId = model.DeportistaId,
+                    BloqueId = model.BloqueId
+                });
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DeportistaId = model.DeportistaId;
-            ViewBag.DeportistaNombre = GeneralRepository.GetFullName(asignacionBloque.DeportistaId);
-            ViewBag.BloqueId = new SelectList(_bloque.List(), "BloqueId", "Nombre");
-            ViewBag.DeporteId = new SelectList(_deportista.Read(model.DeportistaId).Deportes, "DeporteId", "Nombre");
+            var deportista = _unitOfWork.Deportistas.GetWithDeportes(model.DeportistaId);
+
+            ViewBag.DeportistaId = deportista.DeportistaId;
+            ViewBag.DeportistaNombre = deportista.ToString();
+            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre");
+            ViewBag.DeporteId = new SelectList(deportista.Deportes, "DeporteId", "Nombre");
             return View();
         }
 
@@ -127,7 +116,7 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var asignacionBloque = _asignacionBloque.Read(id);
+            var asignacionBloque = _unitOfWork.AsignacionesBloques.Get(id.Value);
             if (asignacionBloque == null)
             {
                 return HttpNotFound();
@@ -140,10 +129,12 @@ namespace Sirindar.Controllers
                 BloqueId = asignacionBloque.BloqueId ?? 0
             };
 
-            ViewBag.DeportistaId = model.DeportistaId;
-            ViewBag.DeportistaNombre = asignacionBloque.Deportista.ToString();
-            ViewBag.BloqueId = new SelectList(_bloque.List(), "BloqueId", "Nombre", asignacionBloque.BloqueId);
-            ViewBag.DeporteId = new SelectList(asignacionBloque.Deportista.Deportes, "DeporteId", "Nombre", asignacionBloque.DeporteId);
+            var deportista = _unitOfWork.Deportistas.GetWithDeportes(model.DeportistaId);
+
+            ViewBag.DeportistaId = deportista.DeportistaId;
+            ViewBag.DeportistaNombre = deportista.ToString();
+            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre", asignacionBloque.BloqueId);
+            ViewBag.DeporteId = new SelectList(deportista.Deportes, "DeporteId", "Nombre", asignacionBloque.DeporteId);
             return View(model);
         }
 
@@ -151,27 +142,25 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AsignacionBloqueId,BloqueId,DeporteId,DeportistaId")]UpdateAsignacionBloquesViewModel model)
         {
-            var asignacionBloque = new AsignacionBloque
-                            {
-                                AsignacionBloqueId = model.AsignacionBloqueId,
-                                DeporteId = model.DeporteId,
-                                DeportistaId = model.DeportistaId,
-                                BloqueId = model.BloqueId
-                            };
-
-            if (GeneralRepository.IsDeporteDeportista(asignacionBloque))
+            if (_unitOfWork.AsignacionesBloques.IsAsigancionGrupos(model.DeporteId, model.DeportistaId, model.BloqueId))
                 ModelState.AddModelError("ExistDeporteDeportista", "La asignacion seleccionada ya existe");
 
             if (ModelState.IsValid)
             {
-                _asignacionBloque.Update(asignacionBloque);
+                var asignacionBloque = _unitOfWork.AsignacionesBloques.Get(model.AsignacionBloqueId);
+                asignacionBloque.DeporteId = model.DeporteId;
+                asignacionBloque.DeportistaId = model.DeportistaId;
+                asignacionBloque.BloqueId = model.BloqueId;
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DeportistaNombre = GeneralRepository.GetFullName(asignacionBloque.DeportistaId);
-            ViewBag.BloqueId = new SelectList(_bloque.List(), "BloqueId", "Nombre", model.BloqueId);
-            ViewBag.DeportistaId = new SelectList(_deportista.List(), "DeportistaId", "Nombre", model.DeportistaId);
-            ViewBag.DeporteId = new SelectList(_deportista.Read(model.DeportistaId).Deportes, "DeporteId", "Nombre", model.DeporteId);
+            var deportista = _unitOfWork.Deportistas.GetWithDeportes(model.DeportistaId);
+
+            ViewBag.DeportistaNombre = deportista.ToString();
+            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre", model.BloqueId);
+            ViewBag.DeportistaId = new SelectList(_unitOfWork.Deportistas.GetAll(), "DeportistaId", "Nombre", model.DeportistaId);
+            ViewBag.DeporteId = new SelectList(deportista.Deportes, "DeporteId", "Nombre", model.DeporteId);
             return View(model);
         }
 
@@ -182,7 +171,7 @@ namespace Sirindar.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var asignacionBloque = _asignacionBloque.Read(id);
+            var asignacionBloque = _unitOfWork.AsignacionesBloques.Get(id.Value);
             if (asignacionBloque == null)
             {
                 return HttpNotFound();
@@ -195,9 +184,110 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _asignacionBloque.Delete(id);
+            _unitOfWork.AsignacionesBloques.Remove(id);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
 
+        public TableAsignacionBloques GridAsignaciones()
+        {
+
+            var groupDeportistas = _unitOfWork.AsignacionesBloques.GetAsignacionBloquesGrupoByMatriucla();
+
+            var tableAsignaciones = new TableAsignacionBloques {Deportistas = new List<RowDeportista>()};
+
+            foreach (var deportista in groupDeportistas)
+            {
+                var key = deportista.Key;
+                var rowDeportista = deportista
+                    .Where(x => x.Deportista.Matricula == key)
+                    .Select(x => new RowDeportista
+                    {
+                        Matricula = x.Deportista.Matricula,
+                        Nombre = x.Deportista.Nombre,
+                        DeportistaId = x.DeportistaId
+                    }).First();
+
+                rowDeportista.Deportes = new List<RowDeporte>();
+
+                var groupDeporte = deportista.Where(x => x.Deportista.Matricula == key).GroupBy(x => x.DeporteId).ToList();
+
+                var listIds = new List<int>();
+                foreach (var deporte in groupDeporte)
+                {
+                    var key2 = deporte.Key;
+                    var rowDeporte = deporte
+                        .Where(x => x.DeporteId == key2)
+                        .Select(x => new RowDeporte
+                        {
+                            DeporteId = x.DeporteId,
+                            Nombre = x.Deporte.Nombre
+                        }).First();
+
+                    var listRowBloque = deporte
+                        .Where(dd => dd.DeporteId == key2)
+                        .Select(dd =>
+                        {
+                            if (dd.Bloque != null)
+                            {
+                                return new RowBloque
+                                {
+                                    Nombre = dd.Bloque.Nombre,
+                                    // ReSharper disable once PossibleInvalidOperationException
+                                    BloqueId = dd.BloqueId.Value,
+                                    DeporteDeportistaId = dd.AsignacionBloqueId
+                                };
+                            }
+                            else
+                            {
+                                return new RowBloque
+                                {
+                                    Nombre = "Sin bloque",
+                                    DeporteDeportistaId = dd.AsignacionBloqueId
+                                };
+                            }
+                        }).ToList();
+
+                    rowDeporte.Bloques = listRowBloque;
+                    rowDeporte.RowSpan = listRowBloque.Select(lrb => lrb.DeporteDeportistaId).ToArray();
+                    listIds.AddRange(listRowBloque.Select(lrb => lrb.DeporteDeportistaId).ToArray());
+                    rowDeportista.Deportes.Add(rowDeporte);
+                }
+                rowDeportista.RowSpan = listIds.ToArray();
+                tableAsignaciones.Deportistas.Add(rowDeportista);
+            }
+
+            return tableAsignaciones;
+
+        }
+
+        public class TableAsignacionBloques
+        {
+            public List<RowDeportista> Deportistas { get; set; }
+        }
+
+        public class RowDeportista
+        {
+            public int[] RowSpan { get; set; }
+            public int DeportistaId { get; set; }
+            public string Matricula { get; set; }
+            public string Nombre { get; set; }
+            public List<RowDeporte> Deportes { get; set; }
+        }
+
+        public class RowDeporte
+        {
+            public int[] RowSpan { get; set; }
+            public int DeporteId { get; set; }
+            public string Nombre { get; set; }
+            public List<RowBloque> Bloques { get; set; }
+        }
+
+        public class RowBloque
+        {
+            public int BloqueId { get; set; }
+            public int DeporteDeportistaId { get; set; }
+            public string Nombre { get; set; }
+        }
     }
 }

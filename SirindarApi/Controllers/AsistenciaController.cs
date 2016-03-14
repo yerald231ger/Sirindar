@@ -36,70 +36,64 @@ namespace SirindarApi.Controllers
                 return BadRequest(ModelState);
 
             var dia = DateTime.Now.DayOfWeek;
-            var deportista = db.Deportistas.Where(d => d.EsActivo).First(d => d.DeportistaId == asistencia.DeportistaId.Value);
+            var horarioComidas = _unitOfWork.Deportistas.GetHorarioComidas(asistencia.DeportistaId.Value);
+
             var esteDiaSi = false;
 
             switch (dia)
             {
                 case DayOfWeek.Monday:
-                    esteDiaSi = deportista.CantidadComidas.Lunes;
+                    esteDiaSi = horarioComidas.Lunes;
                     break;
                 case DayOfWeek.Tuesday:
-                    esteDiaSi = deportista.CantidadComidas.Martes;
+                    esteDiaSi = horarioComidas.Martes;
                     break;
                 case DayOfWeek.Wednesday:
-                    esteDiaSi = deportista.CantidadComidas.Miercoles;
+                    esteDiaSi = horarioComidas.Miercoles;
                     break;
                 case DayOfWeek.Thursday:
-                    esteDiaSi = deportista.CantidadComidas.Jueves;
+                    esteDiaSi = horarioComidas.Jueves;
                     break;
                 case DayOfWeek.Friday:
-                    esteDiaSi = deportista.CantidadComidas.Viernes;
+                    esteDiaSi = horarioComidas.Viernes;
                     break;
                 case DayOfWeek.Saturday:
-                    esteDiaSi = deportista.CantidadComidas.Sabado;
+                    esteDiaSi = horarioComidas.Sabado;
                     break;
                 case DayOfWeek.Sunday:
-                    esteDiaSi = deportista.CantidadComidas.Domingo;
+                    esteDiaSi = horarioComidas.Domingo;
                     break;
             }
 
-            if (esteDiaSi)
+            if (!esteDiaSi)
+                return Json(new AsistenciaResultado {Aceptado = false, Razon = "No tiene beca para este dia"});
+
+            var horarioAhora = _unitOfWork.Horarios.GetHorarioBetweenHour(tiempoAhora);
+
+            if (horarioAhora == null)
+                return Json(new AsistenciaResultado {Aceptado = false, Razon = "No se sirve comida en esta horario"});
+
+            var asistenciasHoy = _unitOfWork.Asistencias.GetAsistenciasDeportistaToday(asistencia.DeportistaId.Value).ToList();
+
+            if (asistenciasHoy.Count >= (int)horarioComidas.Cantidad)
+                return Json(new AsistenciaResultado { Aceptado = false, Razon = "Becas agotadas" });
+
+            var yaAsistioHoy = asistenciasHoy.FirstOrDefault(a => a.HorarioId == horarioAhora.HorarioId);
+
+            if (yaAsistioHoy != null)
+                return Json(new AsistenciaResultado {Aceptado = false, Razon = "Ya ha entrado ha este horario"});
+
+            _unitOfWork.Asistencias.Add(new Asistencia
             {
-                var horarioAhora = _horarioR.List().FirstOrDefault(h => tiempoAhora.TimeOfDay >= h.Inicia && tiempoAhora.TimeOfDay <= h.Finaliza);
-
-                if (horarioAhora != null)
-                {
-                    var asistenciasHoy = db.Asistencias.Where(a => a.EsActivo).Where(a =>
-                            a.HoraAsistencia > DateTime.Today &&
-                            a.DeportistaId == asistencia.DeportistaId.Value);
-
-                    if (asistenciasHoy.Count() >= (int)deportista.CantidadComidas.Cantidad)
-                        return Json(new AsistenciaResultado { Aceptado = false, Razon = "Becas agotadas" });
-
-                    var yaAsistioHoy = asistenciasHoy.FirstOrDefault(a => a.HorarioId == horarioAhora.HorarioId);
-
-                    if (yaAsistioHoy == null)
-                    {
-                        if (_asistenciaR.Create(new Asistencia
-                        {
-                            HorarioId = horarioAhora.HorarioId,
-                            DeportistaId = asistencia.DeportistaId.Value,
-                            HoraAsistencia = tiempoAhora,
-                            EsActivo = true,
-                            FechaModificacion = DateTime.Now,
-                            FechaAlta = DateTime.Now
-                        }))
-                            return Json(new AsistenciaResultado { Aceptado = true, Razon = "Registro Exitoso" });
-                    }
-                    else
-                        return Json(new AsistenciaResultado { Aceptado = false, Razon = "Ya ha entrado ha este horario" });
-                }
-                else
-                    return Json(new AsistenciaResultado { Aceptado = false, Razon = "No se sirve comida en esta horario" });
-            }
-
-            return Json(new AsistenciaResultado { Aceptado = false, Razon = "No tiene beca para este dia" });
+                HorarioId = horarioAhora.HorarioId,
+                DeportistaId = asistencia.DeportistaId.Value,
+                HoraAsistencia = tiempoAhora,
+                EsActivo = true,
+                FechaModificacion = DateTime.Now,
+                FechaAlta = DateTime.Now
+            });
+            _unitOfWork.Complete();
+            return Json(new AsistenciaResultado { Aceptado = true, Razon = "Registro Exitoso" });
         }
         protected override void Dispose(bool disposing)
         {

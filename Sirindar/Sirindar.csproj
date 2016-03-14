@@ -1131,9 +1131,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CNSirindar\CNSirindar.csproj">
-      <Project>{f7b9aefc-af3b-4e65-9caf-bdfdcf33e49c}</Project>
-      <Name>CNSirindar</Name>
+    <ProjectReference Include="..\Sirindar.Common\Sirindar.Core.csproj">
+      <Project>{e98a29b7-22d6-42f3-9864-6e64e3800d8f}</Project>
+      <Name>Sirindar.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sirindar.Entity\Sirindar.Entity.csproj">
+      <Project>{d4b582e6-2da6-4b34-9cc2-e51198c1502a}</Project>
+      <Name>Sirindar.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

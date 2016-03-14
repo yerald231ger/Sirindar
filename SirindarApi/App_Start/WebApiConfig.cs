@@ -1,7 +1,6 @@
 ﻿using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
-using Sirindar.Core;
 using Sirindar.Core.Repositories;
 using Sirindar.Core.UnitOfWork;
 using Sirindar.Entity;

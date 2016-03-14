@@ -6,5 +6,6 @@ namespace Sirindar.Core.Repositories
     {
         IEnumerable<Asistencia> GetAsistenciaByDeportistaId(int deportistaId);
         IEnumerable<Asistencia> GetAsistenciaByDeportistaMatricualId(string matricula);
+        IEnumerable<Asistencia> GetAsistenciasDeportistaToday(int deportistaId);
     }
 }
