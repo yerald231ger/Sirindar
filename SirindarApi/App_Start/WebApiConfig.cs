@@ -1,6 +1,11 @@
 ﻿using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
+using Sirindar.Core;
+using Sirindar.Core.Repositories;
+using Sirindar.Core.UnitOfWork;
+using Sirindar.Entity;
+using Sirindar.Entity.Repositories;
 using SirindarApi.App_Start;
 
 namespace SirindarApi
@@ -10,9 +15,10 @@ namespace SirindarApi
         public static void Register(HttpConfiguration config)
         {
             var container = new UnityContainer();
-            container.RegisterType<IRepository<Horario, int>, HorarioRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<IRepository<Deportista, int>, DeportistaRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<IRepository<Asistencia, int>, AsistenciaRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
+            container.RegisterType<IHorarioRepository, HorarioRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDeportistaRepository, DeportistaRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IAsistenciaRepository, AsistenciaRepository>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
             // Configuración y servicios de Web API
             // Configure Web API para usar solo la autenticación de token de portador.

@@ -2,6 +2,6 @@
 {
     public interface IDeportistaRepository : IRepository<Deportista, int>
     {
-
+        Deportista GetDeportistaByMatricula(string matricula);
     }
 }

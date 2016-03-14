@@ -338,10 +338,6 @@
       <Project>{d4b582e6-2da6-4b34-9cc2-e51198c1502a}</Project>
       <Name>Sirindar.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sirindar.Repositories\Sirindar.Repositories.csproj">
-      <Project>{176316f4-9dd8-4fa3-83bb-05b42b179a70}</Project>
-      <Name>Sirindar.Repositories</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

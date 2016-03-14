@@ -1,52 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
-using CNSirindar.Repositories;
-using CNSirindar.Models;
+using Sirindar.Core;
+using Sirindar.Core.Repositories;
+using Sirindar.Core.UnitOfWork;
+using Sirindar.Entity;
 using SirindarApi.Models.Remotos;
-using CNSirindar;
 
 namespace SirindarApi.Controllers
 {
     [Authorize]
     public class DeportistaController : ApiController
     {
-
-        private IRepository<Deportista, int> deportistaR;
+        private readonly IUnitOfWork _unitOfWork;
         private SirindarDbContext db = new SirindarDbContext();
 
-        public DeportistaController(IRepository<Deportista, int> deportistaR)
+        public DeportistaController(IUnitOfWork unitOfWork)
         {
-            this.deportistaR = deportistaR;
+            _unitOfWork = unitOfWork;
         }
+
         // GET api/Deportista/5
         [ResponseType(typeof(Deportista))]
         public IHttpActionResult GetDeportista(int id)
         {
-            var deportista = db.Deportistas.Where(d => d.Matricula == id.ToString())
-                .Select(d => new CafeteriaDeportistaModel
-                {
-                    DeportistaId = d.DeportistaId,
-                    Nombre = d.Nombre + " " + d.Apellidos,
-                    Dependencia = new CafeteriaDepenenciaModel
-                        {
-                            Nombre = d.Dependencia.Nombre
-                        }
-                }).FirstOrDefault();
+            var deportista = _unitOfWork.Deportistas.GetDeportistaByMatricula(id.ToString());
 
             if (deportista == null)
             {
                 return NotFound();
             }
-            return Ok(deportista);
+
+            var model = new CafeteriaDeportistaModel
+            {
+                DeportistaId = deportista.DeportistaId,
+                Nombre = deportista.Nombre + " " + deportista.Apellidos,
+                Dependencia = new CafeteriaDepenenciaModel
+                {
+                    Nombre = deportista.Dependencia.Nombre
+                }
+            };
+
+            return Ok(model);
         }
 
         protected override void Dispose(bool disposing)

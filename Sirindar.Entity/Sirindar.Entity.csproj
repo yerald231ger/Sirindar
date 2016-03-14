@@ -67,12 +67,32 @@
     <Compile Include="EntityConfigurations\HorarioComidasConfiguration.cs" />
     <Compile Include="EntityConfigurations\HorarioConfiguration.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\201603122335436_InitialCreate.cs" />
-    <Compile Include="Migrations\201603122335436_InitialCreate.Designer.cs">
-      <DependentUpon>201603122335436_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201603130235462_InitialCreate.cs" />
+    <Compile Include="Migrations\201603130235462_InitialCreate.Designer.cs">
+      <DependentUpon>201603130235462_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603140003357_1.cs" />
+    <Compile Include="Migrations\201603140003357_1.Designer.cs">
+      <DependentUpon>201603140003357_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AsignacionBloqueRepository.cs" />
+    <Compile Include="Repositories\AsistenciaRepository.cs" />
+    <Compile Include="Repositories\BloqueRepository.cs" />
+    <Compile Include="Repositories\ClasificacionRepository.cs" />
+    <Compile Include="Repositories\DependenciaRepository.cs" />
+    <Compile Include="Repositories\DeporteDeportistaRepository.cs" />
+    <Compile Include="Repositories\DeporteRepository.cs" />
+    <Compile Include="Repositories\DeportistaRepository.cs" />
+    <Compile Include="Repositories\EntrenadorRepository.cs" />
+    <Compile Include="Repositories\GrupoAlimenticioRepository.cs" />
+    <Compile Include="Repositories\GrupoRepository.cs" />
+    <Compile Include="Repositories\HorarioComidasRepository.cs" />
+    <Compile Include="Repositories\HorarioRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="Repositories\UsuarioRepository.cs" />
     <Compile Include="SirindarDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,8 +106,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603122335436_InitialCreate.resx">
-      <DependentUpon>201603122335436_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603130235462_InitialCreate.resx">
+      <DependentUpon>201603130235462_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603140003357_1.resx">
+      <DependentUpon>201603140003357_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

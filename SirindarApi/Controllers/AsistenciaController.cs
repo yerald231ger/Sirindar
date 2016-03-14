@@ -2,6 +2,9 @@
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Sirindar.Core;
+using Sirindar.Core.Repositories;
+using Sirindar.Core.UnitOfWork;
 using Sirindar.Entity;
 using SirindarApi.Models.Remotos;
 
@@ -10,19 +13,12 @@ namespace SirindarApi.Controllers
     [Authorize]
     public class AsistenciaController : ApiController
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly SirindarDbContext db = new SirindarDbContext();
-        private readonly IRepository<Asistencia, int> _asistenciaR;
-        private IRepository<Deportista, int> deportistaR;
-        private readonly IRepository<Horario, int> _horarioR;
 
-        public AsistenciaController(
-            IRepository<Asistencia, int> asistenciaR,
-            IRepository<Deportista, int> deportistaR,
-            IRepository<Horario, int> horarioR)
+        public AsistenciaController(IUnitOfWork unitOfWork)
         {
-            _asistenciaR = asistenciaR;
-            this.deportistaR = deportistaR;
-            _horarioR = horarioR;
+            _unitOfWork = unitOfWork;
         }
 
         // POST api/Asistencia

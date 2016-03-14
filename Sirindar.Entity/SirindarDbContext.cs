@@ -9,8 +9,9 @@ namespace Sirindar.Entity
     public class SirindarDbContext : IdentityDbContext<ApplicationUser>
     {
         public SirindarDbContext()
-            : base("SirindarEntityConnectionString")
+            : base("SirindarConnectionString")
         {
+            Configuration.LazyLoadingEnabled = true;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

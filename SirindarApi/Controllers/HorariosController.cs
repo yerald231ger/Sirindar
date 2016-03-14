@@ -1,41 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
-using CNSirindar;
-using CNSirindar.Models;
-using CNSirindar.Repositories;
+using Sirindar.Core;
+using Sirindar.Core.Repositories;
+using Sirindar.Core.UnitOfWork;
+using Sirindar.Entity;
 
 namespace SirindarApi.Controllers
 {
     [Authorize]
     public class HorariosController : ApiController
     {
-        private IRepository<Horario, int> horarioR;
+        private readonly IUnitOfWork _unitOfWork;
         private SirindarDbContext db = new SirindarDbContext();
 
-        public HorariosController(IRepository<Horario, int> horarioR)
+        public HorariosController(IUnitOfWork unitOfWork)
         {
-            this.horarioR = horarioR;
+            _unitOfWork = unitOfWork;
         }
 
         // GET api/Horarios
         public IEnumerable<Horario> GetHorarios()
         {
-            return horarioR.List();
+            return _unitOfWork.Horarios.GetAll();
         }
 
         // GET api/Horarios/5
         [ResponseType(typeof(Horario))]
         public IHttpActionResult GetHorario(int id)
         {
-            var horario = horarioR.Read(id);
+            var horario = _unitOfWork.Horarios.Get(id);
             if (horario == null)
             {
                 return NotFound();

@@ -1,8 +1,8 @@
-﻿using System;
-using Sirindar.Core.Repositories;
+﻿using Sirindar.Core.Repositories;
 using Sirindar.Core.UnitOfWork;
+using Sirindar.Entity.Repositories;
 
-namespace Sirindar.Repositories
+namespace Sirindar.Entity
 {
     public class UnitOfWork : IUnitOfWork
     {

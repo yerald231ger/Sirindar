@@ -22,6 +22,7 @@ namespace Sirindar.Entity.EntityConfigurations
             HasOptional(a => a.Bloque)
                 .WithMany(b => b.AsignacionesBloques)
                 .HasForeignKey(a => a.BloqueId);
+            
         }
     }
 }
