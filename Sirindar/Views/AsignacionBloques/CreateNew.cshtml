@@ -1,5 +1,5 @@
-﻿@model Sirindar.Models.CreateAsignacionBloquesViewModel
-<link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" />
+﻿rindar.Models.CreateAsignacionBloquesViewModel
+<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
 <div class="row">
     <div class="col-md-12">
         <h2>Asignacion de bloque</h2>
@@ -498,8 +498,11 @@
         </div>
     </div>
 </div>
-
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section Scripts{
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+}
