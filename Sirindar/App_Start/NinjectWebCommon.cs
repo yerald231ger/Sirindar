@@ -1,4 +1,6 @@
 using Sirindar.Core.Repositories;
+using Sirindar.Core.UnitOfWork;
+using Sirindar.Entity;
 using Sirindar.Entity.Repositories;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Sirindar.App_Start.NinjectWebCommon), "Start")]
@@ -64,6 +66,7 @@ namespace Sirindar.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
             kernel.Bind<IDeporteRepository>().To<DeporteRepository>();
             kernel.Bind<IDeportistaRepository>().To<DeportistaRepository>();
             kernel.Bind<IDeporteDeportistaRepository>().To<DeporteDeportistaRepository>();

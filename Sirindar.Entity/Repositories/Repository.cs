@@ -39,6 +39,12 @@ namespace Sirindar.Entity.Repositories
             return Context.Set<TEntity>().Where(e => e.EsActivo).SingleOrDefault(predicate);
         }
 
+        public void Update(TEntity entity)
+        {
+            DbSet.Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
+        }
+
         public void Add(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);

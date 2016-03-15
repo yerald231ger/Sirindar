@@ -70,14 +70,13 @@ namespace Sirindar.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DeporteId,Nombre,TipoEnergia")] Deporte deporte, int clasificacionDeporteId)
+        public ActionResult Edit([Bind(Include = "DeporteId,Nombre,TipoEnergia,ClasificacionDeporteId")] Deporte deporte)
         {
             if (ModelState.IsValid)
             {
                 var _deporte = _unitOfWork.Deportes.Get(deporte.DeporteId);
                 _deporte.Nombre = deporte.Nombre;
                 _deporte.TipoEnergia = deporte.TipoEnergia;
-                _deporte.Clasificacion = deporte.Clasificacion;
                 _deporte.ClasificacionDeporteId = deporte.ClasificacionDeporteId;
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");

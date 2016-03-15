@@ -13,6 +13,8 @@ namespace Sirindar.Core.Repositories
 
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
 
+        void Update(TEntity entity);
+
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
 

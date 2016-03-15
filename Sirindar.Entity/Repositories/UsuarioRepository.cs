@@ -8,6 +8,11 @@ namespace Sirindar.Entity.Repositories
 {
     class UsuarioRepository : IUsuarioRepository
     {
+        public void Update(Usuario entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Add(Usuario entity) 
         {
             throw new NotImplementedException();

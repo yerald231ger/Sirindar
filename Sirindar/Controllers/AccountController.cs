@@ -156,7 +156,7 @@ namespace Sirindar.Controllers
 
                     if (result.Succeeded)
                     {
-                        UserManager.AddToRole(user.Id, "User");
+                        UserManager.AddToRole(user.Id, "Admin");
                         await SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", "Home");
                     }

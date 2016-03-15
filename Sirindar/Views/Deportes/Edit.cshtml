@@ -1,5 +1,4 @@
-﻿@using CNSirindar.Models;
-@using Sirindar.Helpers
+﻿@using Sirindar.Helpers
 @model Sirindar.Core.Deporte
 
 @{
@@ -17,7 +16,6 @@
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.DeporteId)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-2" })
             <div class="col-md-10">               
