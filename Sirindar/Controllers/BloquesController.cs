@@ -117,17 +117,17 @@ namespace Sirindar.Controllers
         // POST: /Bloques/GrupoCreate
         [HttpPost, ActionName("GrupoCreate")]
         [ValidateAntiForgeryToken]
-        public ActionResult GrupoCreate([Bind(Include = "GrupoId,Nombre,Grupo,Porcentaje,Gramos,Kilocalorias,Equivalencias,BloqueId,GrupoAlimenticioId")] Grupo grupo)
+        public ActionResult GrupoCreate([Bind(Include = "GrupoId,Nombre,Grupo,Porcentaje,Gramos,Kilocalorias,Equivalencias,BloqueId,GrupoAlimenticioId")] Grupo model)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Grupos.Add(grupo);
-                _unitOfWork.Bloques.SumaKilocalorias(grupo.BloqueId);
+                _unitOfWork.Grupos.Add(model);
+                _unitOfWork.Bloques.Get(model.BloqueId).KilocaloriasTotales += model.Kilocalorias;
                 _unitOfWork.Complete();
-                return RedirectToAction("Edit", new { id = grupo.BloqueId });
+                return RedirectToAction("Edit", new { id = model.BloqueId });
 
             }
-            return RedirectToAction("Edit", grupo.BloqueId);
+            return RedirectToAction("Edit", model.BloqueId);
         }
 
         // GET: /Bloques/GrupoEdit/1
@@ -161,7 +161,7 @@ namespace Sirindar.Controllers
                 _grupo.Equivalencias = model.Equivalencias;
                 _grupo.BloqueId = model.BloqueId;
                 _grupo.GrupoAlimenticioId = model.GrupoAlimenticioId;
-                _unitOfWork.Bloques.SumaKilocalorias(model.BloqueId);
+                _unitOfWork.Bloques.CalculateKilocalorias(model.BloqueId);
                 _unitOfWork.Complete();
                     return RedirectToAction("Edit", new { id = model.BloqueId });
                 
@@ -187,12 +187,13 @@ namespace Sirindar.Controllers
         // POST: /Bloques/GrupoDelete/1
         [HttpPost, ActionName("GrupoDelete")]
         [ValidateAntiForgeryToken]
-        public ActionResult GrupoDelete(int id)
+        public ActionResult GrupoDelete(int id, int bloqueId)
         {
-            var grupo = _unitOfWork.Grupos.Get(id);
-            grupo.EsActivo = false;
+            _unitOfWork.Grupos.Remove(id);
             _unitOfWork.Complete();
-            return RedirectToAction("Edit", new { id = grupo.BloqueId });
+            _unitOfWork.Bloques.CalculateKilocalorias(bloqueId);
+            _unitOfWork.Complete();
+            return RedirectToAction("Edit", new { id = bloqueId });
         }
 
         protected override void Dispose(bool disposing)

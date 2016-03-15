@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Sirindar.Core;
@@ -30,7 +31,7 @@ namespace Sirindar.Entity.Repositories
             var deportista = Get(deportistaId);
             deportista.Deportes = SirindarDbContext.DeportesDeportistas.Include(d => d.Deporte)
                 .Where(d => d.DeportistaId == deportistaId && d.EsActivo)
-                .Select(dd => dd.Deporte)
+                .Select(dd => dd.Deporte).ToList()
                 .Select(d => new Deporte
                 {
                     DeporteId = d.DeporteId,
@@ -97,6 +98,24 @@ namespace Sirindar.Entity.Repositories
                            Cantidad = y.HorarioComidas.Cantidad
                        }
                     }).ToList();
+        }
+
+        public void AddDeporte(int deportistaId, int deporteId, TimeSpan iniciaEntrenamiento,
+            TimeSpan finalizaEntrenamiento)
+        {
+            SirindarDbContext.DeportesDeportistas.Add(new DeporteDeportista
+            {
+                DeporteId = deporteId,
+                DeportistaId = deportistaId,
+                IniciaEntrenamiento = iniciaEntrenamiento,
+                FinalizaEntrenamiento = finalizaEntrenamiento
+            });
+        }
+
+        public void RemoveDeporte(int deportistaId, int deporteId)
+        {
+            var deporteDeportista = SirindarDbContext.DeportesDeportistas.FirstOrDefault(
+                dd => dd.DeportistaId == deportistaId && dd.DeporteId == deporteId).EsActivo = false;
         }
 
         public bool IsMatricula(string matricula)

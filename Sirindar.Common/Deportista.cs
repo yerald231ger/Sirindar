@@ -8,7 +8,6 @@ namespace Sirindar.Core
         public int DependenciaId { get; set; }
         public string Matricula { get; set; }
         public Status Status { get; set; }
-        public DateTime FechaRegistro { get; set; }
         public virtual Dependencia Dependencia { get; set; }
         public virtual HorarioComidas HorarioComidas { get; set; }
 

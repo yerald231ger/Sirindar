@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Sirindar.Core.Repositories
 {
@@ -14,5 +15,7 @@ namespace Sirindar.Core.Repositories
         IEnumerable<Deportista> SearchByDependencia(string deporte);
         bool IsMatricula(string matricula);
         bool IsDeportista(int deportistaId);
+        void AddDeporte(int deportistaId, int deporteId, TimeSpan iniciaEntrenamiento, TimeSpan finalizaEntrenamiento);
+        void RemoveDeporte(int deportistaId, int deporteId);
     }
 }

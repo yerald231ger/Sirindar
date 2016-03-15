@@ -19,10 +19,6 @@ namespace Sirindar.Entity.EntityConfigurations
             Property(d => d.Status)
                 .IsRequired();
 
-            Property(d => d.FechaRegistro)
-                .HasColumnType("DateTime")
-                .IsOptional();
-
             HasRequired(d => d.Dependencia)
                 .WithMany(dp => dp.Deportistas)
                 .HasForeignKey(d => d.DependenciaId);

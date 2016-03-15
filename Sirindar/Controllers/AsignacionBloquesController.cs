@@ -28,8 +28,6 @@ namespace Sirindar.Controllers
 
         public ActionResult CreateNew()
         {
-            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre");
-            ViewBag.DeportistaId = new SelectList(_unitOfWork.Deportistas.GetAll(), "DeportistaId", "Nombre");
             return View();
         }
 
@@ -191,8 +189,7 @@ namespace Sirindar.Controllers
 
         public TableAsignacionBloques GridAsignaciones()
         {
-
-            var groupDeportistas = _unitOfWork.AsignacionesBloques.GetAsignacionBloquesGrupoByMatriucla();
+            var groupDeportistas = _unitOfWork.AsignacionesBloques.GetAsignacionBloquesByMatriucla();
 
             var tableAsignaciones = new TableAsignacionBloques {Deportistas = new List<RowDeportista>()};
 

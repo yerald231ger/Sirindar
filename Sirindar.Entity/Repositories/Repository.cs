@@ -26,9 +26,7 @@ namespace Sirindar.Entity.Repositories
 
         public TEntity Get(Expression<Func<TEntity, bool>> predicate, string include = "")
         {
-            IQueryable<TEntity> query = DbSet;
-
-            return query.Include(include).Where(predicate).ToList().First();
+            return DbSet.Include(include).Where(predicate).ToList().First();
         }
 
         public IEnumerable<TEntity> GetAll()

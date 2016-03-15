@@ -17,13 +17,14 @@ namespace Sirindar.Entity.Repositories
         {
         }
 
-        public IEnumerable<IGrouping<string,AsignacionBloque>> GetAsignacionBloquesGrupoByMatriucla()
+        public IEnumerable<IGrouping<string,AsignacionBloque>> GetAsignacionBloquesByMatriucla()
         {
             return SirindarDbContext.AsigancionesBloques
                         .Include(ab => ab.Deporte)
                         .Include(ab => ab.Deportista)
                         .Include(ab => ab.Bloque)
-                        .Where(ab => ab.EsActivo).GroupBy(ab => ab.Deportista.Matricula).ToList();
+                        .Where(ab => ab.EsActivo)
+                        .GroupBy(ab => ab.Deportista.Matricula).ToList();
         }
 
         public bool IsAsigancionGrupos(int deporteId, int deportistaId, int bloqueId)

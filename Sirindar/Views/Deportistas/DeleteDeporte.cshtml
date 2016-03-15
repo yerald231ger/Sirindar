@@ -36,7 +36,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    @using (Html.BeginForm(new { Model.DeporteDeportistaId, Model.DeportistaId }))
+    @using (Html.BeginForm(new { Model.DeporteDeportistaId, Model.DeportistaId, Model.DeporteId }))
     {
         @Html.AntiForgeryToken()
         <div class="row">

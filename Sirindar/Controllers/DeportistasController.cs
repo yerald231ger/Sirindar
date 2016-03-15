@@ -24,7 +24,7 @@ namespace Sirindar.Controllers
         // GET: /Deportistas/
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportes.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportistas.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             return View();
         }
 
@@ -60,28 +60,30 @@ namespace Sirindar.Controllers
                         {
                             DeporteId = model.DeporteId,
                             IniciaEntrenamiento = model.IniciaEntrenamiento,
-                            FinalizaEntrenamiento = model.FinalizaEntrenamiento,
-                            FechaAlta = DateTime.Now,
-                            EsActivo = true
+                            FinalizaEntrenamiento = model.FinalizaEntrenamiento
                         }
                     },
                     AsignacionesBloques = new List<AsignacionBloque>
                     {
                         new AsignacionBloque
                         {
-                            DeporteId = model.DeporteId,
-                            FechaAlta = DateTime.Now,
-                            EsActivo = true
+                            DeporteId = model.DeporteId
                         }
                     },
                     HorarioComidas = new HorarioComidas
                     {
                         Cantidad = NumeroComidas.Uno,
-                        FechaAlta = DateTime.Now,
-                        EsActivo = true
+                        Lunes = true,
+                        Martes = true,
+                        Miercoles = true,
+                        Jueves = true,
+                        Viernes = true,
+                        Sabado = true,
+                        Domingo = true
                     }
                 };
                 _unitOfWork.Deportistas.Add(deportista);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
             ViewBag.DeporteId = new SelectList(_unitOfWork.Deportes.GetAll(), "DeporteId", "Nombre");
@@ -197,14 +199,9 @@ namespace Sirindar.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddDeporte([Bind(Include = "DeporteId,DeportistaId,IniciaEntrenamiento,FinalizaEntrenamiento")] CreateDeporteDeportistaViewModel model)
         {
-            _unitOfWork.DeportesDeportistas.Add(new DeporteDeportista
-            {
-                DeporteId = model.DeporteId,
-                DeportistaId = model.DeportistaId,
-                IniciaEntrenamiento = model.IniciaEntrenamiento,
-                FinalizaEntrenamiento = model.FinalizaEntrenamiento
-            });
-            
+            _unitOfWork.Deportistas.AddDeporte(model.DeportistaId, model.DeporteId, model.IniciaEntrenamiento,
+                model.FinalizaEntrenamiento);
+            _unitOfWork.Complete();
             return RedirectToAction("Edit", new { id = model.DeportistaId });
         }
 
@@ -213,16 +210,16 @@ namespace Sirindar.Controllers
         {
             if (deporteId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-           
+
             var deportistaDeporte = _unitOfWork.DeportesDeportistas.FindByDeporteId(deporteId.Value);
             return PartialView(deportistaDeporte);
         }
 
         [HttpPost, ActionName("DeleteDeporte")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteDeporte([Bind(Include = "DeporteDeportistaId,DeportistaId")]DeporteDeportista model)
+        public ActionResult DeleteDeporte([Bind(Include = "DeporteDeportistaId,DeportistaId,DeporteId")]DeporteDeportista model)
         {
-            _unitOfWork.DeportesDeportistas.Remove(model.DeporteDeportistaId);
+            _unitOfWork.Deportistas.RemoveDeporte(model.DeportistaId, model.DeporteId);
             _unitOfWork.Complete();
             return RedirectToAction("Edit", new { id = model.DeportistaId });
         }

@@ -5,7 +5,7 @@ namespace Sirindar.Core.Repositories
 {
     public interface IAsignacionBloqueRepository : IRepository<AsignacionBloque,int>
     {
-        IEnumerable<IGrouping<string, AsignacionBloque>> GetAsignacionBloquesGrupoByMatriucla();
+        IEnumerable<IGrouping<string, AsignacionBloque>> GetAsignacionBloquesByMatriucla();
         bool IsAsigancionGrupos(int deporteId, int deportistaId, int bloqueId);
     }
 }
