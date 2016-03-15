@@ -6,5 +6,6 @@ namespace Sirindar.Core.Repositories
     {
         Bloque GetWithGrupos(int blqoueId);
         bool IsBloque(int bloqueId);
+        void SumaKilocalorias(int bloqueId);
     }
 }

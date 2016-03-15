@@ -8,6 +8,7 @@ namespace Sirindar.Core.Repositories
         where TEntity : class
     {
         TEntity Get(TKey id);
+        TEntity Get(Expression<Func<TEntity, bool>> predicate, string include);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 

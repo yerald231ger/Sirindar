@@ -122,6 +122,7 @@ namespace Sirindar.Controllers
             if (ModelState.IsValid)
             {
                 _unitOfWork.Grupos.Add(grupo);
+                _unitOfWork.Bloques.SumaKilocalorias(grupo.BloqueId);
                 _unitOfWork.Complete();
                 return RedirectToAction("Edit", new { id = grupo.BloqueId });
 
@@ -160,6 +161,7 @@ namespace Sirindar.Controllers
                 _grupo.Equivalencias = model.Equivalencias;
                 _grupo.BloqueId = model.BloqueId;
                 _grupo.GrupoAlimenticioId = model.GrupoAlimenticioId;
+                _unitOfWork.Bloques.SumaKilocalorias(model.BloqueId);
                 _unitOfWork.Complete();
                     return RedirectToAction("Edit", new { id = model.BloqueId });
                 

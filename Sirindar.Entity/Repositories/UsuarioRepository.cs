@@ -33,6 +33,11 @@ namespace Sirindar.Entity.Repositories
             throw new NotImplementedException();
         }
 
+        public Usuario Get(Expression<Func<Usuario, bool>> predicate, string include)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Usuario> GetAll()
         {
             throw new NotImplementedException();

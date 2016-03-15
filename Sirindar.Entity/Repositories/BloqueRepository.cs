@@ -27,5 +27,12 @@ namespace Sirindar.Entity.Repositories
         {
             return SingleOrDefault(b => b.BloqueId == bloqueId) != null;
         }
+
+        public void SumaKilocalorias(int bloqueId)
+        {
+            var bloque = sirindarDbContext.Bloques.Include("Grupos").First(b => b.BloqueId == bloqueId);
+            bloque.KilocaloriasTotales = 0;
+            bloque.Grupos.Where(g => g.EsActivo).ToList().ForEach(g => bloque.KilocaloriasTotales += g.Kilocalorias);
+        }
     }
 }

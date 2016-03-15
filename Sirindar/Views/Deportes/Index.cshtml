@@ -37,10 +37,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="x in tempItems">
+                            <tr ng-switch on="x.TipoEnergia" ng-repeat="x in tempItems">
                                 <td scope="row"></td>
                                 <td>{{ x.Nombre }}</td>
-                                <td>{{ x.TipoEnergia }}</td>
+                                <td ng-switch-when="0">Aerobico</td>
+                                <td ng-switch-when="1">Anaerobico</td>
+                                <td ng-switch-when="2">Aerobico/Anaerobico</td>
                                 <td>{{ x.Clasificacion.Descripcion }}</td>
                                 <td><a ng-href="@Url.Action("Edit")/{{x.DeporteId}}"><span class="glyphicon glyphicon-edit"></span></a></td>
                                 <td><a href="#" ng-click="deleteConfirm('@Url.Action("Delete")', x.DeporteId)"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -90,6 +92,6 @@
 @section scripts
 {
     <script>       
-        jsPageing('@json', "@Url.Action("GetItemsJson")", 10, 9);
+        jsPageing('@json', null, 10, 9);
     </script>
 }

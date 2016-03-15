@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using Sirindar.Core;
 using Sirindar.Core.UnitOfWork;
@@ -20,7 +21,8 @@ namespace Sirindar.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportes.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, NullValueHandling = NullValueHandling.Include }));
+            var deportes = _unitOfWork.Deportes.GetAll();
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(deportes, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, NullValueHandling = NullValueHandling.Include }));
             return View();
         }
         
@@ -107,6 +109,7 @@ namespace Sirindar.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _unitOfWork.Deportes.Remove(id);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
 

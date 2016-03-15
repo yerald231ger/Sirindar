@@ -8,10 +8,10 @@ using Sirindar.Core.Repositories;
 
 namespace Sirindar.Entity.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity, int> where TEntity : TableDbConventions 
+    public class Repository<TEntity> : IRepository<TEntity, int> where TEntity : TableDbConventions
     {
         protected readonly DbContext Context;
-        protected readonly DbSet<TEntity> DbSet; 
+        protected readonly DbSet<TEntity> DbSet;
 
         public Repository(DbContext context)
         {
@@ -22,6 +22,13 @@ namespace Sirindar.Entity.Repositories
         public TEntity Get(int id)
         {
             return Context.Set<TEntity>().Find(id);
+        }
+
+        public TEntity Get(Expression<Func<TEntity, bool>> predicate, string include = "")
+        {
+            IQueryable<TEntity> query = DbSet;
+
+            return query.Include(include).Where(predicate).ToList().First();
         }
 
         public IEnumerable<TEntity> GetAll()
