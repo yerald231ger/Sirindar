@@ -24,5 +24,10 @@ namespace Sirindar.Entity.Repositories
                         .Contains(deporte.ToLowerInvariant())
                     ).ToList();
         }
+
+        public bool IsDeporte(int deportistaId)
+        {
+            return SingleOrDefault(d => d.DeporteId == deportistaId) != null;
+        }
     }
 }

@@ -59,8 +59,8 @@ namespace Sirindar.Controllers
                         new DeporteDeportista
                         {
                             DeporteId = model.DeporteId,
-                            IniciaEntrenamiento = model.IniciaEntrenamiento.Value,
-                            FinalizaEntrenamiento = model.FinalizaEntrenamiento.Value,
+                            IniciaEntrenamiento = model.IniciaEntrenamiento,
+                            FinalizaEntrenamiento = model.FinalizaEntrenamiento,
                             FechaAlta = DateTime.Now,
                             EsActivo = true
                         }
@@ -201,8 +201,8 @@ namespace Sirindar.Controllers
             {
                 DeporteId = model.DeporteId,
                 DeportistaId = model.DeportistaId,
-                IniciaEntrenamiento = model.IniciaEntrenamiento.Value,
-                FinalizaEntrenamiento = model.FinalizaEntrenamiento.Value
+                IniciaEntrenamiento = model.IniciaEntrenamiento,
+                FinalizaEntrenamiento = model.FinalizaEntrenamiento
             });
             
             return RedirectToAction("Edit", new { id = model.DeportistaId });

@@ -1,19 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Sirindar.Models
 {
     public class CreateAsignacionBloquesViewModel
     {
         [Required]
-        [IsDeportista(ErrorMessage = "El Deportista seleccionado no exitste")]
+        [Remote("IsDeportista", "Validations", ErrorMessage = "El deportista no existe")]
         public virtual int DeportistaId { get; set; }
 
         [Required]
-        [IsDeporte(ErrorMessage = "El dDorte seleccionado no existe")]
+        [Remote("IsDeporte", "Validations", ErrorMessage = "El deporte no existe")]
         public virtual int DeporteId { get; set; }
 
         [Required]
-        [IsBloque(ErrorMessage = "El Bloque seleccionado no exitste")]
+        [Remote("IsBloque", "Validations", ErrorMessage = "El deporte no existe")]
         public virtual int BloqueId { get; set; }
     }
 
@@ -22,15 +23,15 @@ namespace Sirindar.Models
         public virtual int AsignacionBloqueId { get; set; }
 
         [Required]
-        [IsDeportista(ErrorMessage = "El Deportista seleccionado no exitste")]
+        [Remote("IsDeportista", "Validations", ErrorMessage = "El deportista no existe")]
         public virtual int DeportistaId { get; set; }
 
         [Required]
-        [IsDeporte(ErrorMessage = "El dDorte seleccionado no existe")]
+        [Remote("IsDeporte", "Validations", ErrorMessage = "El deporte no existe")]
         public virtual int DeporteId { get; set; }
 
         [Required]
-        [IsBloque(ErrorMessage = "El Bloque seleccionado no exitste")]
+        [Remote("IsBloque", "Validations", ErrorMessage = "El deporte no existe")]
         public virtual int BloqueId { get; set; }
 
     }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Linq.Expressions;
-using CNSirindar.Models;
 
 namespace Sirindar.Helpers
 {

@@ -24,5 +24,10 @@ namespace Sirindar.Entity.Repositories
                     .Contains(dependencia.ToLowerInvariant()))
                 .OrderBy(d => d.Nombre).ToList();
         }
+
+        public bool IsDependencia(int dependenciaId)
+        {
+            return SingleOrDefault(d => d.DependenciaId == dependenciaId) != null;
+        }
     }
 }

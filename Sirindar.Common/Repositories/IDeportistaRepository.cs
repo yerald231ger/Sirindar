@@ -12,5 +12,7 @@ namespace Sirindar.Core.Repositories
         IEnumerable<Deportista> SearchByStringExpression(string expression);
         IEnumerable<Deportista> SearchByDeporte(string deporte);
         IEnumerable<Deportista> SearchByDependencia(string deporte);
+        bool IsMatricula(string matricula);
+        bool IsDeportista(int deportistaId);
     }
 }

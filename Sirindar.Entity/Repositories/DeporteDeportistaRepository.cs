@@ -7,7 +7,7 @@ namespace Sirindar.Entity.Repositories
 {
     public class DeporteDeportistaRepository : Repository<DeporteDeportista>, IDeporteDeportistaRepository
     {
-        private SirindarDbContext sirindarDbContext
+        private SirindarDbContext SirindarDbContext
         {
             get { return Context as SirindarDbContext; }
         }
@@ -19,7 +19,7 @@ namespace Sirindar.Entity.Repositories
 
         public DeporteDeportista FindByDeporteId(int deporteId)
         {
-            return sirindarDbContext.DeportesDeportistas
+            return SirindarDbContext.DeportesDeportistas
                 .Include(dd => dd.Deporte)
                 .Where(dd => dd.EsActivo).First(dd => dd.DeporteId == deporteId);
         }

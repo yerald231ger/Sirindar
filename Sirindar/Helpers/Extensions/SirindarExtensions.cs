@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using CNSirindar.Models;
-using Sirindar.Models;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq.Expressions;
-using CNSirindar;
+using Sirindar.Core;
+using Sirindar.Entity;
 
 namespace Sirindar.Helpers.Extensions
 {

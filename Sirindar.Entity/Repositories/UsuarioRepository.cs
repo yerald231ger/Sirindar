@@ -38,6 +38,11 @@ namespace Sirindar.Entity.Repositories
             throw new NotImplementedException();
         }
 
+        public void Remove(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveRange(IEnumerable<Usuario> entities)
         {
             throw new NotImplementedException();

@@ -22,5 +22,10 @@ namespace Sirindar.Entity.Repositories
                  .Include(b => b.Grupos)
                  .First(b => b.EsActivo && b.BloqueId == blqoueId);
         }
+
+        public bool IsBloque(int bloqueId)
+        {
+            return SingleOrDefault(b => b.BloqueId == bloqueId) != null;
+        }
     }
 }

@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using Sirindar.Core;
+using Sirindar.Core.UnitOfWork;
 using Sirindar.Helpers;
-using CNSirindar.Models;
-using CNSirindar.Repositories;
 
 namespace Sirindar.Controllers
 {
     [Authorize(Roles="Admin")]
     public class HorariosController : Controller
     {
-        private IRepository<Horario,int> _horario;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HorariosController(
-            IRepository<Horario, int> horario
-            ) 
+        public HorariosController(IUnitOfWork unitOfWork)
         {
-            this._horario = horario;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: /Horarios/
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_horario.List(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Horarios.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             return View();
         }
 
@@ -36,7 +30,7 @@ namespace Sirindar.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var horario = _horario.Read(id);
+            var horario = _unitOfWork.Horarios.Get(id.Value);
             if (horario == null)
                 return HttpNotFound();
 
@@ -49,24 +43,21 @@ namespace Sirindar.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="HorarioId,Inicia,Finaliza,FechaAlta,Nombre")] Horario horario)
+        public ActionResult Edit([Bind(Include="HorarioId,Inicia,Finaliza,FechaAlta,Nombre")] Horario model)
         {
             if (ModelState.IsValid)
             {
-                _horario.Update(horario);
+                var horario = _unitOfWork.Horarios.Get(model.HorarioId);
+                horario.Inicia = model.Inicia;
+                horario.Finaliza = model.Finaliza;
+                horario.Nombre = model.Nombre;
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            ViewBag.Nombre = new SelectList(SirindarControls.EnumAsList<ComidasDia>(), "Value", "Text", horario.HorarioId);
-            return View(horario);
+            ViewBag.Nombre = new SelectList(SirindarControls.EnumAsList<ComidasDia>(), "Value", "Text", model.HorarioId);
+            return View(model);
         }       
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _horario = null;
-            }
-            base.Dispose(disposing);
-        }
+      
     }
 }

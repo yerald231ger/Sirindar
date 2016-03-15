@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
 using Sirindar.Core;
 using Sirindar.Core.Repositories;
@@ -98,6 +97,16 @@ namespace Sirindar.Entity.Repositories
                            Cantidad = y.HorarioComidas.Cantidad
                        }
                     }).ToList();
+        }
+
+        public bool IsMatricula(string matricula)
+        {
+            return SingleOrDefault(d => d.Matricula == matricula) != null;
+        }
+
+        public bool IsDeportista(int deportistaId)
+        {
+            return SingleOrDefault(d => d.DeportistaId == deportistaId) != null;
         }
     }
 }
