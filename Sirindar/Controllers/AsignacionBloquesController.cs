@@ -22,169 +22,20 @@ namespace Sirindar.Controllers
         // GET: /AsignacionBloques
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(GridAsignaciones().Deportistas, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            ViewBag.json =
+                new HtmlString(JsonConvert.SerializeObject(GridAsignaciones().Deportistas,
+                    new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
             return View();
         }
 
-        public ActionResult CreateNew()
+        public ActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateNew(
-            [Bind(Include = "DeporteId,BloqueId,DeportistaId")]
-            CreateAsignacionBloquesViewModel model
-            )
+        public JsonResult GetAllByExpression(string expression)
         {
-            if (_unitOfWork.AsignacionesBloques.IsAsigancionGrupos(model.DeporteId, model.DeportistaId, model.BloqueId))
-                ModelState.AddModelError("ExistDeporteDeportista", "La asignacion seleccionada ya existe");
-
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.AsignacionesBloques.Add(new AsignacionBloque
-                {
-                    DeporteId = model.DeporteId,
-                    DeportistaId = model.DeportistaId,
-                    BloqueId = model.BloqueId
-                });
-                _unitOfWork.Complete();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre", model.BloqueId);
-            ViewBag.DeportistaId = new SelectList(_unitOfWork.Deportistas.GetAll(), "DeportistaId", "Nombre", model.DeportistaId);
-            return View();
-        }
-
-        public ActionResult Create(int? deportistaId, int? deporteId)
-        {
-            if (deportistaId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var deportista = _unitOfWork.Deportistas.GetWithDeportes(deportistaId.Value);
-            if (deportista == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.DeportistaId = deportistaId;
-            ViewBag.DeportistaNombre = deportista.ToString();
-            ViewBag.DeporteId = new SelectList(deportista.Deportes, "DeporteId", "Nombre", deporteId);
-            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre");
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(
-            [Bind(Include = "DeporteId,BloqueId,DeportistaId")]
-            CreateAsignacionBloquesViewModel model
-            )
-        {
-            if (_unitOfWork.AsignacionesBloques.IsAsigancionGrupos(model.DeporteId, model.DeportistaId, model.BloqueId))
-                ModelState.AddModelError("ExistDeporteDeportista", "La asignacion seleccionada ya existe");
-
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.AsignacionesBloques.Add(new AsignacionBloque
-                {
-                    DeporteId = model.DeporteId,
-                    DeportistaId = model.DeportistaId,
-                    BloqueId = model.BloqueId
-                });
-                _unitOfWork.Complete();
-                return RedirectToAction("Index");
-            }
-
-            var deportista = _unitOfWork.Deportistas.GetWithDeportes(model.DeportistaId);
-
-            ViewBag.DeportistaId = deportista.DeportistaId;
-            ViewBag.DeportistaNombre = deportista.ToString();
-            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre");
-            ViewBag.DeporteId = new SelectList(deportista.Deportes, "DeporteId", "Nombre");
-            return View();
-        }
-
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var asignacionBloque = _unitOfWork.AsignacionesBloques.Get(id.Value);
-            if (asignacionBloque == null)
-            {
-                return HttpNotFound();
-            }
-            var model = new UpdateAsignacionBloquesViewModel
-            {
-                AsignacionBloqueId = asignacionBloque.AsignacionBloqueId,
-                DeportistaId = asignacionBloque.DeportistaId,
-                DeporteId = asignacionBloque.DeporteId,
-                BloqueId = asignacionBloque.BloqueId ?? 0
-            };
-
-            var deportista = _unitOfWork.Deportistas.GetWithDeportes(model.DeportistaId);
-
-            ViewBag.DeportistaId = deportista.DeportistaId;
-            ViewBag.DeportistaNombre = deportista.ToString();
-            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre", asignacionBloque.BloqueId);
-            ViewBag.DeporteId = new SelectList(deportista.Deportes, "DeporteId", "Nombre", asignacionBloque.DeporteId);
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AsignacionBloqueId,BloqueId,DeporteId,DeportistaId")]UpdateAsignacionBloquesViewModel model)
-        {
-            if (_unitOfWork.AsignacionesBloques.IsAsigancionGrupos(model.DeporteId, model.DeportistaId, model.BloqueId))
-                ModelState.AddModelError("ExistDeporteDeportista", "La asignacion seleccionada ya existe");
-
-            if (ModelState.IsValid)
-            {
-                var asignacionBloque = _unitOfWork.AsignacionesBloques.Get(model.AsignacionBloqueId);
-                asignacionBloque.DeporteId = model.DeporteId;
-                asignacionBloque.DeportistaId = model.DeportistaId;
-                asignacionBloque.BloqueId = model.BloqueId;
-                _unitOfWork.Complete();
-                return RedirectToAction("Index");
-            }
-
-            var deportista = _unitOfWork.Deportistas.GetWithDeportes(model.DeportistaId);
-
-            ViewBag.DeportistaNombre = deportista.ToString();
-            ViewBag.BloqueId = new SelectList(_unitOfWork.Bloques.GetAll(), "BloqueId", "Nombre", model.BloqueId);
-            ViewBag.DeportistaId = new SelectList(_unitOfWork.Deportistas.GetAll(), "DeportistaId", "Nombre", model.DeportistaId);
-            ViewBag.DeporteId = new SelectList(deportista.Deportes, "DeporteId", "Nombre", model.DeporteId);
-            return View(model);
-        }
-
-        // GET: /Bloques/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var asignacionBloque = _unitOfWork.AsignacionesBloques.Get(id.Value);
-            if (asignacionBloque == null)
-            {
-                return HttpNotFound();
-            }
-            return PartialView(asignacionBloque);
-        }
-
-        // POST: /Bloques/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            _unitOfWork.AsignacionesBloques.Remove(id);
-            _unitOfWork.Complete();
-            return RedirectToAction("Index");
+            return Json(_unitOfWork.Deportistas.GetAllByExpression(expression), JsonRequestBehavior.AllowGet);
         }
 
         public TableAsignacionBloques GridAsignaciones()

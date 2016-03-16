@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using Sirindar.Core;
 using Sirindar.Core.Repositories;
@@ -47,6 +49,11 @@ namespace Sirindar.Entity.Repositories
             return deportista;
         }
 
+        public IEnumerable<Deportista> GetAllByExpression(string expression)
+        {
+            return Context.Database.SqlQuery<Deportista>("SPLDeportistas @Expression", new SqlParameter("@Expression", expression)).ToList();
+        }
+
         public IEnumerable<Deportista> SearchByMatricula(string matricula)
         {
             return Find(d => d
@@ -86,13 +93,13 @@ namespace Sirindar.Entity.Repositories
             return SirindarDbContext.Dependencias
                 .Where(d => d.EsActivo)
                 .Where(d => d.Nombre.ToLowerInvariant().Contains(deporte.ToLowerInvariant()))
-                    .SelectMany(dpo => dpo.Deportistas, (x, y) => 
+                    .SelectMany(dpo => dpo.Deportistas, (x, y) =>
                     new Deportista
                     {
-                       DeportistaId = y.DeportistaId,
-                       Matricula = y.Matricula,
-                       Nombre = y.Nombre,
-                       HorarioComidas = 
+                        DeportistaId = y.DeportistaId,
+                        Matricula = y.Matricula,
+                        Nombre = y.Nombre,
+                        HorarioComidas =
                        new HorarioComidas
                        {
                            Cantidad = y.HorarioComidas.Cantidad

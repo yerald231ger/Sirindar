@@ -1108,9 +1108,6 @@
     <Content Include="Views\Deportistas\Delete.cshtml" />
     <Content Include="Views\AsignacionBloques\Index.cshtml" />
     <Content Include="Views\AsignacionBloques\Create.cshtml" />
-    <Content Include="Views\AsignacionBloques\Edit.cshtml" />
-    <Content Include="Views\AsignacionBloques\Delete.cshtml" />
-    <Content Include="Views\AsignacionBloques\CreateNew.cshtml" />
     <Content Include="Views\AsignacionHorarios\Index.cshtml" />
     <Content Include="Views\AsignacionHorarios\UpdateCantidadComidasDeportista.cshtml" />
     <Content Include="Views\AsignacionHorarios\UpdateCantidadComidasByDependencia.cshtml" />
