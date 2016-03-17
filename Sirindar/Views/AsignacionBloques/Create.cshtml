@@ -10,16 +10,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="row">
-                        <form role="form">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Buscar Deportista</label>
-                                    <input class="form-control" placeholder="Buscar..." id="btn-buscar">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    Busqueda de deportistas
                 </div>
                 <div class="panel-body">
                     <div class="dataTable_wrapper">
@@ -62,9 +53,10 @@
                 $('#example').DataTable();
             });
         });*@
-        var table = $('#example').dataTable({
+        @*var table = $('#example').dataTable({
+                serverSide: true,
                 "ajax": {
-                    "url": "@Url.Action("GetAllByExpression", "AsignacionBloques")?expression=" + 0,
+                    "url": "@Url.Action("GetAllByExpression", "AsignacionBloques")",
                     "dataSrc": function (json) {
                         return json;
                     }
@@ -74,11 +66,16 @@
                     { "data": "Nombre" },
                     { "data": "Apellidos" }
                 ]
-        });
-        $("#btn-buscar").keyup(function (expression) {
-
-            alert('Data source: ' + table.ajax.url());
-            table.ajax.url("@Url.Action("GetAllByExpression", "AsignacionBloques")?expression=" + expression);
+        });*@
+        var table = $('#example').dataTable({
+            processing: true,
+            serverSide: true,
+            "ajax": "@Url.Action("GetAllByExpression", "AsignacionBloques")",
+            "columns": [
+                { "data": "Matricula" },
+                { "data": "Nombre" },
+                { "data": "Apellidos" }
+            ]
         });
     </script>
 }

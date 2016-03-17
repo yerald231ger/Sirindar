@@ -77,5 +77,10 @@ namespace Sirindar.Entity.Repositories
                 entity.EsActivo = false;
             }
         }
+
+        public int Count()
+        {
+            return Context.Set<TEntity>().Count();
+        }
     }
 }

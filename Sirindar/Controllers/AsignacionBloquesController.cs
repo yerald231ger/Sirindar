@@ -3,10 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using System.Net;
-using Sirindar.Core;
 using Sirindar.Core.UnitOfWork;
-using Sirindar.Models;
 
 namespace Sirindar.Controllers
 {
@@ -24,7 +21,7 @@ namespace Sirindar.Controllers
         {
             ViewBag.json =
                 new HtmlString(JsonConvert.SerializeObject(GridAsignaciones().Deportistas,
-                    new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
+                    new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             return View();
         }
 
@@ -33,16 +30,37 @@ namespace Sirindar.Controllers
             return View();
         }
 
-        public JsonResult GetAllByExpression(string expression)
+        public JsonResult GetAllByExpression(int draw, int start, int length, search search)
         {
-            return Json(_unitOfWork.Deportistas.GetAllByExpression(expression), JsonRequestBehavior.AllowGet);
+            var value = HttpContext.Request.Params["search[value]"];
+            var recordsTotal = _unitOfWork.Deportistas.Count();
+            var data = _unitOfWork.Deportistas
+                .GetAllByExpression(value)
+                .Select(d => new
+                {
+                    DT_RowId = "row_" + d.DeportistaId,
+                    DT_RowData = new
+                    {
+                        pkey = d.DeportistaId
+                    },
+                    d.Matricula,
+                    d.Nombre,
+                    d.Apellidos
+                });
+            return Json(new
+            {
+                draw,
+                recordsTotal,
+                recordsFiltered = data.Count(),
+                data
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public TableAsignacionBloques GridAsignaciones()
         {
             var groupDeportistas = _unitOfWork.AsignacionesBloques.GetAsignacionBloquesByMatriucla();
 
-            var tableAsignaciones = new TableAsignacionBloques {Deportistas = new List<RowDeportista>()};
+            var tableAsignaciones = new TableAsignacionBloques { Deportistas = new List<RowDeportista>() };
 
             foreach (var deportista in groupDeportistas)
             {
@@ -107,6 +125,37 @@ namespace Sirindar.Controllers
 
             return tableAsignaciones;
 
+        }
+
+        public class DataTablesParams
+        {
+            public int draw;
+            public int start;
+            public int length;
+            public search search;
+            public order[] order;
+            public column[] columns;
+        }
+
+        public class order
+        {
+            public int column;
+            public string dir;
+        }
+
+        public class column
+        {
+            public string data;
+            public string name;
+            public bool searchable;
+            public bool orderable;
+            public search search;
+        }
+
+        public class search
+        {
+            public string value;
+            public bool regex;
         }
 
         public class TableAsignacionBloques

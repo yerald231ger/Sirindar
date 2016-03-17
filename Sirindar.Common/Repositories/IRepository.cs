@@ -22,5 +22,7 @@ namespace Sirindar.Core.Repositories
         void Remove(TEntity entity);
         void Remove(TKey id);
         void RemoveRange(IEnumerable<TEntity> entities);
+
+        int Count();
     }
 }

@@ -58,6 +58,11 @@ namespace Sirindar.Entity.Repositories
             throw new NotImplementedException();
         }
 
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
+
         public Usuario SingleOrDefault(Expression<Func<Usuario, bool>> predicate)
         {
             throw new NotImplementedException();

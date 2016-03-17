@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using Sirindar.Core;
 using Sirindar.Core.Repositories;
