@@ -67,15 +67,34 @@
                     { "data": "Apellidos" }
                 ]
         });*@
+
+       
+
         var table = $('#example').dataTable({
             processing: true,
             serverSide: true,
             "ajax": "@Url.Action("GetAllByExpression", "AsignacionBloques")",
             "columns": [
-                { "data": "Matricula" },
+                {
+                    "data": "Matricula",
+                    "orderable": false,
+                    "searchable": false,
+                    "render": function (data) {
+                        var a = '<a href="#" onclick="displayDeportes('+ data +')">'+ data +'</a>';
+                        return a;
+                    }
+                },
                 { "data": "Nombre" },
                 { "data": "Apellidos" }
             ]
+        });
+
+        function displayDeportes(matricula) {
+            debugger;
+        }
+
+        $('#example tbody').click(function(data) {
+            //alert(data.toElement.parentNode.id);
         });
     </script>
 }
