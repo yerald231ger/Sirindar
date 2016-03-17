@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Sirindar.Core;
 using Sirindar.Entity.EntityConfigurations;
@@ -50,6 +53,22 @@ namespace Sirindar.Entity
         public DbSet<DeporteDeportista> DeportesDeportistas { get; set; }
         public DbSet<HorarioComidas> CantidadComidas { get; set; }
         public DbSet<AsignacionBloque> AsigancionesBloques { get; set; }
+
+        public List<TEntity> EjecutaSp<TEntity>(string storeProcedure, IDictionary<string, string> parametros = null) where TEntity : class
+        {
+            if (parametros == null)
+                return Database.SqlQuery<TEntity>(storeProcedure).ToList();
+
+            var parameters = new object[parametros.Count];
+            var count = 0;
+            foreach (var kvp in parametros)
+            {
+                parameters[count] = new SqlParameter(kvp.Key, kvp.Value);
+                storeProcedure += string.Format("{0} {1}", count > 0 ? "," : "", kvp.Key);
+                count++;
+            }
+            return Database.SqlQuery<TEntity>(storeProcedure, parameters).ToList();
+        }
     }
 
     public class SirindarDbContextInizializer : CreateDatabaseIfNotExists<SirindarDbContext>

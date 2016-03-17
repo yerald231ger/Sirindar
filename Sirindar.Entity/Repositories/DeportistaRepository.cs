@@ -51,7 +51,11 @@ namespace Sirindar.Entity.Repositories
 
         public IEnumerable<Deportista> GetAllByExpression(string expression)
         {
-            return Context.Database.SqlQuery<Deportista>("SPLDeportistas @Expression", new SqlParameter("@Expression", expression)).ToList();
+            var dictionary = new Dictionary<string, string>
+            {
+                {"@Expression", expression}
+            };
+            return SirindarDbContext.EjecutaSp<Deportista>("SPLDeportistas", dictionary).ToList();
         }
 
         public IEnumerable<Deportista> SearchByMatricula(string matricula)
