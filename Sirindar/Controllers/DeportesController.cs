@@ -20,7 +20,14 @@ namespace Sirindar.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportes.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            var dd = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportes.GetAll(), new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
+            ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportes.GetAll(), new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
             return View();
         }
         

@@ -47,6 +47,15 @@ namespace Sirindar.Entity.Repositories
             return deportista;
         }
 
+        public IEnumerable<Deporte> GetDeportes(string matricula)
+        {
+            var dictionary = new Dictionary<string, string>
+            {
+                {"@Matricula", matricula}
+            };
+            return SirindarDbContext.EjecutaSp<Deporte>("SPLDeportistaDeportes", dictionary).ToList();
+        }
+
         public IEnumerable<Deportista> GetAllByExpression(string expression)
         {
             var dictionary = new Dictionary<string, string>

@@ -30,7 +30,7 @@ namespace Sirindar.Controllers
             return View();
         }
 
-        public JsonResult GetAllByExpression(int draw, int start, int length, search search)
+        public JsonResult GetDeportistas(int draw, int start, int length)
         {
             var value = HttpContext.Request.Params["search[value]"];
             var recordsTotal = _unitOfWork.Deportistas.Count();
@@ -46,14 +46,24 @@ namespace Sirindar.Controllers
                     d.Matricula,
                     d.Nombre,
                     d.Apellidos
-                });
+                }).ToList();
             return Json(new
             {
                 draw,
                 recordsTotal,
-                recordsFiltered = data.Count(),
+                recordsFiltered = data.Count,
                 data
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetBloques()
+        {
+            return Json(_unitOfWork.Bloques.GetAll(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDeportes(string matricula)
+        {
+            return Json(_unitOfWork.Deportistas.GetDeportes(matricula), JsonRequestBehavior.AllowGet);
         }
 
         public TableAsignacionBloques GridAsignaciones()
@@ -127,36 +137,36 @@ namespace Sirindar.Controllers
 
         }
 
-        public class DataTablesParams
-        {
-            public int draw;
-            public int start;
-            public int length;
-            public search search;
-            public order[] order;
-            public column[] columns;
-        }
+        //public class DataTablesParams
+        //{
+        //    public int draw;
+        //    public int start;
+        //    public int length;
+        //    public search search;
+        //    public order[] order;
+        //    public column[] columns;
+        //}
 
-        public class order
-        {
-            public int column;
-            public string dir;
-        }
+        //public class order
+        //{
+        //    public int column;
+        //    public string dir;
+        //}
 
-        public class column
-        {
-            public string data;
-            public string name;
-            public bool searchable;
-            public bool orderable;
-            public search search;
-        }
+        //public class column
+        //{
+        //    public string data;
+        //    public string name;
+        //    public bool searchable;
+        //    public bool orderable;
+        //    public search search;
+        //}
 
-        public class search
-        {
-            public string value;
-            public bool regex;
-        }
+        //public class search
+        //{
+        //    public string value;
+        //    public bool regex;
+        //}
 
         public class TableAsignacionBloques
         {

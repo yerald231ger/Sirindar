@@ -9,6 +9,7 @@ namespace Sirindar.Core.Repositories
         HorarioComidas GetHorarioComidas(int deportistaId);
         Deportista GetWithDeportes(int deportistaId);
 
+        IEnumerable<Deporte> GetDeportes(string matricula);
         IEnumerable<Deportista> GetAllByExpression(string expression);
         IEnumerable<Deportista> SearchByMatricula(string matricula);
         IEnumerable<Deportista> SearchByStringExpression(string expression);

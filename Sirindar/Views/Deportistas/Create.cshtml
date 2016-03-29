@@ -111,5 +111,14 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 @section Scripts{
+    <script>
+        $(":submit").click(function () {
+            debugger;
+            var form = $(this).closest('form');
+            if ($('form').valid()) {
+                $(":submit").prop("disabled", true);
+            }
+        });
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

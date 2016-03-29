@@ -24,6 +24,7 @@ namespace Sirindar.Controllers
         // GET: /Deportistas/
         public ActionResult Index()
         {
+            var dd = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportistas.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             ViewBag.json = new HtmlString(JsonConvert.SerializeObject(_unitOfWork.Deportistas.GetAll(), new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             return View();
         }
