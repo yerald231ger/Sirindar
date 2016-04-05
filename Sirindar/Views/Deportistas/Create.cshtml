@@ -1,117 +1,121 @@
 ﻿@using Sirindar.Helpers
 @model Sirindar.Models.DeportistaViewModel
-
-@{
-    ViewBag.Title = "Create";
-}
-
-<h2>Registro Deportistas</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <br />
-        <h4>Deportista</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Matricula, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Matricula, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Matricula, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Apellidos, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Apellidos, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Genero, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Genero, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Genero, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaNacimiento, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", type = "Date" })
-                @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DependenciaId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("DependenciaId", null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DependenciaId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Status, new { @class = "form-control" }, 1)
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <br />
-        <h4>Deporte</h4>
-        <hr />
-        <div class="form-group">
-            @Html.LabelFor(model => model.DeporteId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("DeporteId", null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DeporteId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IniciaEntrenamiento, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.IniciaEntrenamiento, new { @class = "form-control", type = "time" })
-                @Html.ValidationMessageFor(model => model.IniciaEntrenamiento, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FinalizaEntrenamiento, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FinalizaEntrenamiento, new { @class = "form-control", type = "time" })
-                @Html.ValidationMessageFor(model => model.FinalizaEntrenamiento, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Registrar" class="btn btn-default" />
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-12">
+        <h2>Registrar nuevo deportistas</h2>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <br />
+                <h4>Datos del deportista</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Matricula, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Matricula, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Matricula, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Apellidos, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Apellidos, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Genero, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.Genero, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Genero, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaNacimiento, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", type = "Date" })
+                        @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DependenciaId, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("DependenciaId", null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DependenciaId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.Status, new { @class = "form-control" }, 1)
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <h4>Deporte</h4>
+                <hr />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DeporteId, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("DeporteId", null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DeporteId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IniciaEntrenamiento, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.IniciaEntrenamiento, new { @class = "form-control", type = "time" })
+                        @Html.ValidationMessageFor(model => model.IniciaEntrenamiento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FinalizaEntrenamiento, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FinalizaEntrenamiento, new { @class = "form-control", type = "time" })
+                        @Html.ValidationMessageFor(model => model.FinalizaEntrenamiento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Registrar" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+        <div>
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+        <hr />
+    </div>
+</div>
+
+
 @section Scripts{
-    <script>
+    @*<script>
         $(":submit").click(function () {
             debugger;
             var form = $(this).closest('form');
@@ -119,6 +123,6 @@
                 $(":submit").prop("disabled", true);
             }
         });
-    </script>
+    </script>*@
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -39,5 +39,10 @@ namespace Sirindar.Controllers
         {
             return Json(!_unitOfWork.Bloques.IsBloque(bloqueid), JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult IsAsignacionBloques(int deportistaId, int deporteId, int bloqueId)
+        {
+            return Json(!_unitOfWork.AsignacionesBloques.IsAsigancionGrupos(deportistaId, deporteId, bloqueId), JsonRequestBehavior.AllowGet);
+        }
     }
 }

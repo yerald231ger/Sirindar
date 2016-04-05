@@ -1,0 +1,186 @@
+﻿@using (Html.BeginForm("Create", "AsignacionBloques", FormMethod.Post, new { id = "create-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("DeportistaId", 0);
+    @Html.Hidden("DeporteId", 0);
+    @Html.Hidden("BloqueId", 0);
+    <div class="modal-header">
+        <h4>Agregar bloque</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table" id="tbl-deportes">
+                            <thead>
+                                <tr>
+                                    <th>Deporte</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="label label-danger hidden" id="label-required-deporte">Debes seleccionar un deporte</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <div class="panel panel-default collapse">
+                        <div class="panel-heading">
+                            Bloques
+                        </div>
+                        <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <div id="dataTables-example_wrapper1" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="tbl-bloques" class="table table-striped table-bordered table-hover " cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>Kilocalorias</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="label label-danger hidden" id="label-required-bloque">Debes seleccionar un bloque</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="div-lbl-breadcrums">
+                <div class='fa fa-arrow-circle-right'></div> <div class="label label-success">@ViewBag.Deportista.Matricula @ViewBag.Deportista.ToString()</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+                <div class="alert alert-danger hidden" id="alert-isAsignacionBloque"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" value="Ok" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+
+    var asignacionBloques = {
+        DeportistaId : 0,
+        DeporteId : 0,
+        BloqueId : 0
+    };
+
+    asignacionBloques.DeportistaId = @ViewBag.Deportista.DeportistaId;
+
+    $.get("@Url.Action("GetDeportes","AsignacionBloques")", { matricula : @ViewBag.Deportista.Matricula }).success(function (json) {
+        $.each(json, function (key, value) {
+            $("#tbl-deportes tbody").first().append(
+                "<tr>" +
+                "<td><a href='#' onclick='addDeporte("+ value.DeporteId +",\""+ value.Nombre +"\")'>" + value.Nombre + "</a></td>"
+                + "</tr>");
+        });
+    });
+
+    function addDeporte(deporteId, nombre){
+        $("#label-required-deporte").addClass("hidden");
+        asignacionBloques.DeporteId = deporteId;
+        $(".remove").remove();
+        $("#div-lbl-breadcrums").append(" <div class='fa fa-arrow-circle-right remove'></div> <div class='label label-success remove'>"+ nombre +"</div>");
+        $(".collapse").collapse();
+    }
+
+    function addBloque(bloqueId, nombre){
+        $("#label-required-bloque").addClass("hidden");
+        asignacionBloques.BloqueId = bloqueId;
+        $(".remove-l").remove();
+        $("#div-lbl-breadcrums").append(" <div class='fa fa-arrow-circle-right remove-l'></div> <div class='label label-success remove-l'>"+ nombre +"</div>");
+    }
+
+    $('#tbl-bloques').dataTable({
+        "ajax":
+            {
+                "url" : "@Url.Action("GetBloques","AsignacionBloques")",
+                "dataSrc" : function(json){
+                    return json;
+                }
+            },
+        "columns": [
+            {
+                "data": "Nombre",
+                "render": function (data, type, row, meta) {
+                    return '<a href="#" onclick="addBloque('+ row.BloqueId +',\''+ row.Nombre +'\')">' + data + '</a>';
+                }
+            },
+            { "data": "KilocaloriasTotales" },
+        ]
+    });
+
+    //$("#create-form").submit(function(){
+
+    //    return true;
+    //});
+
+    $('#create-form').submit(function(e) {
+        // this code prevents form from actually being submitted
+        e.preventDefault();
+        e.returnValue = false;
+
+        $("input[name='DeportistaId']").attr('value', asignacionBloques.DeportistaId);
+        $("input[name='DeporteId']").attr('value', asignacionBloques.DeporteId);
+        $("input[name='BloqueId']").attr('value', asignacionBloques.BloqueId);
+
+        if($("input[name='DeporteId']").val() == 0) {
+            $("#label-required-deporte").removeClass("hidden");
+            return;
+        }
+
+        if($("input[name='BloqueId']").val() == 0){
+            $("#label-required-bloque").removeClass("hidden");
+            return;
+        }
+
+        var $form = $(this);
+
+        // this is the important part. you want to submit
+        // the form but only after the ajax call is completed
+        $.ajax({
+            type: 'get',
+            url: '@Url.Action("IsAsignacionBloques", "Validations")',
+            data: asignacionBloques,
+            context: $form, // context will be "this" in your handlers
+            success: function(ok) {
+                if(ok){
+                    this.off('submit');
+                    this.submit();
+                }
+                else{
+                    $("#alert-isAsignacionBloque").removeClass("hidden");
+                    $("#alert-isAsignacionBloque").text("El deportista ya tiene esta asignacion");
+                }
+            },
+            error: function() {
+                $("#alert-isAsignacionBloque").removeClass("hidden");
+                $("#alert-isAsignacionBloque").text("A ocurrido un error");
+            }
+        });
+    });
+
+</script>

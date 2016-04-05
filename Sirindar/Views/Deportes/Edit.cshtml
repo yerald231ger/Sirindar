@@ -3,52 +3,59 @@
 @{
     ViewBag.Title = "Editar";
 }
-
-<h2>Cambiar Informacion: @Model.Nombre</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Deporte</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.DeporteId)
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">               
-                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TipoEnergia, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">                                                
-                @Html.DropDownList("TipoEnergia", null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TipoEnergia, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Clasificacion, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("clasificacionDeporteId", null, new { @class = "form-control" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">Modificar del deporte</h2>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
-@section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Datos del deporte</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.DeporteId)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TipoEnergia, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("TipoEnergia", null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TipoEnergia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Clasificacion, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("clasificacionDeporteId", null, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+        @section Scripts{
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+    </div>
+</div>

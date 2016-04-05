@@ -2,7 +2,7 @@
 <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
 <div class="row">
     <div class="col-md-12">
-        <h2>Asignacion de bloque</h2>
+        <h2 class="page-header">Asignacion de bloque</h2>
     </div>
 </div>
 <div class="row">
@@ -35,89 +35,28 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="well">
-            <h5>Deportes del deportista</h5>
-            <ul id="list-deportes-id" class="list-group">
-                <li class="list-group-item">Selecciona un deportista</li>
-            </ul>
-        </div>
-
-    </div>
-    <div class="col-md-8">
-        <div class="table-responsive">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Bloques
-                </div>
-                <div class="panel-body">
-                    <div class="dataTable_wrapper">
-                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table id="tbl-bloques" class="table table-striped table-bordered table-hover " cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Bloque</th>
-                                                <th>Kilocalorias</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @section Scripts{
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.js"></script>
     <script>
-        @*$.getJSON('@Url.Action("GetAllByExpression", "AsignacionBloques")', { expression: 'n' }, function (data) {
-            var str = "";
-            for (var i = 0; i < data.length - 1; i++) {
-                str += "<tr>" +
-                              "<td>" + data[i].Matricula + "</td>" +
-                              "<td>" + data[i].Nombre + "</td>" +
-                              "<td>" + data[i].Apellidos + "</td>" +
-                          "</tr>";
-            }
-            $("#tbl-body").append(str);
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
-        });*@
-        @*var table = $('#example').dataTable({
-                serverSide: true,
-                "ajax": {
-                    "url": "@Url.Action("GetAllByExpression", "AsignacionBloques")",
-                    "dataSrc": function (json) {
-                        return json;
-                    }
-                },
-                "columns": [
-                    { "data": "Matricula" },
-                    { "data": "Nombre" },
-                    { "data": "Apellidos" }
-                ]
-        });*@
-
         var tbl_deportistas = $('#tbl-deportistas').dataTable({
             processing: true,
             serverSide: true,
-            "ajax": "@Url.Action("GetDeportistas", "AsignacionBloques")",
-            "columns": [
+            ajax :
+                {
+                    //"data": function (data) {
+                    //    data = JSON.stringify(data);
+                    //},
+                    "url" : "@Url.Action("GetDeportistas", "AsignacionBloques")",
+                    "type": 'POST'
+                },
+            columns : [
                 {
                     "data": "Matricula",
                     "orderable": false,
                     "searchable": false,
                     "render": function (data) {
-                        return '<a href="#" onclick="displayDeportes(' + data + ')">' + data + '</a>';
+                        return '<a href="#" onclick="displayModal(' + data + ')">' + data + '</a>';
                     }
                 },
                 { "data": "Nombre" },
@@ -125,25 +64,13 @@
             ]
         });
 
-        var tbl_bloques = $('#tbl-bloques').dataTable({
-            "ajax": "@Url.Action("GetBloques","AsignacionBloques")",
-            "columns": [
-                { "data": "Nombre" },
-                { "data": "KilocaloriasTotales" },
-            ]
-        });
+        function displayModal(matricula) {
 
-        function displayDeportes(matricula) {
-            $.getJSON("@Url.Action("GetDeportes", "AsignacionBloques")?matricula=" + matricula).success(function (json) {
-                $("#list-deportes-id li").remove();
-                $.each(json, function (i, v) {
-                    $("#list-deportes-id").append("<li class='list-group-item'><a href='#'>" + v.Nombre + "</a></li>");
-                });
+            $.get("@Url.Action("AddBloque", "AsignacionBloques")",{ matricula }).success(function (html) {
+                $("#idModal .modal-content").replaceWith('<div class="modal-content">' + html + '</div>');
+                $("#idModal").modal('show');
             });
         }
 
-        $('#example tbody').click(function (data) {
-            //alert(data.toElement.parentNode.id);
-        });
     </script>
 }

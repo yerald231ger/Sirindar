@@ -27,7 +27,7 @@ namespace Sirindar.Entity.Repositories
                         .GroupBy(ab => ab.Deportista.Matricula).ToList();
         }
 
-        public bool IsAsigancionGrupos(int deporteId, int deportistaId, int bloqueId)
+        public bool IsAsigancionGrupos(int deportistaId, int deporteId, int bloqueId)
         {
             return SingleOrDefault(dd =>
                 dd.DeporteId == deporteId

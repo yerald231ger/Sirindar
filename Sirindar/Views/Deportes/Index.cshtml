@@ -2,14 +2,18 @@
     ViewBag.Title = "Inicio";
 }
 @{var json = (HtmlString)ViewBag.json; }
-<h2>Deportes</h2>
-<div class="row" ng-app="listApp" ng-controller="listController">
-    <div>
-        <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
-            <strong>{{ message }}</strong>
-        </div>
-    </div>
+<div class="row">
     <div class="col-md-12">
+        <h2 class="page-header">Deportes</h2>
+    </div>
+</div>
+<div class="row" ng-app="listApp" ng-controller="listController">
+    <div class="col-md-12">
+        <div>
+            <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
+                <strong>{{ message }}</strong>
+            </div>
+        </div>
         <div class="table-responsive">
             <div>
                 <div class="col-md-6">

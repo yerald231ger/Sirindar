@@ -5,49 +5,59 @@
     var json = (HtmlString)ViewBag.Json;
 }
 
-<h2>Edit</h2>
-<h4 class="text-info">@ViewBag.TextStatus</h4>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Bloque</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.BloqueId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.KilocaloriasTotales, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.KilocaloriasTotales, new { @class = "form-control"})
-                @Html.ValidationMessageFor(model => model.KilocaloriasTotales, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-<hr />
-<div class="row" ng-app="listApp" ng-controller="listController">
-    <div>
-        <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
-            <strong>{{ message }}</strong>
-        </div>
-    </div>
+<div class="row">
     <div class="col-md-12">
+        <h2 class="page-header">Editar el bloque</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="text-info">@ViewBag.TextStatus</h4>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Datos del bloque</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.BloqueId)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.KilocaloriasTotales, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.KilocaloriasTotales, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.KilocaloriasTotales, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+        <hr />
+    </div>
+</div>
+
+<div class="row" ng-app="listApp" ng-controller="listController">
+    <div class="col-md-12">
+        <div>
+            <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
+                <strong>{{ message }}</strong>
+            </div>
+        </div>
         <div class="table-responsive">
             <div>
                 <div class="col-md-6">
@@ -60,7 +70,7 @@
                     </div>
                 </div>
                 <div class="col-md-offset-3 col-md-3">
-                    <h5><a href="#" ng-click="createItem('@Url.Action("GrupoCreate", "Bloques", new { Model.BloqueId })')">Agregar Bloque</a></h5>
+                    <h5><a href="#" ng-click="createItem('@Url.Action("GrupoCreate", "Bloques", new { Model.BloqueId })')">Agregar Grupo</a></h5>
                 </div>
                 <div class="col-md-12">
                     <table class="table table-striped table-hover table-condensed">
@@ -127,10 +137,10 @@
                 </div>
             </div>
         </div>
+        <div>
+            @Html.ActionLink("Regresar", "Index")
+        </div>
     </div>
-</div>
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 @section scripts
         {

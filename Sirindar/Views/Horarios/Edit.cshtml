@@ -1,5 +1,7 @@
 ﻿@model Sirindar.Core.Horario
 
+
+
 @using (Html.BeginForm())
 {
     <div class="modal-header">
@@ -13,24 +15,24 @@
             @Html.HiddenFor(model => model.FechaAlta)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
+                @Html.LabelFor(model => model.Nombre, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
                     @Html.DropDownList("Nombre", null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Inicia, new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
+                @Html.LabelFor(model => model.Inicia, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
                     @Html.TextBoxFor(model => model.Inicia, new { @class = "form-control", type = "time" })
                     @Html.ValidationMessageFor(model => model.Inicia, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Finaliza, new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
+                @Html.LabelFor(model => model.Finaliza, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
                     @Html.TextBoxFor(model => model.Finaliza, new { @class = "form-control", type = "time" })
                     @Html.ValidationMessageFor(model => model.Finaliza, "", new { @class = "text-danger" })
                 </div>

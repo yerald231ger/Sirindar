@@ -64,13 +64,6 @@ namespace Sirindar.Controllers
                             FinalizaEntrenamiento = model.FinalizaEntrenamiento
                         }
                     },
-                    AsignacionesBloques = new List<AsignacionBloque>
-                    {
-                        new AsignacionBloque
-                        {
-                            DeporteId = model.DeporteId
-                        }
-                    },
                     HorarioComidas = new HorarioComidas
                     {
                         Cantidad = NumeroComidas.Uno,

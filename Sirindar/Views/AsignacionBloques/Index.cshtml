@@ -2,15 +2,18 @@
     ViewBag.Title = "Inicio";
     var json = (HtmlString)ViewBag.json;
 }
-<h2>Asignación de bloques</h2>
-<br />
-<div class="row" ng-app="listApp" ng-controller="listController">
-    <div>
-        <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
-            <strong>{{ message }}</strong>
-        </div>
-    </div>
+<div class="row">
     <div class="col-md-12">
+        <h2 class="page-header">Asignación de bloque</h2>
+    </div>
+</div>
+<div class="row" ng-app="listApp" ng-controller="listController">
+    <div class="col-md-12">
+        <div>
+            <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
+                <strong>{{ message }}</strong>
+            </div>
+        </div>
         <div class="table-responsive">
             <div>
                 <div class="col-md-6">
@@ -53,12 +56,10 @@
                                 <td ng-if="$first" rowspan="{{c.RowSpan.length}}">{{c.Nombre}}</td>
                                 <td>{{s.Nombre}}</td>
                                 <td ng-if="s.Nombre == 'Sin bloque' || s.BloqueId == 0" >
-                                    <a ng-href="@Url.Action("Edit")/{{s.DeporteDeportistaId}}"><span class="glyphicon glyphicon-plus"></span></a>&ensp;
+                                    <a ng-href="@Url.Action("Edit")/{{s.AsignacionBloqueId}}"><span class="glyphicon glyphicon-plus"></span></a>&ensp;
                                 </td>                               
                                 <td ng-if="s.Nombre != 'Sin bloque' && s.BloqueId != 0">
-                                    <a ng-href="@Url.Action("Edit")/{{s.DeporteDeportistaId}}"><span class="glyphicon glyphicon-edit"></span></a>&ensp;
-                                    <a href="#" ng-click="deleteConfirm('@Url.Action("Delete")', s.DeporteDeportistaId)"><span class="glyphicon glyphicon-remove"></span></a>&ensp;
-                                    <a ng-if="$first" ng-href="@Url.Action("Create")?deportistaId={{p.DeportistaId}}&deporteId={{c.DeporteId}}"><span class="glyphicon glyphicon-plus"></span></a>
+                                    <a href="#" ng-click="deleteConfirm('@Url.Action("Delete")', s.AsignacionBloqueId)"><span class="glyphicon glyphicon-remove"></span></a>&ensp;
                                 </td>
                             </tr>
                             <tr ng-repeat-end ng-if="false"></tr>

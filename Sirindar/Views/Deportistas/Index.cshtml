@@ -2,7 +2,11 @@
     ViewBag.Title = "Inicio";
 }
 @{var json = (HtmlString)ViewBag.json; }
-<h2>Deportistas</h2>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">Deportistas</h2>
+    </div>
+</div>
 <div class="row">
     <div ng-app="listApp" ng-controller="listController">
         <div class="alert alert-info alert-dismissible" role="alert" ng-hide="items.length != 0">
@@ -203,7 +207,7 @@
 
                     $scope.currentPage = p;
                 }
-                
+
                 $scope.serch = function (str) {
                     debugger;
                     if (str == "") {

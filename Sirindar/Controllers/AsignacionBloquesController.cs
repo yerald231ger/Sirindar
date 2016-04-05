@@ -4,6 +4,8 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Sirindar.Core.UnitOfWork;
+using Sirindar.Core;
+using System.Net;
 
 namespace Sirindar.Controllers
 {
@@ -30,11 +32,25 @@ namespace Sirindar.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(AsignacionBloque asignacionBloque)
+        {
+            _unitOfWork.AsignacionesBloques.Add(new AsignacionBloque
+            {
+                DeportistaId = asignacionBloque.DeportistaId,
+                DeporteId = asignacionBloque.DeporteId,
+                BloqueId = asignacionBloque.BloqueId
+            });
+            _unitOfWork.Complete();
+            return RedirectToAction("Index");
+        }
+
         public JsonResult GetDeportistas(int draw, int start, int length)
         {
             var value = HttpContext.Request.Params["search[value]"];
             var recordsTotal = _unitOfWork.Deportistas.Count();
-            var data = _unitOfWork.Deportistas
+            var deportistas = _unitOfWork.Deportistas
                 .GetAllByExpression(value)
                 .Select(d => new
                 {
@@ -47,13 +63,20 @@ namespace Sirindar.Controllers
                     d.Nombre,
                     d.Apellidos
                 }).ToList();
+            var data = deportistas.Skip(start).Take(length);
             return Json(new
             {
                 draw,
                 recordsTotal,
-                recordsFiltered = data.Count,
+                recordsFiltered = deportistas.Count,
                 data
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AddBloque(string matricula)
+        {
+            ViewBag.Deportista = _unitOfWork.Deportistas.GetByMatricula(matricula);
+            return PartialView();
         }
 
         public JsonResult GetBloques()
@@ -64,6 +87,30 @@ namespace Sirindar.Controllers
         public JsonResult GetDeportes(string matricula)
         {
             return Json(_unitOfWork.Deportistas.GetDeportes(matricula), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var model = _unitOfWork.AsignacionesBloques.Get(id.Value);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var asignacionBloque = _unitOfWork.AsignacionesBloques.Get(id);
+            _unitOfWork.AsignacionesBloques.Remove(asignacionBloque);
+            _unitOfWork.Complete();
+            return RedirectToAction("Index");
         }
 
         public TableAsignacionBloques GridAsignaciones()
@@ -104,29 +151,18 @@ namespace Sirindar.Controllers
                         .Where(dd => dd.DeporteId == key2)
                         .Select(dd =>
                         {
-                            if (dd.Bloque != null)
+                            return new RowBloque
                             {
-                                return new RowBloque
-                                {
-                                    Nombre = dd.Bloque.Nombre,
-                                    // ReSharper disable once PossibleInvalidOperationException
-                                    BloqueId = dd.BloqueId.Value,
-                                    DeporteDeportistaId = dd.AsignacionBloqueId
-                                };
-                            }
-                            else
-                            {
-                                return new RowBloque
-                                {
-                                    Nombre = "Sin bloque",
-                                    DeporteDeportistaId = dd.AsignacionBloqueId
-                                };
-                            }
+                                Nombre = dd.Bloque.Nombre,
+                                // ReSharper disable once PossibleInvalidOperationException
+                                BloqueId = dd.BloqueId.Value,
+                                AsignacionBloqueId = dd.AsignacionBloqueId
+                            };
                         }).ToList();
 
                     rowDeporte.Bloques = listRowBloque;
-                    rowDeporte.RowSpan = listRowBloque.Select(lrb => lrb.DeporteDeportistaId).ToArray();
-                    listIds.AddRange(listRowBloque.Select(lrb => lrb.DeporteDeportistaId).ToArray());
+                    rowDeporte.RowSpan = listRowBloque.Select(lrb => lrb.AsignacionBloqueId).ToArray();
+                    listIds.AddRange(listRowBloque.Select(lrb => lrb.AsignacionBloqueId).ToArray());
                     rowDeportista.Deportes.Add(rowDeporte);
                 }
                 rowDeportista.RowSpan = listIds.ToArray();
@@ -193,7 +229,7 @@ namespace Sirindar.Controllers
         public class RowBloque
         {
             public int BloqueId { get; set; }
-            public int DeporteDeportistaId { get; set; }
+            public int AsignacionBloqueId { get; set; }
             public string Nombre { get; set; }
         }
     }

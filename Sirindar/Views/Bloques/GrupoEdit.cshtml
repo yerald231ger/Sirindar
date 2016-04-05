@@ -3,7 +3,7 @@
 @using (Html.BeginForm())
 {
     <div class="modal-header">
-        <h4>Editar de model</h4>
+        <h4>Modificar el Grupo</h4>
     </div>
     <div class="modal-body">
         @Html.AntiForgeryToken()
@@ -54,7 +54,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Equivalencias, new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.TextAreaFor(model => model.Equivalencias, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Equivalencias, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Equivalencias, "", new { @class = "text-danger" })
                 </div>
             </div>
